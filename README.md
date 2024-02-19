@@ -28,3 +28,8 @@ export default {
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+# UI/UX Repository
+Desktop: https://www.figma.com/file/XJxcuynH5T0CZTmGHNTSxT/desktop?type=design&t=Y8hAgNTIkWnQCtKY-6
+Mobile: https://www.figma.com/file/kHnnikCD384Cb6KpgsALe6/mobile?type=design&t=Y8hAgNTIkWnQCtKY-6
+Board: https://www.figma.com/file/pW8DReLCOIOqVMsaWIWb53/board?type=whiteboard&t=Y8hAgNTIkWnQCtKY-6
