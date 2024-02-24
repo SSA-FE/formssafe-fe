@@ -17,6 +17,7 @@ export default {
       },
       height: {
         topbar: '4rem',
+        toolbar: '2rem',
         homeFront: '28rem',
         line: '0.0625rem',
       },
@@ -26,6 +27,14 @@ export default {
       },
       borderRadius: {
         '4xl': '2rem',
+      },
+      gap: {
+        lg: '2rem',
+        md: '1rem',
+        sm: '0.5rem',
+      },
+      fontSize: {
+        content: ['0.875rem', '16.94px'],
       },
     },
   },

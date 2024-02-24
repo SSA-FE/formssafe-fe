@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family:
+    'Inter',
+    Trebuchet MS,
+    sans-serif !important;
+}
+
 /* width, height 하위 컴포넌트에서 100%잡기 위함 */
 body,
 html,
