@@ -1,11 +1,10 @@
-/**
- * 메인 워크스페이스 페이지
- */
+import Toolbar from '@/components/Workspace/Toolbar';
+
 const Workspace = () => {
   return (
-    <>
-      <>WP</>
-    </>
+    <div>
+      <Toolbar />
+    </div>
   );
 };
 
