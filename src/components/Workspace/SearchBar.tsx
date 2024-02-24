@@ -5,7 +5,7 @@ const SearchBar = () => {
     <div className="flex items-center justify-between h-full pl-6 pr-4 rounded-lg gap-md bg-neutral-300">
       <input
         type="text"
-        className="font-bold bg-transparent outline-none h-[17px] text-neutral-400  placeholder-neutral-400 caret-neutral-400 text-content flex-grow w-36"
+        className="font-bold bg-transparent outline-none h-[17px] text-neutral-400  placeholder-neutral-400 caret-neutral-400 text-content w-36"
         placeholder="프로젝트를 검색하세요"
       />
       <button>
