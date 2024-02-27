@@ -1,39 +1,30 @@
-// import Sidebar from '@/components/Sidebar';
-// import Topbar from '@/components/Topbar';
-// import { IIsLoggedInState } from '@/interface/redux';
-// import { RouterInfo } from '@/utils/router';
-// import { useSelector } from 'react-redux';
-// import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  RouteObject,
+  RouterProvider,
+} from 'react-router-dom';
+import Home from '@/pages/Home';
+import Workspace from '@/pages/Workspace';
+import NotFound from '@/pages/NotFound';
+import CheckUserAuth from '@/components/auth/CheckUserAuth';
 
-// const FSRouter = () => {
-//   const isLoggedIn = useSelector(
-//     (state: IIsLoggedInState) => state.isLogin.isLoggedIn
-//   );
+const Router = () => {
+  const routes: RouteObject[] = [
+    {
+      path: '/',
+      element: <Home />,
+      errorElement: <NotFound />,
+    },
+    {
+      path: '/main',
+      element: <CheckUserAuth />,
+      children: [{ path: '/main', element: <Workspace /> }],
+    },
+  ];
 
-//   // routes에 routing할 페이지들 추가
-//   const routes = createBrowserRouter(RouterInfo);
+  const router = createBrowserRouter([...routes]);
 
-//   return (
-//     <Router>
-//       <div className="flex flex-row w-full h-full">
-//         {isLoggedIn && <Sidebar />}
-//         <div className="flex flex-col w-full h-full">
-//           <Topbar />
-//           <Routes>
-//             {routes.map((route, key) => {
-//               return (
-//                 <Route
-//                   key={`routes-${key}`}
-//                   path={route.path}
-//                   element={route.element}
-//                 />
-//               );
-//             })}
-//           </Routes>
-//         </div>
-//       </div>
-//     </Router>
-//   );
-// };
+  return <RouterProvider router={router} />;
+};
 
-// export default FSRouter;
+export default Router;

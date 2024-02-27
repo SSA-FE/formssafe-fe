@@ -29,6 +29,7 @@
       "@components/*": ["components/*"],
       "@hooks/*": ["hooks/*"],
       "@pages/*": ["pages/*"],
+      "@router/*": ["router/*"],
       "@store/*": ["store/*"],
       "@style/*": ["style/*"],
       "@utils/*": ["utils/*"]
