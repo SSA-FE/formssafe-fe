@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import dropdownIcon from '@/assets/icons/dropdown-icon.svg';
 
 const SortDropdown = () => {
@@ -6,6 +6,7 @@ const SortDropdown = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(options[0]);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -17,8 +18,24 @@ const SortDropdown = () => {
     setIsOpen(false);
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
         className="bg-neutral-300 text-content h-8 text-neutral-400 focus:outline-none rounded-lg pl-6 pr-4 text-center flex items-center font-bold w-[182px] justify-between"
