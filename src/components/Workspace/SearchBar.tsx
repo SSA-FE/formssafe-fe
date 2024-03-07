@@ -1,12 +1,20 @@
 import searchIcon from '@/assets/icons/search-icon.svg';
 
-const SearchBar = () => {
+interface SearchBarProps {
+  placeholder: string;
+  bgColor: string;
+  width: string;
+}
+
+const SearchBar = ({ placeholder, bgColor, width }: SearchBarProps) => {
   return (
-    <div className="flex items-center justify-between h-full pl-6 pr-4 rounded-lg gap-md bg-neutral-300">
+    <div
+      className={`box-content flex items-center justify-between py-2 pr-4 pl-6 border border-neutral-200 rounded-[1.125rem] gap-lg ${bgColor} h-min`}
+    >
       <input
         type="text"
-        className="font-bold bg-transparent outline-none h-[17px] text-neutral-400  placeholder-neutral-400 caret-neutral-400 text-content w-36"
-        placeholder="프로젝트를 검색하세요"
+        className={`font-bold bg-transparent outline-none h-[17px] text-neutral-400 placeholder-neutral-400 caret-neutral-400 text-sm ${width}`}
+        placeholder={placeholder}
       />
       <button>
         <img src={searchIcon} alt="검색 아이콘" />
