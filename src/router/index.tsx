@@ -6,6 +6,7 @@ import {
 import Home from '@/pages/Home';
 import Workspace from '@/pages/Workspace';
 import NotFound from '@/pages/NotFound';
+import Editor from '@/pages/Editor';
 import CheckUserAuth from '@/components/auth/CheckUserAuth';
 
 const Router = () => {
@@ -19,6 +20,11 @@ const Router = () => {
       path: '/main',
       element: <CheckUserAuth />,
       children: [{ path: '/main', element: <Workspace /> }],
+    },
+    {
+      path: '/editor',
+      element: <CheckUserAuth />,
+      children: [{ path: '/editor', element: <Editor /> }],
     },
   ];
 
