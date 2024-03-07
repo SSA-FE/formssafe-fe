@@ -38,7 +38,7 @@ const SortDropdown = () => {
     <div className="relative inline-block" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
-        className="bg-neutral-300 text-content h-8 text-neutral-400 focus:outline-none rounded-lg pl-6 pr-4 text-center flex items-center font-bold w-[182px] justify-between"
+        className="bg-neutral-300 text-sm h-8 text-neutral-400 focus:outline-none rounded-lg pl-6 pr-4 text-center flex items-center font-bold w-[182px] justify-between"
         type="button"
       >
         {selectedOption}
@@ -47,7 +47,7 @@ const SortDropdown = () => {
 
       {isOpen && (
         <div className="absolute z-10 w-full mt-1 bg-white rounded-lg shadow">
-          <ul className="py-2 text-neutral-400 text-content">
+          <ul className="py-2 text-sm text-neutral-400">
             {options.map((option) => (
               <li key={option}>
                 <button
