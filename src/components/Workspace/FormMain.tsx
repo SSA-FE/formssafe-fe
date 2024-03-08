@@ -26,13 +26,13 @@ const FormMain = () => {
         ))}
       </div>
       <div className="flex justify-center w-full mt-6">
-        <div className="w-8 h-8 rounded-full bg-[#d9d9d9] flex justify-center items-center">
+        <button className="w-8 h-8 rounded-full bg-[#d9d9d9] flex justify-center items-center">
           <img
             src={plusIcon}
             alt="설문추가 아이콘"
             className="w-[19px] h-[19px]"
           />
-        </div>
+        </button>
       </div>
     </div>
   );
