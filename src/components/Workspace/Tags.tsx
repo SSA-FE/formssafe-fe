@@ -20,7 +20,7 @@ const Tags = () => {
   };
 
   const handleTagAdd = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && tagValue) {
       setTagList([
         ...tagList,
         {
