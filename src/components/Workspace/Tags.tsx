@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 interface ITag {
   id: string;
   value: string;
+  bgColor: string;
 }
 
 const Tags = () => {
@@ -11,6 +12,7 @@ const Tags = () => {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const inputSpanRef = useRef<HTMLSpanElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const tagColorList = ['bg-cyan-400', 'bg-indigo-400'];
 
   const handleTagRemove = (tagId: string) => {
     const newTagList = tagList.filter((tag) => tag.id !== tagId);
@@ -24,6 +26,8 @@ const Tags = () => {
         {
           id: crypto.randomUUID(),
           value: tagValue,
+          bgColor:
+            tagColorList[Math.floor(Math.random() * tagColorList.length)],
         },
       ]);
       setTagValue('');
@@ -49,7 +53,7 @@ const Tags = () => {
           <li className="mr-2" key={tag.id}>
             <button
               type="button"
-              className="py-2 px-6 bg-neutral-400 rounded text-xs text-white cursor-pointer"
+              className={`py-2 px-6 rounded ${tag.bgColor} text-xs text-white cursor-pointer hover:bg-rose-400`}
               onClick={() => handleTagRemove(tag.id)}
             >
               # {tag.value}
