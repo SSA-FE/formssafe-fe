@@ -1,5 +1,5 @@
-import SearchBar from '@/components/Workspace/SearchBar';
-import SortDropdown from '@/components/Workspace/SortDropdown';
+import SearchBar from '@/components/Myspace/SearchBar';
+import SortDropdown from '@/components/Myspace/SortDropdown';
 
 const Toolbar = () => {
   return (

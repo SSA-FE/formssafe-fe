@@ -41,7 +41,7 @@ const Home = () => {
     // TODO: 닉네임 변경 API 추가
     // status 400: 닉네임 중복
     // status 401: 세션이 존재하지 않음
-    navigate('/main');
+    navigate('/myspace');
   };
 
   const checkKeyDown = (e: React.KeyboardEvent) => {
