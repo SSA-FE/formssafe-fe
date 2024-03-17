@@ -1,35 +1,54 @@
 /**
  * login onboarding page
  */
-// import { zodResolver } from '@hookform/resolvers/zod';
-// import { useForm } from 'react-hook-form';
-// import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import Modal from '@/components/modal';
 import googleIcon from '@/assets/icons/google-icon.svg';
 import { useState } from 'react';
 import ArrowSVG from '@assets/icons/arrow-icon.svg?react';
+import { useNavigate } from 'react-router-dom';
 
-// const schema = z.object({
-//   nickname: z.string().min(1, { message: '닉네임은 필수값입니다.' }),
-// });
+const schema = z.object({
+  nickname: z
+    .string()
+    .min(4, { message: '닉네임은 최소 네 글자 이상이어야 합니다.' }),
+});
 
 // nickname을 한개만 받는 type 선언
-// type Nickname = {
-//   nickname: string;
-// };
+type Nickname = {
+  nickname: string;
+};
 
 const Home = () => {
   const [isFirstSignined, setIsFirstSignined] = useState<boolean>(false);
-  // const {
-  //   register,
-  //   formState: { errors },
-  //   handleSubmit,
-  // } = useForm<Nickname>({
-  //   resolver: zodResolver(schema),
-  //   defaultValues: {
-  //     nickname: '',
-  //   },
-  // });
+  const navigate = useNavigate();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<Nickname>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      nickname: '',
+    },
+  });
+
+  const handleValid = (data: Nickname) => {
+    // data 확인 (향후 삭제)
+    console.log(data);
+    // TODO: 닉네임 변경 API 추가
+    // status 400: 닉네임 중복
+    // status 401: 세션이 존재하지 않음
+    navigate('/main');
+  };
+
+  const checkKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
 
   return (
     <div className="h-auto w-full flex justify-center py-36">
@@ -79,10 +98,16 @@ const Home = () => {
             type="text"
             id="nickname"
             className="bg-neutral-200 rounded-2xl w-full py-2 px-4"
+            onKeyDown={checkKeyDown}
+            {...register('nickname')}
           />
+          {errors.nickname && <p>{errors.nickname.message}</p>}
         </form>
         <div className="flex justify-end pt-8">
-          <button className="text-sm text-neutral-400 gap-2 ">
+          <button
+            className="text-sm text-neutral-400 gap-2 "
+            onClick={handleSubmit(handleValid)}
+          >
             <ArrowSVG transform="rotate(180)" />
           </button>
         </div>
