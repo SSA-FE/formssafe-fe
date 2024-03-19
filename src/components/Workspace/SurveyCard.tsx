@@ -1,4 +1,4 @@
-import TempSaveIcon from '@/assets/icons/temp-save-icon.svg';
+import TempSaveIcon from '@/assets/icons/temp-save-icon.svg?react';
 
 interface ISurveyCard {
   tags?: string[];
@@ -7,12 +7,7 @@ interface ISurveyCard {
   isTemp: boolean;
 }
 
-const SurveyCard = ({
-  tags, // 태그 리스트
-  questionCnt, // 설문 문항 수
-  expectTime, // 설문 예상 시간
-  isTemp, // 임시 저장 여부
-}: ISurveyCard) => {
+const SurveyCard = ({ tags, questionCnt, expectTime, isTemp }: ISurveyCard) => {
   return (
     <div className="w-full border rounded-lg max-w-surveyCard border-neutral-300">
       <div className="flex items-center justify-between w-full gap-2 px-5 pt-4 pb-[10px] border-neutral-300 border-b-[1px]">
@@ -22,7 +17,7 @@ const SurveyCard = ({
           </h1>
           {isTemp && (
             <p className="w-[14px] h-[14px]">
-              <img src={TempSaveIcon} alt="임시 저장 여부 아이콘" />
+              <TempSaveIcon />
             </p>
           )}
         </div>
