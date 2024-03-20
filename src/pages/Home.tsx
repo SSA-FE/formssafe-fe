@@ -9,8 +9,7 @@ import googleIcon from '@/assets/icons/google-icon.svg';
 import { useState } from 'react';
 import ArrowSVG from '@assets/icons/arrow-icon.svg?react';
 import { useNavigate } from 'react-router-dom';
-
-const GOOGLE_URL = import.meta.env.VITE_APP_GOOGLE_AUTH_URL;
+import { GOOGLE_AUTH_URL } from '@/config';
 
 const schema = z.object({
   nickname: z
@@ -53,7 +52,7 @@ const Home = () => {
   };
 
   const handleLogin = () => {
-    window.location.href = GOOGLE_URL;
+    window.location.href = GOOGLE_AUTH_URL;
   };
 
   return (
