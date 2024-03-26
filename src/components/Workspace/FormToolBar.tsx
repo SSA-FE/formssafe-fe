@@ -1,4 +1,4 @@
-import SearchBar from '@/components/Workspace/SearchBar';
+import SearchBar from '@/components/Myspace/SearchBar';
 import visibleIcon from '@/assets/icons/visible-icon.svg';
 
 const FormToolBar = () => {
