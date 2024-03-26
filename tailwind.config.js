@@ -24,6 +24,7 @@ export default {
       maxWidth: {
         nicknamemodal: '30rem',
         homeFront: '34rem',
+        surveyCard: '22.625rem',
       },
       borderRadius: {
         '4xl': '2rem',

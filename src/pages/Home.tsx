@@ -1,11 +1,55 @@
 /**
  * login onboarding page
  */
-
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import Modal from '@/components/modal';
 import googleIcon from '@/assets/icons/google-icon.svg';
+import { useState } from 'react';
+import ArrowSVG from '@/assets/icons/arrow-icon.svg?react';
+import { useNavigate } from 'react-router-dom';
+
+const schema = z.object({
+  nickname: z
+    .string()
+    .min(4, { message: '닉네임은 최소 네 글자 이상이어야 합니다.' }),
+});
+
+// nickname을 한개만 받는 type 선언
+type Nickname = {
+  nickname: string;
+};
 
 const Home = () => {
+  const [isFirstSigned, setIsFirstSigned] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<Nickname>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      nickname: '',
+    },
+  });
+
+  const handleValid = (data: Nickname) => {
+    // data 확인 (향후 삭제)
+    console.log(data);
+    // TODO: 닉네임 변경 API 추가
+    // status 400: 닉네임 중복
+    // status 401: 세션이 존재하지 않음
+    navigate('/myspace');
+  };
+
+  const checkKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
   return (
     <div className="flex justify-center w-full h-auto py-36">
       <div className="flex flex-col items-center justify-between w-full h-homeFront max-w-homeFront">
@@ -27,7 +71,10 @@ const Home = () => {
             설문지 찾기
           </button>
           <hr className="w-full h-line max-w-96 bg-neutral-300" />
-          <button className="flex items-center justify-center w-full h-16 py-4 text-xl bg-white border-2 border-solid max-w-80 rounded-4xl gap-xs border-neutral-300">
+          <button
+            className="flex items-center justify-center w-full h-16 gap-4 py-4 text-xl bg-white border-2 border-solid max-w-80 rounded-4xl border-neutral-300"
+            onClick={() => setIsFirstSigned(true)}
+          >
             <img src={googleIcon} alt="구글 로그인 아이콘" />
             <p className="text-base font-bold text-neutral-400 whitespace-nowrap">
               Google 계정으로 로그인
@@ -39,25 +86,30 @@ const Home = () => {
         @
       </button>
 
-      <Modal maxWidth={'max-w-nicknamemodal'} state={false}>
-        <div className="flex flex-col gap-y-2">
-          <h1 className="text-xl font-bold text-neutral-800">
-            새로운 계정을 만듭니다.
-          </h1>
-          <p className="text-base font-normal text-neutral-500">
-            닉네임은 한 번 정하면 바꿀 수 없습니다.
-          </p>
-        </div>
-        <div className="flex flex-col gap-y-4">
+      <Modal maxWidth={'max-w-nicknamemodal'} state={isFirstSigned}>
+        <form className="flex flex-col gap-y-4">
           <label htmlFor="nickname" className="text-lg font-bold">
             닉네임
           </label>
+          <p className="info-message">
+            ⓘ 닉네임은 최소 네 글자 이상이어야 합니다.
+          </p>
           <input
             type="text"
             id="nickname"
-            placeholder="google account default name"
             className="w-full px-4 py-2 bg-neutral-200 rounded-2xl"
+            onKeyDown={checkKeyDown}
+            {...register('nickname')}
           />
+          {errors.nickname && <p>{errors.nickname.message}</p>}
+        </form>
+        <div className="flex justify-end pt-8">
+          <button
+            className="gap-2 text-sm text-neutral-400 "
+            onClick={handleSubmit(handleValid)}
+          >
+            <ArrowSVG transform="rotate(180)" />
+          </button>
         </div>
       </Modal>
     </div>

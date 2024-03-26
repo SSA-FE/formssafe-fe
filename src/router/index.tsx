@@ -4,7 +4,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import Home from '@/pages/Home';
-import Workspace from '@/pages/Workspace';
+import Myspace from '@/pages/Myspace';
 import NotFound from '@/pages/NotFound';
 import Editor from '@/pages/Editor';
 import CheckUserAuth from '@/components/auth/CheckUserAuth';
@@ -17,9 +17,9 @@ const Router = () => {
       errorElement: <NotFound />,
     },
     {
-      path: '/main',
+      path: '/myspace',
       element: <CheckUserAuth />,
-      children: [{ path: '/main', element: <Workspace /> }],
+      children: [{ path: '/myspace', element: <Myspace /> }],
     },
     {
       path: '/editor',

@@ -27,3 +27,12 @@
   border-radius: 2px;
   border: 1px solid #fff;
 }
+
+@layer components {
+  .input {
+    @apply rounded-lg bg-neutral-100 border border-neutral-200 p-2 focus:border-neutral-500 focus:outline-none;
+  }
+  .info-message {
+    @apply text-orange-400 text-sm;
+  }
+}

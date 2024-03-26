@@ -29,7 +29,7 @@ const Modal = ({ maxWidth, state, children }: IModal) => {
         createPortal(
           <div className="flex justify-center items-center w-full h-full bg-black bg-opacity-25 top-0 left-0 fixed">
             <div
-              className={`flex flex-col w-full ${maxWidth} bg-white rounded-lg px-8 pt-8 pb-16 gap-y-8`}
+              className={`flex flex-col w-full ${maxWidth} bg-white rounded-lg px-8 pt-8 pb-8`}
             >
               {children}
             </div>
