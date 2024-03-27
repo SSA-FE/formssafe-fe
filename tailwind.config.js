@@ -30,12 +30,13 @@ export default {
         '4xl': '2rem',
       },
       gap: {
-        lg: '2rem',
-        md: '1rem',
+        xs: '0.25rem',
         sm: '0.5rem',
+        md: '1rem',
+        lg: '2rem',
       },
       fontSize: {
-        content: ['0.875rem', '16.94px'],
+        // content: ['0.875rem', '16.94px'],
       },
     },
   },

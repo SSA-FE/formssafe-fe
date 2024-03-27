@@ -7,7 +7,7 @@ import { z } from 'zod';
 import Modal from '@/components/modal';
 import googleIcon from '@/assets/icons/google-icon.svg';
 import { useState } from 'react';
-import ArrowSVG from '@assets/icons/arrow-icon.svg?react';
+import ArrowSVG from '@/assets/icons/arrow-icon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { GOOGLE_AUTH_URL } from '@/config';
 
