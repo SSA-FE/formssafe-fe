@@ -1,10 +1,13 @@
 import Router from '@/router';
 import Topbar from '@/components/Topbar';
+import { useState } from 'react';
 
 function App() {
+  const [isAuthenticated] = useState(true);
+
   return (
     <>
-      <Topbar />
+      <Topbar isAuthenticated={isAuthenticated} />
       <Router />
     </>
   );
