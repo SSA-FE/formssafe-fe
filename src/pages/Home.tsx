@@ -9,6 +9,7 @@ import googleIcon from '@/assets/icons/google-icon.svg';
 import { useState } from 'react';
 import ArrowSVG from '@/assets/icons/arrow-icon.svg?react';
 import { useNavigate } from 'react-router-dom';
+import { GOOGLE_AUTH_URL } from '@/config';
 
 const schema = z.object({
   nickname: z
@@ -22,7 +23,7 @@ type Nickname = {
 };
 
 const Home = () => {
-  const [isFirstSigned, setIsFirstSigned] = useState<boolean>(false);
+  const [isFirstSignIn] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -50,6 +51,10 @@ const Home = () => {
     }
   };
 
+  const handleLogin = () => {
+    window.location.href = GOOGLE_AUTH_URL;
+  };
+
   return (
     <div className="flex justify-center w-full h-auto py-36">
       <div className="flex flex-col items-center justify-between w-full h-homeFront max-w-homeFront">
@@ -73,7 +78,7 @@ const Home = () => {
           <hr className="w-full h-line max-w-96 bg-neutral-300" />
           <button
             className="flex items-center justify-center w-full h-16 gap-4 py-4 text-xl bg-white border-2 border-solid max-w-80 rounded-4xl border-neutral-300"
-            onClick={() => setIsFirstSigned(true)}
+            onClick={handleLogin}
           >
             <img src={googleIcon} alt="구글 로그인 아이콘" />
             <p className="text-base font-bold text-neutral-400 whitespace-nowrap">
@@ -86,7 +91,7 @@ const Home = () => {
         @
       </button>
 
-      <Modal maxWidth={'max-w-nicknamemodal'} state={isFirstSigned}>
+      <Modal maxWidth={'max-w-nicknamemodal'} state={isFirstSignIn}>
         <form className="flex flex-col gap-y-4">
           <label htmlFor="nickname" className="text-lg font-bold">
             닉네임
