@@ -23,7 +23,7 @@ type Nickname = {
 };
 
 const Home = () => {
-  const [isFirstSignined] = useState<boolean>(false);
+  const [isFirstSignIn] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -91,7 +91,7 @@ const Home = () => {
         @
       </button>
 
-      <Modal maxWidth={'max-w-nicknamemodal'} state={isFirstSignined}>
+      <Modal maxWidth={'max-w-nicknamemodal'} state={isFirstSignIn}>
         <form className="flex flex-col gap-y-4">
           <label htmlFor="nickname" className="text-lg font-bold">
             닉네임
