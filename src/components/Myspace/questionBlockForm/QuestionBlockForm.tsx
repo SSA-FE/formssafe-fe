@@ -1,5 +1,10 @@
 import { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import {
+  setDescription,
+  setTitle,
+} from '@/components/Myspace/questionBlockForm/questionBlockFormSlice';
 
 const questionTypeLabels = {
   single: '객관식',
@@ -25,7 +30,7 @@ interface QuestionBlockFormProps {
 
 interface QuestionBlockFormInputs {
   title: string;
-  description: string;
+  description?: string;
 }
 
 const QuestionBlockForm = ({
@@ -33,6 +38,15 @@ const QuestionBlockForm = ({
   questionType,
 }: QuestionBlockFormProps) => {
   const { register } = useForm<QuestionBlockFormInputs>();
+  const dispatch = useDispatch();
+
+  const handleSaveData = (name: string, value: string) => {
+    if (name === 'title') {
+      dispatch(setTitle(value));
+    } else if (name === 'description') {
+      dispatch(setDescription(value));
+    }
+  };
 
   return (
     <div className="group relative w-full bg-neutral-100 rounded-lg">
@@ -50,11 +64,13 @@ const QuestionBlockForm = ({
           {...register('title', { required: true })}
           placeholder="질문을 입력해주세요."
           className="text-neutral-500 text-lg w-full bg-transparent hover:text-neutral-600 outline-none"
+          onBlur={(e) => handleSaveData('title', e.target.value)}
         />
         <input
           {...register('description')}
           placeholder="질문에 대해 추가로 필요한 설명이나 제한사항을 입력하세요."
           className="text-neutral-400 text-sm w-full bg-transparent outline-none"
+          onBlur={(e) => handleSaveData('description', e.target.value)}
         />
       </header>
       <section className="p-2 pb-5">{children}</section>
