@@ -1,7 +1,7 @@
-import FormInfoBar from '@/components/Workspace/FormInfoBar';
-import FormMain from '@/components/Workspace/FormMain';
-import FormOptionBar from '@/components/Workspace/FormOptionBar';
-import FormToolBar from '@/components/Workspace/FormToolBar';
+import FormInfoBar from '@/components/Myspace/FormInfoBar';
+import FormMain from '@/components/Myspace/FormMain';
+import FormOptionBar from '@/components/Myspace/FormOptionBar';
+import FormToolBar from '@/components/Myspace/FormToolBar';
 
 const Editor = () => {
   return (

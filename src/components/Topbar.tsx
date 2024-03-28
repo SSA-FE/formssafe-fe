@@ -3,7 +3,7 @@ const Topbar = () => {
     <nav className="flex items-center justify-between w-full px-8 py-2 h-topbar min-h-16 whitespace-nowrap overflow-clip">
       <div className="flex align-middle gap-9">
         <p className="text-base font-bold text-slate-800">폼나는 싸패</p>
-        <div className="flex items-center gap-xs text-sm">
+        <div className="flex items-center text-sm gap-xs">
           <span className="flex items-center h-full px-4 text-neutral-500 rounded-2xl bg-neutral-200 ">
             v 3.4.1 24/02/13
           </span>
@@ -13,7 +13,7 @@ const Topbar = () => {
         </div>
       </div>
 
-      <ul className="flex items-center h-full gap-xs text-sm font-normal text-neutral-500">
+      <ul className="flex items-center h-full gap-4 text-sm font-normal text-neutral-500">
         <li className="flex items-center h-full px-8 cursor-pointer">
           <p>리포지토리</p>
         </li>
