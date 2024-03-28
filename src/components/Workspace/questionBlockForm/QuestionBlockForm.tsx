@@ -7,9 +7,16 @@ const questionTypeLabels = {
   dropdown: '드롭다운',
   long: '단답형',
   short: '장문형',
+  text: '텍스트',
 };
 
-type questionType = 'single' | 'checkbox' | 'dropdown' | 'long' | 'short';
+type questionType =
+  | 'single'
+  | 'checkbox'
+  | 'dropdown'
+  | 'long'
+  | 'short'
+  | 'text';
 
 interface QuestionBlockFormProps {
   children: ReactNode;
