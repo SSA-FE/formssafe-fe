@@ -23,7 +23,7 @@ interface QuestionBlockFormProps {
   questionType: questionType;
 }
 
-interface QuestionBlockInputs {
+interface QuestionBlockFormInputs {
   title: string;
   description: string;
 }
@@ -32,7 +32,7 @@ const QuestionBlockForm = ({
   children,
   questionType,
 }: QuestionBlockFormProps) => {
-  const { register } = useForm<QuestionBlockInputs>();
+  const { register } = useForm<QuestionBlockFormInputs>();
 
   return (
     <div className="group relative w-full bg-neutral-100 rounded-lg">
