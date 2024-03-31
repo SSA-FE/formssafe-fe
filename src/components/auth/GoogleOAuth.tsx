@@ -1,7 +1,8 @@
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { instance } from '@/api/axios';
 import { useEffect } from 'react';
 import { API } from '@/config';
+import Loading from '@components/Loading';
 
 const GoogleOAuth = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const GoogleOAuth = () => {
       });
       const data = response.data; // 응답 데이터
       console.log(data);
-      navigate('myspace');
+      navigate('/myspace');
     } catch (error) {
       console.error(error);
       navigate('/');
@@ -28,7 +29,11 @@ const GoogleOAuth = () => {
     }
   }, [code, handleOAuth]);
 
-  return <Navigate to="/" replace={true} />;
+  return (
+    <>
+      <Loading />
+    </>
+  );
 };
 
 export default GoogleOAuth;
