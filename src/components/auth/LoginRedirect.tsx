@@ -77,7 +77,7 @@ function LoginRedirect() {
   };
 
   useEffect(() => {
-    if (users.length > 0 && !users[0].nickname.startsWith('user-')) {
+    if (users.length > 0 && !users[0]?.nickname?.startsWith('user-')) {
       navigate('/myspace');
     }
   }, [users, navigate]);
@@ -85,7 +85,7 @@ function LoginRedirect() {
   return (
     <Modal
       maxWidth={'max-w-nicknamemodal'}
-      state={users.length > 0 && users[0].nickname.startsWith('user-')}
+      state={users.length > 0 && users[0]?.nickname?.startsWith('user-')}
     >
       <form className="flex flex-col gap-y-4">
         <label htmlFor="nickname" className="text-lg font-bold">
