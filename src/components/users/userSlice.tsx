@@ -43,15 +43,7 @@ const usersSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
-        const { userId, nickname, imageUrl, email } = action.payload;
-        state.users = [
-          {
-            userId,
-            nickname,
-            imageUrl,
-            email,
-          },
-        ];
+        state.users = [{ ...action.payload }];
         state.status = 'succeeded';
       })
       .addCase(fetchUsers.rejected, (state, action) => {

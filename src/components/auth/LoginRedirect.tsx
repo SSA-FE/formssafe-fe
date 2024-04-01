@@ -45,7 +45,7 @@ function LoginRedirect() {
           { code }
         );
         if (response.status === 200) {
-          dispatch(fetchUsers());
+          await dispatch(fetchUsers()).unwrap();
         }
       } catch (error) {
         console.error(error);
@@ -58,7 +58,7 @@ function LoginRedirect() {
     if (code) {
       fetchGoogleLogin(code);
     }
-  }, [navigate, dispatch]);
+  }, [dispatch, navigate]);
 
   const handleValid = async (data: Nickname) => {
     try {
@@ -75,40 +75,43 @@ function LoginRedirect() {
     }
   };
 
-  if (users.length > 0 && users[0].nickname.startsWith('user-')) {
-    return (
-      <Modal maxWidth={'max-w-nicknamemodal'} state={true}>
-        <form className="flex flex-col gap-y-4">
-          <label htmlFor="nickname" className="text-lg font-bold">
-            닉네임
-          </label>
-          <p className="info-message">
-            ⓘ 닉네임은 최소 네 글자 이상이어야 합니다.
-          </p>
-          <input
-            type="text"
-            id="nickname"
-            className="w-full px-4 py-2 bg-neutral-200 rounded-2xl"
-            onKeyDown={checkKeyDown}
-            {...register('nickname')}
-          />
-          {errors.nickname && <p>{errors.nickname.message}</p>}
-        </form>
-        <div className="flex justify-end pt-8">
-          <button
-            className="gap-2 text-sm text-neutral-400 "
-            onClick={handleSubmit(handleValid)}
-          >
-            <ArrowSVG transform="rotate(180)" />
-          </button>
-        </div>
-      </Modal>
-    );
-  } else {
-    navigate('/myspace');
-  }
+  useEffect(() => {
+    if (users.length > 0 && !users[0].nickname.startsWith('user-')) {
+      navigate('/myspace');
+    }
+  }, [users, navigate]);
 
-  return null;
+  return (
+    <Modal
+      maxWidth={'max-w-nicknamemodal'}
+      state={users.length > 0 && users[0].nickname.startsWith('user-')}
+    >
+      <form className="flex flex-col gap-y-4">
+        <label htmlFor="nickname" className="text-lg font-bold">
+          닉네임
+        </label>
+        <p className="info-message">
+          ⓘ 닉네임은 최소 네 글자 이상이어야 합니다.
+        </p>
+        <input
+          type="text"
+          id="nickname"
+          className="w-full px-4 py-2 bg-neutral-200 rounded-2xl"
+          onKeyDown={checkKeyDown}
+          {...register('nickname')}
+        />
+        {errors.nickname && <p>{errors.nickname.message}</p>}
+      </form>
+      <div className="flex justify-end pt-8">
+        <button
+          className="gap-2 text-sm text-neutral-400 "
+          onClick={handleSubmit(handleValid)}
+        >
+          <ArrowSVG transform="rotate(180)" />
+        </button>
+      </div>
+    </Modal>
+  );
 }
 
 export default LoginRedirect;
