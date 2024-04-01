@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
 type ModalProps = {
   maxWidth: string;
   state: boolean;
-  children?: React.ReactNode;
+  children: ReactNode;
 };
 
 const Modal = ({ maxWidth, state, children }: ModalProps) => {
