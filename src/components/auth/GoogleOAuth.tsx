@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { instance } from '@/api/axios';
 import { useEffect } from 'react';
 import { API } from '@/config';
-import Loading from '@components/Loading';
 
 const GoogleOAuth = () => {
   const navigate = useNavigate();
@@ -26,11 +25,7 @@ const GoogleOAuth = () => {
     }
   }, [navigate]);
 
-  return (
-    <>
-      <Loading />
-    </>
-  );
+  return null;
 };
 
 export default GoogleOAuth;
