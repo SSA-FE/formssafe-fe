@@ -31,9 +31,9 @@ const Router = () => {
           path: '/editor',
           element: <Editor />,
         },
-        { path: '/join', element: <LoginRedirect /> },
       ],
     },
+    { path: '/join', element: <LoginRedirect /> },
   ];
 
   const router = createBrowserRouter([...routes]);

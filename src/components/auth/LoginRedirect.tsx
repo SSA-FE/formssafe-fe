@@ -62,8 +62,9 @@ function LoginRedirect() {
 
   const handleValid = async (data: Nickname) => {
     try {
-      dispatch(updateUsers(data));
-      navigate('/myspace');
+      dispatch(updateUsers(data)).then(() => {
+        navigate('/myspace');
+      });
     } catch (error) {
       console.error(error);
     }
