@@ -89,7 +89,7 @@ function LoginRedirect() {
     >
       <form className="flex flex-col gap-y-4">
         <label htmlFor="nickname" className="text-lg font-bold">
-          닉네임
+          닉네임을 입력하세요
         </label>
         <p className="info-message">
           ⓘ 닉네임은 최소 네 글자 이상이어야 합니다.
