@@ -11,7 +11,9 @@ import NotFound from '@/pages/NotFound';
 const Home = React.lazy(() => import('@/pages/Home'));
 const Myspace = React.lazy(() => import('@/pages/Myspace'));
 const Editor = React.lazy(() => import('@/pages/Editor'));
-const GoogleOAuth = React.lazy(() => import('@/components/auth/GoogleOAuth'));
+const LoginRedirect = React.lazy(
+  () => import('@/components/auth/LoginRedirect')
+);
 
 const Router = () => {
   const routes: RouteObject[] = [
@@ -29,7 +31,7 @@ const Router = () => {
           path: '/editor',
           element: <Editor />,
         },
-        { path: '/join', element: <GoogleOAuth /> },
+        { path: '/join', element: <LoginRedirect /> },
       ],
     },
   ];

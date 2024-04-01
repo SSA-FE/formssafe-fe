@@ -1,56 +1,7 @@
-/**
- * login onboarding page
- */
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import Modal from '@/components/modal';
 import googleIcon from '@/assets/icons/google-icon.svg';
-import { useState } from 'react';
-import ArrowSVG from '@/assets/icons/arrow-icon.svg?react';
-import { useNavigate } from 'react-router-dom';
 import { GOOGLE_AUTH_URL } from '@/config';
 
-const schema = z.object({
-  nickname: z
-    .string()
-    .min(4, { message: '닉네임은 최소 네 글자 이상이어야 합니다.' }),
-});
-
-// nickname을 한개만 받는 type 선언
-type Nickname = {
-  nickname: string;
-};
-
 const Home = () => {
-  const [isFirstSignIn] = useState(false);
-  const navigate = useNavigate();
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<Nickname>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      nickname: '',
-    },
-  });
-
-  const handleValid = (data: Nickname) => {
-    // data 확인 (향후 삭제)
-    console.log(data);
-    // TODO: 닉네임 변경 API 추가
-    // status 400: 닉네임 중복
-    // status 401: 세션이 존재하지 않음
-    navigate('/myspace');
-  };
-
-  const checkKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
-  };
-
   const handleLogin = () => {
     window.location.href = GOOGLE_AUTH_URL;
   };
@@ -90,33 +41,6 @@ const Home = () => {
       <button className="fixed flex items-center justify-center w-12 pb-1 text-2xl font-bold text-white bg-black rounded-full aspect-square right-8 bottom-8">
         @
       </button>
-
-      <Modal maxWidth={'max-w-nicknamemodal'} state={isFirstSignIn}>
-        <form className="flex flex-col gap-y-4">
-          <label htmlFor="nickname" className="text-lg font-bold">
-            닉네임
-          </label>
-          <p className="info-message">
-            ⓘ 닉네임은 최소 네 글자 이상이어야 합니다.
-          </p>
-          <input
-            type="text"
-            id="nickname"
-            className="w-full px-4 py-2 bg-neutral-200 rounded-2xl"
-            onKeyDown={checkKeyDown}
-            {...register('nickname')}
-          />
-          {errors.nickname && <p>{errors.nickname.message}</p>}
-        </form>
-        <div className="flex justify-end pt-8">
-          <button
-            className="gap-2 text-sm text-neutral-400 "
-            onClick={handleSubmit(handleValid)}
-          >
-            <ArrowSVG transform="rotate(180)" />
-          </button>
-        </div>
-      </Modal>
     </div>
   );
 };
