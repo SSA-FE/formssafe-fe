@@ -1,14 +1,14 @@
-/**
- * This is the main store configuration file.
- */
 import { configureStore } from '@reduxjs/toolkit';
-// 각 redux 파일에서 export한 reducer를 import
-import { isLogin } from './auth';
-import questionBlockFormReducer from '@/components/Myspace/questionBlockForm/questionBlockFormSlice';
+import usersReducer from '@components/users/userSlice';
+import questionBlockFormReducer from '@components/Myspace/questionBlockForm/questionBlockFormSlice';
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
-    isLogin: isLogin.reducer,
+    // import한 reducer를 넣어줌
     questionBlockForm: questionBlockFormReducer,
+    users: usersReducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

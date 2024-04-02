@@ -1,11 +1,8 @@
-import Router from '@/router';
-import Topbar from '@/components/Topbar';
-
+import Layout from '@components/Layout';
 function App() {
   return (
     <>
-      <Topbar />
-      <Router />
+      <Layout />
     </>
   );
 }

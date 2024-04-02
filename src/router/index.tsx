@@ -1,31 +1,39 @@
+import React from 'react';
+
 import {
   createBrowserRouter,
   RouteObject,
   RouterProvider,
 } from 'react-router-dom';
-import Home from '@/pages/Home';
-import Myspace from '@/pages/Myspace';
+import App from '@/App';
 import NotFound from '@/pages/NotFound';
-import Editor from '@/pages/Editor';
-import CheckUserAuth from '@/components/auth/CheckUserAuth';
+
+const Home = React.lazy(() => import('@/pages/Home'));
+const Myspace = React.lazy(() => import('@/pages/Myspace'));
+const Editor = React.lazy(() => import('@/pages/Editor'));
+const LoginRedirect = React.lazy(
+  () => import('@/components/auth/LoginRedirect')
+);
 
 const Router = () => {
   const routes: RouteObject[] = [
     {
       path: '/',
-      element: <Home />,
+      element: <App />,
       errorElement: <NotFound />,
+      children: [
+        { index: true, path: '/', element: <Home /> },
+        {
+          path: '/myspace',
+          element: <Myspace />,
+        },
+        {
+          path: '/editor',
+          element: <Editor />,
+        },
+      ],
     },
-    {
-      path: '/myspace',
-      element: <CheckUserAuth />,
-      children: [{ path: '/myspace', element: <Myspace /> }],
-    },
-    {
-      path: '/editor',
-      element: <CheckUserAuth />,
-      children: [{ path: '/editor', element: <Editor /> }],
-    },
+    { path: '/join', element: <LoginRedirect /> },
   ];
 
   const router = createBrowserRouter([...routes]);
