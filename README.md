@@ -12,8 +12,6 @@
   </p>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-
 ### Table of Contents
 
   <ol>
