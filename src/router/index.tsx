@@ -1,53 +1,44 @@
-import Sidebar from '@/components/Sidebar';
-import Topbar from '@/components/Topbar';
-import { IIsLoggedInState } from '@/interface/redux';
-import Home from '@/pages/Home';
-import Workspace from '@/pages/Workspace';
-import { useSelector } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
 
-const FSRouter = () => {
-  const isLoggedIn = useSelector(
-    (state: IIsLoggedInState) => state.isLogin.isLoggedIn
-  );
-  interface IRoute {
-    path: string;
-    element: JSX.Element;
-  }
+import {
+  createBrowserRouter,
+  RouteObject,
+  RouterProvider,
+} from 'react-router-dom';
+import App from '@/App';
+import NotFound from '@/pages/NotFound';
 
-  // routes에 routing할 페이지들 추가
-  const routes: IRoute[] = [
+const Home = React.lazy(() => import('@/pages/Home'));
+const Myspace = React.lazy(() => import('@/pages/Myspace'));
+const Editor = React.lazy(() => import('@/pages/Editor'));
+const LoginRedirect = React.lazy(
+  () => import('@/components/auth/LoginRedirect')
+);
+
+const Router = () => {
+  const routes: RouteObject[] = [
     {
       path: '/',
-      element: <Home />,
+      element: <App />,
+      errorElement: <NotFound />,
+      children: [
+        { index: true, path: '/', element: <Home /> },
+        {
+          path: '/myspace',
+          element: <Myspace />,
+        },
+        {
+          path: '/editor',
+          element: <Editor />,
+        },
+      ],
     },
-    {
-      path: '/main',
-      element: <Workspace />,
-    },
+    { path: '/join', element: <LoginRedirect /> },
   ];
 
-  return (
-    <Router>
-      <div className="flex flex-row w-full h-full">
-        {isLoggedIn && <Sidebar />}
-        <div className="flex flex-col w-full h-full">
-          <Topbar />
-          <Routes>
-            {routes.map((route, key) => {
-              return (
-                <Route
-                  key={`routes-${key}`}
-                  path={route.path}
-                  element={route.element}
-                />
-              );
-            })}
-          </Routes>
-        </div>
-      </div>
-    </Router>
-  );
+  const router = createBrowserRouter([...routes]);
+
+  return <RouterProvider router={router} />;
 };
 
-export default FSRouter;
+export default Router;

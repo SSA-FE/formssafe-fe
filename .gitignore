@@ -23,5 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
+# dotenv 파일
+.env 
+
 # eslint cache파일
 .eslintcache

@@ -1,33 +1,109 @@
-# React + TypeScript + Vite
+<div id="top"></div>
+<br />
+<div align="center">
+    <img src="https://avatars.githubusercontent.com/u/158531016?s=400&u=619e9bb49ebdef2a2ef1a575f42b4c185707d960&v=4" alt="Logo" width="80" height="80">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  <h3 align="center">폼나는싸패 프론트엔드</h3>
 
-Currently, two official plugins are available:
+  <p align="center">
+    <h3><a href="https://formssafe.com">👉배포 사이트 바로가기👈</a></h3>
+    <a href="https://github.com/SSA-FE/formssafe-be"><strong>백엔드 레포지토리 구경하기</strong></a><br>
+    <br>
+  </p>
+</div>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<!-- TABLE OF CONTENTS -->
 
-## Expanding the ESLint configuration
+### Table of Contents
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+  <ol>
+    <li><a href="#프로젝트-소개">프로젝트 소개</a></li>
+    <li><a href="#프로젝트-목표">프로젝트 목표</a></li>
+    <li><a href="#ia">IA</a></li>
+    <li><a href="#tech-stacks">기술스택 소개</a></li>
+    <li><a href="#contributors">Contributors</a></li>
+  </ol>
 
-- Configure the top-level `parserOptions` property like this:
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
+### 프로젝트 소개
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+**폼나는싸패**는 간단한 설문부터 프로젝트 인원 모집, 스터디 모집 등 다양한 설문을 진행할 수 있도록 설문지 제작 및 응답 서비스를 제공하는 프로젝트입니다.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+### 프로젝트 목표
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+### IA
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+### Tech Stacks
+
+<table>
+	<tr><th rowspan="7">⚛ Front-end</th><td>언어</td><td>TypeScript</td></tr>
+	<tr><td>개발환경</td><td>React</td></tr>
+	<tr><td>상태관리</td><td>Redux</td></tr>
+	<tr><td>CSS 프레임워크</td><td>Tailwind CSS</td></tr>
+	<tr><td>비동기</td><td>Axios</td></tr>
+	
+	
+</table>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+### Contributors
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/kwakseongjae">
+        <img src="https://avatars.githubusercontent.com/u/87296259?v=4" width="110px;" alt=""/><br />
+        <sub><b>곽성재</b></sub></a><br />
+        <sub><b>🍪Front-end</b></sub></a><br />
+    </td>
+    <td align="center">
+      <a href="https://github.com/s0ojin">
+        <img src="https://avatars.githubusercontent.com/u/100757599?v=4" width="110px;" alt=""/><br />
+        <sub><b>박수진</b></sub></a><br />
+        <sub><b>🍪Front-end</b></sub></a><br />
+	<sub><b></b></sub></a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/KimYuKyung16">
+        <img src="https://avatars.githubusercontent.com/u/81006438?v=4" width="110px;" alt=""/><br />
+        <sub><b>김유경</b></sub></a><br />
+        <sub><b>🍪Front-end</b></sub></a><br /> 
+	<sub><b></b></sub></a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/hannabananah">
+        <img src="https://avatars.githubusercontent.com/u/96603129?v=4" width="110px;" alt=""/><br />
+        <sub><b>강한나</b></sub></a><br />
+        <sub><b>🍪Front-end</b></sub></a><br />
+	<sub><b></b></sub></a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/coolfin">
+        <img src="https://avatars.githubusercontent.com/u/56531884?v=4" width="110px;" alt=""/><br />
+        <sub><b>박상우</b></sub></a><br />
+        <sub><b>🍪Front-end</b></sub></a><br />
+	<sub><b></b></sub></a>
+    </td>
+  </tr>
+</table>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 # UI/UX Repository
 Desktop: https://www.figma.com/file/XJxcuynH5T0CZTmGHNTSxT/desktop?type=design&t=Y8hAgNTIkWnQCtKY-6

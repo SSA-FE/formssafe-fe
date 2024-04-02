@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), svgr()],
   resolve: {
     alias: [
       { find: '@', replacement: path.resolve(__dirname, 'src') },
@@ -15,6 +16,7 @@ export default defineConfig({
       },
       { find: '@hooks', replacement: path.resolve(__dirname, 'src/hooks') },
       { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
+      { find: '@router', replacement: path.resolve(__dirname, 'src/router') },
       { find: '@store', replacement: path.resolve(__dirname, 'src/store') },
       { find: '@style', replacement: path.resolve(__dirname, 'src/style') },
       { find: '@utils', replacement: path.resolve(__dirname, 'src/util') },
