@@ -104,3 +104,8 @@
 </table>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+# UI/UX Repository
+Desktop: https://www.figma.com/file/XJxcuynH5T0CZTmGHNTSxT/desktop?type=design&t=Y8hAgNTIkWnQCtKY-6
+Mobile: https://www.figma.com/file/kHnnikCD384Cb6KpgsALe6/mobile?type=design&t=Y8hAgNTIkWnQCtKY-6
+Board: https://www.figma.com/file/pW8DReLCOIOqVMsaWIWb53/board?type=whiteboard&t=Y8hAgNTIkWnQCtKY-6
