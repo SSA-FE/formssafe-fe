@@ -1,13 +1,11 @@
-/**
- * This is the main store configuration file.
- */
 import { configureStore } from '@reduxjs/toolkit';
-// 각 redux 파일에서 export한 reducer를 import
-import { isLogin } from './auth';
+import usersReducer from '@components/users/userSlice';
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
-    // import한 reducer를 넣어줌
-    isLogin: isLogin.reducer,
+    users: usersReducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

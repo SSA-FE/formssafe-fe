@@ -1,14 +1,19 @@
+import React from 'react';
+
 import {
   createBrowserRouter,
   RouteObject,
   RouterProvider,
 } from 'react-router-dom';
-import Home from '@/pages/Home';
-import Myspace from '@/pages/Myspace';
-import NotFound from '@/pages/NotFound';
-import Editor from '@/pages/Editor';
-import GoogleOAuth from '@/components/auth/GoogleOAuth';
 import App from '@/App';
+import NotFound from '@/pages/NotFound';
+
+const Home = React.lazy(() => import('@/pages/Home'));
+const Myspace = React.lazy(() => import('@/pages/Myspace'));
+const Editor = React.lazy(() => import('@/pages/Editor'));
+const LoginRedirect = React.lazy(
+  () => import('@/components/auth/LoginRedirect')
+);
 
 const Router = () => {
   const routes: RouteObject[] = [
@@ -28,7 +33,7 @@ const Router = () => {
         },
       ],
     },
-    { path: '/join', element: <GoogleOAuth /> },
+    { path: '/join', element: <LoginRedirect /> },
   ];
 
   const router = createBrowserRouter([...routes]);
