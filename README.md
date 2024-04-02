@@ -20,6 +20,7 @@
     <li><a href="#프로젝트-소개">프로젝트 소개</a></li>
     <li><a href="#프로젝트-목표">프로젝트 목표</a></li>
     <li><a href="#ia">IA</a></li>
+    <li><a href="#figma">FIGMA</a></li>
     <li><a href="#tech-stacks">기술스택 소개</a></li>
     <li><a href="#contributors">Contributors</a></li>
   </ol>
@@ -41,6 +42,12 @@
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 ### IA
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+### FIGMA
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -104,8 +111,3 @@
 </table>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-# UI/UX Repository
-Desktop: https://www.figma.com/file/XJxcuynH5T0CZTmGHNTSxT/desktop?type=design&t=Y8hAgNTIkWnQCtKY-6
-Mobile: https://www.figma.com/file/kHnnikCD384Cb6KpgsALe6/mobile?type=design&t=Y8hAgNTIkWnQCtKY-6
-Board: https://www.figma.com/file/pW8DReLCOIOqVMsaWIWb53/board?type=whiteboard&t=Y8hAgNTIkWnQCtKY-6
