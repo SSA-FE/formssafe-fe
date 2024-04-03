@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { instance } from '@api/axios';
 import { API } from '@/config';
 
-interface UserState {
+interface UserType {
   user: {
     userId: number;
     nickname: string;
@@ -13,7 +13,7 @@ interface UserState {
   error: string | null;
 }
 
-const initialState: UserState = {
+const initialState: UserType = {
   user: {
     userId: 0,
     nickname: '',
