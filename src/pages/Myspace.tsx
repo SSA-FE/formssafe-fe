@@ -1,11 +1,11 @@
 import Toolbar from '@/components/Myspace/Toolbar';
 import { useSelector } from 'react-redux';
-import { selectAllUsers } from '@components/users/userSlice';
+import { RootState } from '@/store';
 
 const Myspace = () => {
-  const users = useSelector(selectAllUsers);
+  const { user } = useSelector((state: RootState) => state.user);
 
-  console.log(users);
+  console.log(user);
   return (
     <>
       <Toolbar />

@@ -1,70 +1,72 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { instance } from '@api/axios';
 import { API } from '@/config';
-import { RootState } from '@/store';
 
-interface UsersState {
-  users: {
+interface UserState {
+  user: {
     userId: number;
     nickname: string;
     imageUrl: string;
     email: string;
-  }[];
+  };
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
 
-const initialState: UsersState = {
-  users: [],
+const initialState: UserState = {
+  user: {
+    userId: 0,
+    nickname: '',
+    imageUrl: '',
+    email: '',
+  },
   status: 'idle',
   error: null,
 };
 
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
+export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
   const response = await instance.get(`${API.USERS}/profile`);
   return response.data;
 });
 
-export const updateUsers = createAsyncThunk(
-  'users/updateUsers',
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
   async (data: { nickname: string }) => {
     const response = await instance.patch(`${API.USERS}`, data);
     return response.data;
   }
 );
 
-const usersSlice = createSlice({
-  name: 'users',
+const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchUsers.pending, (state) => {
+      .addCase(fetchUser.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.users = [{ ...action.payload }];
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.user = { ...action.payload };
         state.status = 'succeeded';
       })
-      .addCase(fetchUsers.rejected, (state, action) => {
+      .addCase(fetchUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message as string;
-        console.error(action.error.message);
       })
-      .addCase(updateUsers.pending, (state) => {
+      .addCase(updateUser.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(updateUsers.fulfilled, (state, action) => {
+      .addCase(updateUser.fulfilled, (state, action) => {
         const { nickname } = action.payload;
-        state.users[0].nickname = nickname;
+        state.user.nickname = nickname;
         state.status = 'succeeded';
       })
-      .addCase(updateUsers.rejected, (state, action) => {
+      .addCase(updateUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message as string;
       });
   },
 });
 
-export const selectAllUsers = (state: RootState) => state.users;
-export default usersSlice.reducer;
+export default userSlice.reducer;

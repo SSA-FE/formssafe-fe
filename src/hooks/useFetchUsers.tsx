@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsers } from '@components/users/userSlice';
+import { fetchUser } from '@/components/user/userSlice';
 import { AppDispatch, RootState } from '@/store';
 
 export const useFetchUsers = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  const { error } = useSelector((state: RootState) => state.users);
+  const { error } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     setLoading(true);
-    dispatch(fetchUsers()).then((action) => {
-      if (fetchUsers.fulfilled.match(action)) {
+    dispatch(fetchUser()).then((action) => {
+      if (fetchUser.fulfilled.match(action)) {
         setLoading(false);
       }
     });

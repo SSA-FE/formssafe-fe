@@ -9,8 +9,8 @@ import ArrowSVG from '@/assets/icons/arrow-icon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '@/api/axios';
 import { API } from '@/config';
-import { updateUsers } from '@components/users/userSlice';
-import { fetchUsers } from '@components/users/userSlice';
+import { updateUser } from '@/components/user/userSlice';
+import { fetchUser } from '@/components/user/userSlice';
 
 type Nickname = {
   nickname: string;
@@ -25,7 +25,7 @@ const schema = z.object({
 function LoginRedirect() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { users } = useSelector((state: RootState) => state.users);
+  const { user } = useSelector((state: RootState) => state.user);
   const {
     register,
     formState: { errors },
@@ -38,6 +38,7 @@ function LoginRedirect() {
   });
 
   useEffect(() => {
+    const code = new URL(window.location.href).searchParams.get('code');
     const fetchGoogleLogin = async (code: string) => {
       try {
         const response = await instance.post(
@@ -45,15 +46,13 @@ function LoginRedirect() {
           { code }
         );
         if (response.status === 200) {
-          await dispatch(fetchUsers()).unwrap();
+          await dispatch(fetchUser()).unwrap();
         }
       } catch (error) {
         console.error(error);
         navigate('/');
       }
     };
-
-    const code = new URL(window.location.href).searchParams.get('code');
 
     if (code) {
       fetchGoogleLogin(code);
@@ -62,7 +61,7 @@ function LoginRedirect() {
 
   const handleValid = async (data: Nickname) => {
     try {
-      dispatch(updateUsers(data)).then(() => {
+      dispatch(updateUser(data)).then(() => {
         navigate('/myspace');
       });
     } catch (error) {
@@ -76,16 +75,21 @@ function LoginRedirect() {
     }
   };
 
+  const isEmptyObj = (obj: object): boolean =>
+    obj.constructor === Object && Object.keys(obj).length === 0;
+
   useEffect(() => {
-    if (users.length > 0 && !users[0]?.nickname?.startsWith('user-')) {
+    if (!isEmptyObj(user) && !user?.nickname?.startsWith('user-')) {
       navigate('/myspace');
+    } else if (isEmptyObj(user)) {
+      navigate('/');
     }
-  }, [users, navigate]);
+  }, [user, navigate]);
 
   return (
     <Modal
       maxWidth={'max-w-nicknamemodal'}
-      state={users.length > 0 && users[0]?.nickname?.startsWith('user-')}
+      state={!isEmptyObj(user) && user?.nickname?.startsWith('user-')}
     >
       <form className="flex flex-col gap-y-4">
         <label htmlFor="nickname" className="text-lg font-bold">
