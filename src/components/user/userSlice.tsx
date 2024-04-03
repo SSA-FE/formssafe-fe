@@ -11,6 +11,7 @@ interface UserType {
   };
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
+  isLoggedIn: boolean;
 }
 
 const initialState: UserType = {
@@ -22,6 +23,7 @@ const initialState: UserType = {
   },
   status: 'idle',
   error: null,
+  isLoggedIn: false,
 };
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
@@ -48,6 +50,7 @@ const userSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = { ...action.payload };
+        state.isLoggedIn = true;
         state.status = 'succeeded';
       })
       .addCase(fetchUser.rejected, (state, action) => {
