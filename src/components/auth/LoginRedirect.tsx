@@ -1,14 +1,21 @@
+import { useCallback, useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Modal from '@/components/Modal';
-import { useEffect } from 'react';
 import ArrowSVG from '@/assets/icons/arrow-icon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '@/api/axios';
 import { API } from '@/config';
 import { useUpdateUserMutation } from '@api/userApi';
-import { useFetchUserQuery } from '@api/userApi';
+
+type UserType = {
+  userId: number;
+  nickname: string;
+  imageUrl: string;
+  email: string;
+} | null;
+
 type Nickname = {
   nickname: string;
 };
@@ -20,8 +27,7 @@ const schema = z.object({
 });
 
 function LoginRedirect() {
-  const { data: user, refetch } = useFetchUserQuery();
-  console.log(user);
+  const [user, setUser] = useState<UserType>(null);
   const [updateUser] = useUpdateUserMutation();
   const navigate = useNavigate();
   const {
@@ -35,27 +41,38 @@ function LoginRedirect() {
     },
   });
 
-  useEffect(() => {
-    const code = new URL(window.location.href).searchParams.get('code');
-    const fetchGoogleLogin = async (code: string) => {
+  const fetchUser = useCallback(async () => {
+    const response = await instance.get(`${API.USERS}/profile`);
+    return response.data;
+  }, []);
+
+  const fetchGoogleLogin = useCallback(
+    async (code: string) => {
       try {
         const response = await instance.post(
           `${API.AUTH}/social/login/google`,
-          { code }
+          {
+            code,
+          }
         );
         if (response.status === 200) {
-          refetch();
+          const fetchedUser = await fetchUser();
+          setUser(fetchedUser);
         }
       } catch (error) {
         console.error(error);
         navigate('/');
       }
-    };
+    },
+    [fetchUser, navigate]
+  );
 
+  useEffect(() => {
+    const code = new URLSearchParams(window.location.search).get('code');
     if (code) {
       fetchGoogleLogin(code);
     }
-  }, []);
+  }, [fetchGoogleLogin]);
 
   const handleValid = async (data: Nickname) => {
     try {
@@ -66,37 +83,26 @@ function LoginRedirect() {
     }
   };
 
-  const checkKeyDown = (e: React.KeyboardEvent) => {
+  const handleEnterKey = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
     }
   };
 
   useEffect(() => {
-    if (user && user.userInfo && !user.userInfo.nickname.startsWith('user-')) {
-      navigate('/myspace');
-    } else if (!user) {
-      navigate('/');
-    }
+    if (!user) return;
+
+    const destination =
+      user.nickname && !user.nickname.startsWith('user-') ? '/myspace' : '/';
+    navigate(destination);
   }, [user, navigate]);
 
-  const isEmptyObj = (obj: object): boolean =>
-    obj.constructor === Object && Object.keys(obj).length === 0;
-
-  if (!user || !user.userInfo) {
-    return null;
-  }
+  const isModalOpen = user?.nickname
+    ? user.nickname.startsWith('user-')
+    : false;
 
   return (
-    <Modal
-      maxWidth={'max-w-nicknamemodal'}
-      state={
-        user &&
-        user.userInfo &&
-        !isEmptyObj(user.userInfo) &&
-        user.userInfo.nickname?.startsWith('user-')
-      }
-    >
+    <Modal maxWidth={'max-w-nicknamemodal'} state={isModalOpen}>
       <form className="flex flex-col gap-y-4">
         <label htmlFor="nickname" className="text-lg font-bold">
           닉네임을 입력하세요
@@ -108,7 +114,7 @@ function LoginRedirect() {
           type="text"
           id="nickname"
           className="w-full px-4 py-2 bg-neutral-200 rounded-2xl"
-          onKeyDown={checkKeyDown}
+          onKeyDown={handleEnterKey}
           {...register('nickname')}
         />
         {errors.nickname && <p>{errors.nickname.message}</p>}
