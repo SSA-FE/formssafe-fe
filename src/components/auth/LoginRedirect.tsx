@@ -1,5 +1,3 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { AppDispatch, RootState } from '@store/index';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -9,9 +7,8 @@ import ArrowSVG from '@/assets/icons/arrow-icon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '@/api/axios';
 import { API } from '@/config';
-import { updateUser } from '@/components/user/userSlice';
-import { fetchUser } from '@/components/user/userSlice';
-
+import { useUpdateUserMutation } from '@api/userApi';
+import { useFetchUserQuery } from '@api/userApi';
 type Nickname = {
   nickname: string;
 };
@@ -23,9 +20,10 @@ const schema = z.object({
 });
 
 function LoginRedirect() {
+  const { data: user, refetch } = useFetchUserQuery();
+  console.log(user);
+  const [updateUser] = useUpdateUserMutation();
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  const { user } = useSelector((state: RootState) => state.user);
   const {
     register,
     formState: { errors },
@@ -46,7 +44,7 @@ function LoginRedirect() {
           { code }
         );
         if (response.status === 200) {
-          await dispatch(fetchUser()).unwrap();
+          refetch();
         }
       } catch (error) {
         console.error(error);
@@ -57,13 +55,12 @@ function LoginRedirect() {
     if (code) {
       fetchGoogleLogin(code);
     }
-  }, [dispatch, navigate]);
+  }, []);
 
   const handleValid = async (data: Nickname) => {
     try {
-      dispatch(updateUser(data)).then(() => {
-        navigate('/myspace');
-      });
+      await updateUser({ nickname: data.nickname }).unwrap();
+      navigate('/myspace');
     } catch (error) {
       console.error(error);
     }
@@ -75,21 +72,30 @@ function LoginRedirect() {
     }
   };
 
-  const isEmptyObj = (obj: object): boolean =>
-    obj.constructor === Object && Object.keys(obj).length === 0;
-
   useEffect(() => {
-    if (!isEmptyObj(user) && !user?.nickname?.startsWith('user-')) {
+    if (user && user.userInfo && !user.userInfo.nickname.startsWith('user-')) {
       navigate('/myspace');
-    } else if (isEmptyObj(user)) {
+    } else if (!user) {
       navigate('/');
     }
   }, [user, navigate]);
 
+  const isEmptyObj = (obj: object): boolean =>
+    obj.constructor === Object && Object.keys(obj).length === 0;
+
+  if (!user || !user.userInfo) {
+    return null;
+  }
+
   return (
     <Modal
       maxWidth={'max-w-nicknamemodal'}
-      state={!isEmptyObj(user) && user?.nickname?.startsWith('user-')}
+      state={
+        user &&
+        user.userInfo &&
+        !isEmptyObj(user.userInfo) &&
+        user.userInfo.nickname?.startsWith('user-')
+      }
     >
       <form className="flex flex-col gap-y-4">
         <label htmlFor="nickname" className="text-lg font-bold">

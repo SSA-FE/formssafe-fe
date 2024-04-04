@@ -1,12 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from '@/components/user/userSlice';
 import questionBlockFormReducer from '@components/Myspace/questionBlockForm/questionBlockFormSlice';
 import { userApi } from '@api/userApi';
 
 export const store = configureStore({
   reducer: {
     questionBlockForm: questionBlockFormReducer,
-    user: userReducer,
     [userApi.reducerPath]: userApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {

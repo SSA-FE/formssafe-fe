@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL, API } from '@/config';
 
 interface UserType {
-  user: {
+  userInfo: {
     userId: number;
     nickname: string;
     imageUrl: string;
