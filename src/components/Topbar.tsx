@@ -1,4 +1,10 @@
+import { useFetchUserQuery } from '@/api/userApi';
+
 const Topbar = () => {
+  const { data } = useFetchUserQuery();
+
+  console.log(data);
+
   return (
     <nav className="flex items-center justify-between w-full px-8 py-2 h-topbar min-h-16 whitespace-nowrap overflow-clip">
       <div className="flex align-middle gap-9">
