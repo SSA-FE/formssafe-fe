@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface QuestionBlockFormFields {
+  id: string;
   title: string;
   description?: string;
 }
 
 const initialState: QuestionBlockFormFields = {
+  id: crypto.randomUUID(),
   title: '',
 };
 
