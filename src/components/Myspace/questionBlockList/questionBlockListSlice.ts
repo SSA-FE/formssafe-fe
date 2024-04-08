@@ -4,7 +4,7 @@ import { option, questionType } from '../questionBlock/QuestionBlock';
 type questionBlock = {
   id: string;
   type: questionType;
-  title: string;
+  title?: string;
   description?: string;
   options?: option[];
   isRequired: boolean;
@@ -49,7 +49,9 @@ export const questionBlockListSlice = createSlice({
   name: 'questionBlockList',
   initialState,
   reducers: {
-    addQuestion: () => {},
+    addQuestion: (state, action: PayloadAction<questionBlock>) => {
+      state.questionList.push(action.payload);
+    },
     updateQuestion: (state, action: PayloadAction<questionBlock>) => {
       const index = state.questionList.findIndex(
         (question) => question.id === action.payload.id
