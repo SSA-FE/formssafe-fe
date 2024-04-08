@@ -1,11 +1,10 @@
-import { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import {
   setDescription,
   setTitle,
 } from '@/components/Myspace/questionBlockForm/questionBlockFormSlice';
-import { addQuestion } from '../questionBlockList/questionBlockListSlice';
+import { updateQuestion } from '../questionBlockList/questionBlockListSlice';
 
 const questionTypeLabels = {
   single: '객관식',
@@ -24,9 +23,14 @@ export type questionType =
   | 'short'
   | 'text';
 
+export type option = {
+  id: string;
+  value: string;
+};
 interface QuestionBlockFormProps {
-  children: ReactNode;
+  questionId: string;
   questionType: questionType;
+  options?: option[];
 }
 
 interface QuestionBlockFormInputs {
@@ -35,13 +39,14 @@ interface QuestionBlockFormInputs {
 }
 
 const QuestionBlockForm = ({
-  children,
   questionType,
+  questionId,
+  options,
 }: QuestionBlockFormProps) => {
-  const { register } = useForm<QuestionBlockFormInputs>();
+  const { register, handleSubmit } = useForm<QuestionBlockFormInputs>();
   const dispatch = useDispatch();
 
-  const handleSaveInputData = (name: string, value: string) => {
+  const handleSetInputData = (name: string, value: string) => {
     if (name === 'title') {
       dispatch(setTitle(value));
     } else if (name === 'description') {
@@ -49,18 +54,25 @@ const QuestionBlockForm = ({
     }
   };
 
-  const handleSaveBlockData = () => {
-    // 블럭에 값저장하고
-    dispatch(setTitle(value));
-    dispatch(setDescription(value));
-
-    // 그거 다시 불러와서 리스트에 저장?;;;;;; -> addQuestion
-    dispatch(addQuestion());
+  // 블러하면 해당블럭의 전체 필드 상태 업데이트하기
+  const handleUpdateBlockData = (data) => {
+    // TODO: 객관식 주관식 구별
+    dispatch(
+      updateQuestion({
+        id: questionId,
+        type: questionType,
+        title: data.title,
+        description: data.description,
+        options: [],
+        isRequired: true,
+        isPrivacy: false,
+      })
+    );
   };
 
   return (
     <div
-      onBlur={handleSaveBlockData}
+      onBlur={handleSubmit(handleUpdateBlockData)}
       className="group relative w-full bg-neutral-100 rounded-lg"
     >
       <button
@@ -77,16 +89,20 @@ const QuestionBlockForm = ({
           {...register('title', { required: true })}
           placeholder="질문을 입력해주세요."
           className="text-neutral-500 text-lg w-full bg-transparent hover:text-neutral-600 outline-none"
-          onBlur={(e) => handleSaveInputData('title', e.target.value)}
+          onBlur={(e) => handleSetInputData('title', e.target.value)}
         />
         <input
           {...register('description')}
           placeholder="질문에 대해 추가로 필요한 설명이나 제한사항을 입력하세요."
           className="text-neutral-400 text-sm w-full bg-transparent outline-none"
-          onBlur={(e) => handleSaveInputData('description', e.target.value)}
+          onBlur={(e) => handleSetInputData('description', e.target.value)}
         />
       </header>
-      <section className="p-2 pb-5">{children}</section>
+      <section className="p-2 pb-5 flex flex-col">
+        {options?.map((option) => (
+          <input className="bg-transparent" type="text" value={option.value} />
+        ))}
+      </section>
     </div>
   );
 };
