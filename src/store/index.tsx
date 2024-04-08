@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import usersReducer from '@components/users/userSlice';
-import questionBlockFormReducer from '@components/Myspace/questionBlockForm/questionBlockFormSlice';
+import questionBlockReducer from '@/components/Myspace/questionBlock/questionBlockSlice';
 import questionBlockListReducer from '@/components/Myspace/questionBlockList/questionBlockListSlice';
 
 export const store = configureStore({
   reducer: {
     // import한 reducer를 넣어줌
     questionBlockList: questionBlockListReducer,
-    questionBlockForm: questionBlockFormReducer,
+    questionBlock: questionBlockReducer,
     users: usersReducer,
   },
 });

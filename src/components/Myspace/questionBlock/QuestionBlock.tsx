@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import {
   setDescription,
   setTitle,
-} from '@/components/Myspace/questionBlockForm/questionBlockFormSlice';
+} from '@/components/Myspace/questionBlock/questionBlockSlice';
 import { updateQuestion } from '../questionBlockList/questionBlockListSlice';
 
 const questionTypeLabels = {
@@ -27,23 +27,24 @@ export type option = {
   id: string;
   value: string;
 };
-interface QuestionBlockFormProps {
+
+interface QuestionBlockProps {
   questionId: string;
   questionType: questionType;
   options?: option[];
 }
 
-interface QuestionBlockFormInputs {
+interface QuestionBlockInputs {
   title: string;
   description?: string;
 }
 
-const QuestionBlockForm = ({
+const QuestionBlock = ({
   questionType,
   questionId,
   options,
-}: QuestionBlockFormProps) => {
-  const { register, handleSubmit } = useForm<QuestionBlockFormInputs>();
+}: QuestionBlockProps) => {
+  const { register, handleSubmit } = useForm<QuestionBlockInputs>();
   const dispatch = useDispatch();
 
   const handleSetInputData = (name: string, value: string) => {
@@ -107,4 +108,4 @@ const QuestionBlockForm = ({
   );
 };
 
-export default QuestionBlockForm;
+export default QuestionBlock;

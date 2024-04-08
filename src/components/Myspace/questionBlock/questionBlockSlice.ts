@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { option, questionType } from './QuestionBlockForm';
+import { option, questionType } from './QuestionBlock';
 
-interface QuestionBlockFormFields {
+interface QuestionBlock {
   id: string;
   type: questionType;
   title: string;
@@ -11,7 +11,7 @@ interface QuestionBlockFormFields {
   isPrivacy: boolean;
 }
 
-const initialState: QuestionBlockFormFields = {
+const initialState: QuestionBlock = {
   id: crypto.randomUUID(),
   type: 'single',
   title: '',
@@ -25,8 +25,8 @@ const initialState: QuestionBlockFormFields = {
   isPrivacy: false,
 };
 
-export const questionBlockFormSlice = createSlice({
-  name: 'questionBlockForm',
+export const questionBlockSlice = createSlice({
+  name: 'questionBlock',
   initialState,
   reducers: {
     setTitle: (state, action) => ({
@@ -43,5 +43,5 @@ export const questionBlockFormSlice = createSlice({
   },
 });
 
-export const { setTitle, setDescription } = questionBlockFormSlice.actions;
-export default questionBlockFormSlice.reducer;
+export const { setTitle, setDescription } = questionBlockSlice.actions;
+export default questionBlockSlice.reducer;
