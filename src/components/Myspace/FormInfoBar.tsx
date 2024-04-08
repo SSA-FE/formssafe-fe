@@ -1,8 +1,10 @@
+import Calendar from '@components/Myspace/Calendar';
 import adjustIcon from '@/assets/icons/adjust-icon.svg';
+import trophyIcon from '@/assets/icons/trophy-icon.svg';
 
 const FormInfoBar = () => {
   return (
-    <div className="w-[19rem] ml-auto h-[calc(100vh-7.75rem)] border border-neutral-200 bg-white rounded flex flex-col content-center self-stretch divide-y">
+    <div className="border-r border-slate-200 w-[19rem] ml-auto h-[calc(100vh-7.75rem)] bg-white flex flex-col content-center self-stretch">
       {/* 좋아하는 과일 설문지 */}
       <div className="w-full px-4 flex flex-col gap-2.5 pt-3 pb-4">
         <h2 className="font-bold leading-6 text-neutral-600">
@@ -13,7 +15,7 @@ const FormInfoBar = () => {
           src="https://picsum.photos/200/300"
           alt="검색 아이콘"
         />
-        <div className="p-2 text-xs border rounded-lg bg-neutral-100 border-neutral-200 text-neutral-500">
+        <div className="p-2 text-xs rounded-lg bg-neutral-100 text-neutral-500">
           contents 좋아하는 과일 조사하기 설문입니다. 무슨 과일을 제일
           좋아하세요? 나는 딸기
         </div>
@@ -24,36 +26,6 @@ const FormInfoBar = () => {
         <div className="flex flex-col overflow-x-scroll scrollbar gap-sm whitespace-nowrap">
           <div className="flex pb-4 gap-sm">
             <button className="text-xs text-nowrap">생성버튼</button>
-            <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
-              생성버튼
-            </button>
-            <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
-              생성버튼
-            </button>
-            <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
-              생성버튼
-            </button>
-            <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
-              생성버튼
-            </button>
-            <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
-              생성버튼
-            </button>
-            <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
-              생성버튼
-            </button>
-            <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
-              생성버튼
-            </button>
-            <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
-              생성버튼
-            </button>
-            <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
-              생성버튼
-            </button>
-            <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
-              생성버튼
-            </button>
             <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
               생성버튼
             </button>
@@ -69,22 +41,20 @@ const FormInfoBar = () => {
       </div>
       {/* 마감 */}
       <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-xs">
-        <h2 className="text-neutral-800">마감</h2>
+        <h2 className="text-neutral-400 font-bold">마감일</h2>
         <div className="flex flex-col gap-md">
-          <p className="text-xs text-orange-400">
-            &#9432; 마감 날짜는 한 번 지정하면 바꿀 수 없습니다.
-          </p>
-          <button className="w-full text-sm bg-neutral-200 text-neutral-400 h-7">
-            설정
-          </button>
+          <Calendar />
         </div>
       </div>
       {/* 경품정하기 */}
-      <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-xs">
-        <h2 className="text-neutral-800">경품 정하기</h2>
+      <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-xs bg-blue-50">
+        <h2 className="text-mainColor font-bold flex gap-x-2 text-sm">
+          <img src={trophyIcon} alt="경품 아이콘" />
+          경품 정하기
+        </h2>
         <div className="flex flex-col gap-md">
-          <p className="text-xs text-red-500">
-            &#9432; 경품은 한 번 지정하면 변경할 수 없습니다.
+          <p className="text-xs text-orange-400">
+            &#9432; 경품을 정해서 설문자를 모아보세요.
           </p>
           <button className="w-full text-sm bg-neutral-200 text-neutral-400 h-7">
             설정

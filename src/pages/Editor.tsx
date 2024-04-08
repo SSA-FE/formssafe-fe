@@ -7,7 +7,7 @@ const Editor = () => {
   return (
     <div>
       <FormToolBar />
-      <div className="flex pt-2 bg-neutral-50">
+      <div className="flex bg-white">
         <FormInfoBar />
         <FormMain />
         <FormOptionBar />
