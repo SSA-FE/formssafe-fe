@@ -3,14 +3,20 @@ import { Provider } from 'react-redux';
 import { store } from '@store/index';
 import Router from '@router/index';
 import './index.css';
-import { worker } from './mocks/browser';
 
-if (import.meta.env.VITE_APP_NODE_ENV === 'development') {
-  worker.start();
+async function enableMocking() {
+  if (import.meta.env.VITE_APP_NODE_ENV !== 'development') {
+    return;
+  }
+
+  const { worker } = await import('./mocks/browser');
+  return worker.start();
 }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <Provider store={store}>
-    <Router />
-  </Provider>
-);
+enableMocking().then(() => {
+  ReactDOM.createRoot(document.getElementById('root')!).render(
+    <Provider store={store}>
+      <Router />
+    </Provider>
+  );
+});
