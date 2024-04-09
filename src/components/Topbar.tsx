@@ -1,7 +1,9 @@
+import { useLocation } from 'react-router-dom';
 import { useFetchUserQuery } from '@/api/userApi';
 import AlarmIcon from '@/assets/icons/alarm-icon.svg?react';
 
 const Topbar = () => {
+  const location = useLocation();
   const { data } = useFetchUserQuery();
 
   return (
@@ -17,7 +19,7 @@ const Topbar = () => {
           </span>
         </div>
       </div>
-      {data && (
+      {location.pathname !== '/' && data && (
         <div className="flex px-3 py-2 my-1 h-14 w-[124px] items-center justify-between">
           <button className="flex items-center justify-center w-10 h-10 cursor-pointer">
             <AlarmIcon height="16" width="16" />
