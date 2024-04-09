@@ -22,8 +22,8 @@ export const userApi = createApi({
     }),
     updateUser: builder.mutation<UserType, { nickname: string }>({
       query: (body) => ({
-        url: `${API.USERS}`,
-        method: 'PATCH',
+        url: `${API.USERS}/join`,
+        method: 'POST',
         body,
       }),
     }),
