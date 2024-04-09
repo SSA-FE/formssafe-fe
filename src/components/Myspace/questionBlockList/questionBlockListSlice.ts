@@ -20,25 +20,6 @@ const initialState: QuestionBlockList = {
     {
       id: crypto.randomUUID(),
       type: 'single',
-      title: '1반임',
-      description: '1반은 즐거워',
-      options: [
-        { id: crypto.randomUUID(), value: '11111' },
-        { id: crypto.randomUUID(), value: '22222' },
-        { id: crypto.randomUUID(), value: '3333' },
-      ],
-      isRequired: true,
-      isPrivacy: false,
-    },
-    {
-      id: crypto.randomUUID(),
-      type: 'checkbox',
-      title: '2반임',
-      description: '2반은 즐거워',
-      options: [
-        { id: crypto.randomUUID(), value: '4444' },
-        { id: crypto.randomUUID(), value: '55555' },
-      ],
       isRequired: true,
       isPrivacy: false,
     },
@@ -60,7 +41,14 @@ export const questionBlockListSlice = createSlice({
         state.questionList[index] = action.payload;
       }
     },
-    removeQuestion: () => {},
+    removeQuestion: (state, action: PayloadAction<{ id: string }>) => {
+      const index = state.questionList.findIndex(
+        (question) => question.id == action.payload.id
+      );
+      if (index !== -1) {
+        state.questionList.splice(index, 1);
+      }
+    },
     reorderQuestion: () => {},
   },
 });
