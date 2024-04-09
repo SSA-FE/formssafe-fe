@@ -1,9 +1,8 @@
 import { useFetchUserQuery } from '@/api/userApi';
+import AlarmIcon from '@/assets/icons/alarm-icon.svg?react';
 
 const Topbar = () => {
   const { data } = useFetchUserQuery();
-
-  console.log(data);
 
   return (
     <nav className="flex items-center justify-between w-full px-8 py-2 h-topbar min-h-16 whitespace-nowrap overflow-clip">
@@ -18,20 +17,20 @@ const Topbar = () => {
           </span>
         </div>
       </div>
-
-      <ul className="flex items-center h-full gap-4 text-sm font-normal text-neutral-500">
-        <li className="flex items-center h-full px-8 cursor-pointer">
-          <p>리포지토리</p>
-        </li>
-        <li className="flex items-center justify-center h-full px-8 cursor-pointer">
-          <p className="w-100">구성원 소개</p>
-        </li>
-        <li className="h-full">
-          <button className="h-full px-8 text-sm font-bold text-white bg-black rounded-lg">
-            바로 작성하기
+      {data && (
+        <div className="flex px-3 py-2 my-1 h-14 w-[124px] items-center justify-between">
+          <button className="flex items-center justify-center w-10 h-10 cursor-pointer">
+            <AlarmIcon height="16" width="16" />
           </button>
-        </li>
-      </ul>
+          <button className="cursor-pointer h-7 w-7">
+            <img
+              src={data?.imageUrl}
+              alt="profile"
+              className="object-cover w-full h-full rounded-full"
+            />
+          </button>
+        </div>
+      )}
     </nav>
   );
 };
