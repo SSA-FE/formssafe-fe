@@ -1,10 +1,7 @@
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import {
-  setDescription,
-  setTitle,
-} from '@/components/Myspace/questionBlock/questionBlockSlice';
 import { updateQuestion } from '../questionBlockList/questionBlockListSlice';
+import { useState } from 'react';
 
 const questionTypeLabels = {
   single: '객관식',
@@ -31,32 +28,21 @@ export type option = {
 interface QuestionBlockProps {
   questionId: string;
   questionType: questionType;
-  options?: option[];
 }
 
 interface QuestionBlockInputs {
   title: string;
   description?: string;
+  [key: `option${string}`]: string;
 }
 
-const QuestionBlock = ({
-  questionType,
-  questionId,
-  options,
-}: QuestionBlockProps) => {
+const QuestionBlock = ({ questionType, questionId }: QuestionBlockProps) => {
   const { register, handleSubmit } = useForm<QuestionBlockInputs>();
+  const [optionList, setOptionList] = useState<option[]>([]);
   const dispatch = useDispatch();
 
-  const handleSetInputData = (name: string, value: string) => {
-    if (name === 'title') {
-      dispatch(setTitle(value));
-    } else if (name === 'description') {
-      dispatch(setDescription(value));
-    }
-  };
-
   // 블러하면 해당블럭의 전체 필드 상태 업데이트하기
-  const handleUpdateBlockData = (data) => {
+  const handleUpdateBlockData: SubmitHandler<QuestionBlockInputs> = (data) => {
     // TODO: 객관식 주관식 구별
     dispatch(
       updateQuestion({
@@ -64,11 +50,28 @@ const QuestionBlock = ({
         type: questionType,
         title: data.title,
         description: data.description,
-        options: [],
+        options: optionList,
         isRequired: true,
         isPrivacy: false,
       })
     );
+  };
+
+  const handleAddOption = () => {
+    const optionId = crypto.randomUUID();
+    setOptionList([...optionList, { id: optionId, value: '' }]);
+  };
+
+  const handleUpdateOption = (optionId: string, value: string) => {
+    const index = optionList.findIndex((option) => option.id === optionId);
+    if (index !== -1) {
+      const newOptionList = [
+        ...optionList.slice(0, index),
+        { id: optionId, value: value },
+        ...optionList.slice(index + 1),
+      ];
+      setOptionList(newOptionList);
+    }
   };
 
   return (
@@ -87,22 +90,36 @@ const QuestionBlock = ({
           {questionTypeLabels[questionType]}
         </p>
         <input
-          {...register('title', { required: true })}
+          {...register('title')}
           placeholder="질문을 입력해주세요."
           className="text-neutral-500 text-lg w-full bg-transparent hover:text-neutral-600 outline-none"
-          onBlur={(e) => handleSetInputData('title', e.target.value)}
         />
         <input
           {...register('description')}
           placeholder="질문에 대해 추가로 필요한 설명이나 제한사항을 입력하세요."
           className="text-neutral-400 text-sm w-full bg-transparent outline-none"
-          onBlur={(e) => handleSetInputData('description', e.target.value)}
         />
       </header>
-      <section className="p-2 pb-5 flex flex-col">
-        {options?.map((option) => (
-          <input className="bg-transparent" type="text" value={option.value} />
-        ))}
+      <section className="">
+        {/* 객관식 */}
+        <div>
+          <div className="flex flex-col gap-2">
+            {optionList.map((option) => (
+              <input
+                key={option.id}
+                {...register(`option${option.id}`)}
+                type="text"
+                onChange={(e) => handleUpdateOption(option.id, e.target.value)}
+                autoFocus
+              />
+            ))}
+          </div>
+          <input type="button" value="옵션 추가" onClick={handleAddOption} />
+        </div>
+        {/* 주관식 */}
+        <div>
+          <input type="text" value="장문형 텍스트" readOnly />
+        </div>
       </section>
     </div>
   );
