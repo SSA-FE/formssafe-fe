@@ -2,6 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { updateQuestion } from '../questionBlockList/questionBlockListSlice';
 import { useState } from 'react';
+import OptionList, { option } from './OptionList';
 
 const questionTypeLabels = {
   single: '객관식',
@@ -20,11 +21,6 @@ export type questionType =
   | 'short'
   | 'text';
 
-export type option = {
-  id: string;
-  value: string;
-};
-
 interface QuestionBlockProps {
   questionId: string;
   questionType: questionType;
@@ -33,7 +29,6 @@ interface QuestionBlockProps {
 interface QuestionBlockInputs {
   title: string;
   description?: string;
-  [key: `option${string}`]: string;
 }
 
 const QuestionBlock = ({ questionType, questionId }: QuestionBlockProps) => {
@@ -42,107 +37,60 @@ const QuestionBlock = ({ questionType, questionId }: QuestionBlockProps) => {
   const dispatch = useDispatch();
 
   const handleUpdateBlockData: SubmitHandler<QuestionBlockInputs> = (data) => {
-    if (
-      questionType === 'single' ||
-      questionType === 'checkbox' ||
-      questionType === 'dropdown'
-    ) {
-      dispatch(
-        updateQuestion({
-          id: questionId,
-          type: questionType,
-          title: data.title,
-          description: data.description,
-          options: optionList,
-          isRequired: true,
-          isPrivacy: false,
-        })
-      );
-    } else {
-      dispatch(
-        updateQuestion({
-          id: questionId,
-          type: questionType,
-          title: data.title,
-          description: data.description,
-          isRequired: true,
-          isPrivacy: false,
-        })
-      );
-    }
-  };
-
-  const handleAddOption = () => {
-    const optionId = crypto.randomUUID();
-    setOptionList([...optionList, { id: optionId, value: '' }]);
-  };
-
-  const handleUpdateOption = (optionId: string, value: string) => {
-    const index = optionList.findIndex((option) => option.id === optionId);
-    if (index !== -1) {
-      const newOptionList = [
-        ...optionList.slice(0, index),
-        { id: optionId, value: value },
-        ...optionList.slice(index + 1),
-      ];
-      setOptionList(newOptionList);
-    }
+    dispatch(
+      updateQuestion({
+        id: questionId,
+        type: questionType,
+        title: data.title,
+        description: data.description,
+        options: optionList,
+        isRequired: true,
+        isPrivacy: false,
+      })
+    );
   };
 
   return (
     <div
+      tabIndex={0}
+      role="button"
       onBlur={handleSubmit(handleUpdateBlockData)}
-      className="group relative w-full bg-neutral-100 rounded-lg"
+      className="group/block relative w-full rounded-lg border border-transparent bg-white hover:bg-slate-50 focus-within:bg-slate-50  focus-within:border-slate-200"
     >
       <button
         type="button"
-        className="invisible group-hover:visible flex absolute right-2 top-2 justify-center items-center w-6 h-6 text-neutral-300 text-xs font-bold p-2 rounded-lg border border-neutral-300  hover:bg-neutral-200"
+        className="invisible group-hover/block:visible flex absolute right-2 top-2 justify-center items-center w-6 h-6 text-neutral-400 text-sm font-bold p-2"
       >
         ⸬
       </button>
-      <header className="flex flex-col gap-1 p-5 pb-2">
-        <p className="text-neutral-500 text-xs">
-          {questionTypeLabels[questionType]}
-        </p>
+      <header className="flex flex-col gap-1 p-6 pt-5 pb-2 text-slate-500">
+        <p className="text-xs font-bold">{questionTypeLabels[questionType]}</p>
         <input
           {...register('title')}
           placeholder="질문을 입력해주세요."
-          className="text-neutral-500 text-lg w-full bg-transparent hover:text-neutral-600 outline-none"
+          className="text-lg w-full bg-transparent hover:bg-slate-100 outline-none border-b border-b-transparent focus:border-slate-300 focus:bg-slate-100 border-slate-300"
         />
         <input
           {...register('description')}
           placeholder="질문에 대해 추가로 필요한 설명이나 제한사항을 입력하세요."
-          className="text-neutral-400 text-sm w-full bg-transparent outline-none"
+          className="w-full bg-transparent outline-none border-b border-b-transparent  hover:bg-slate-100  focus:border-slate-300 focus:bg-slate-100 border-slate-300"
         />
       </header>
-      <section className="">
+      <section className="py-1 text-slate-500">
         {questionType === 'single' ||
         questionType === 'checkbox' ||
         questionType === 'dropdown' ? (
-          <div>
-            <div className="flex flex-col gap-2">
-              {optionList.map((option) => (
-                <input
-                  key={option.id}
-                  {...register(`option${option.id}`)}
-                  type="text"
-                  onChange={(e) =>
-                    handleUpdateOption(option.id, e.target.value)
-                  }
-                  autoFocus
-                />
-              ))}
-            </div>
-            <input type="button" value="옵션 추가" onClick={handleAddOption} />
-          </div>
+          <OptionList
+            questionType={questionType}
+            optionList={optionList}
+            setOptionList={setOptionList}
+          />
         ) : (
-          <div>
-            <input
-              type="text"
-              value={questionTypeLabels[questionType]}
-              readOnly
-            />
-          </div>
+          <input
+            type="text"
+            value={questionTypeLabels[questionType]}
+            readOnly
+          />
         )}
       </section>
     </div>
