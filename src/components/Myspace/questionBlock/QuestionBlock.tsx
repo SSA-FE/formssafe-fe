@@ -41,20 +41,35 @@ const QuestionBlock = ({ questionType, questionId }: QuestionBlockProps) => {
   const [optionList, setOptionList] = useState<option[]>([]);
   const dispatch = useDispatch();
 
-  // 블러하면 해당블럭의 전체 필드 상태 업데이트하기
   const handleUpdateBlockData: SubmitHandler<QuestionBlockInputs> = (data) => {
-    // TODO: 객관식 주관식 구별
-    dispatch(
-      updateQuestion({
-        id: questionId,
-        type: questionType,
-        title: data.title,
-        description: data.description,
-        options: optionList,
-        isRequired: true,
-        isPrivacy: false,
-      })
-    );
+    if (
+      questionType === 'single' ||
+      questionType === 'checkbox' ||
+      questionType === 'dropdown'
+    ) {
+      dispatch(
+        updateQuestion({
+          id: questionId,
+          type: questionType,
+          title: data.title,
+          description: data.description,
+          options: optionList,
+          isRequired: true,
+          isPrivacy: false,
+        })
+      );
+    } else {
+      dispatch(
+        updateQuestion({
+          id: questionId,
+          type: questionType,
+          title: data.title,
+          description: data.description,
+          isRequired: true,
+          isPrivacy: false,
+        })
+      );
+    }
   };
 
   const handleAddOption = () => {
@@ -101,25 +116,34 @@ const QuestionBlock = ({ questionType, questionId }: QuestionBlockProps) => {
         />
       </header>
       <section className="">
-        {/* 객관식 */}
-        <div>
-          <div className="flex flex-col gap-2">
-            {optionList.map((option) => (
-              <input
-                key={option.id}
-                {...register(`option${option.id}`)}
-                type="text"
-                onChange={(e) => handleUpdateOption(option.id, e.target.value)}
-                autoFocus
-              />
-            ))}
+        {questionType === 'single' ||
+        questionType === 'checkbox' ||
+        questionType === 'dropdown' ? (
+          <div>
+            <div className="flex flex-col gap-2">
+              {optionList.map((option) => (
+                <input
+                  key={option.id}
+                  {...register(`option${option.id}`)}
+                  type="text"
+                  onChange={(e) =>
+                    handleUpdateOption(option.id, e.target.value)
+                  }
+                  autoFocus
+                />
+              ))}
+            </div>
+            <input type="button" value="옵션 추가" onClick={handleAddOption} />
           </div>
-          <input type="button" value="옵션 추가" onClick={handleAddOption} />
-        </div>
-        {/* 주관식 */}
-        <div>
-          <input type="text" value="장문형 텍스트" readOnly />
-        </div>
+        ) : (
+          <div>
+            <input
+              type="text"
+              value={questionTypeLabels[questionType]}
+              readOnly
+            />
+          </div>
+        )}
       </section>
     </div>
   );
