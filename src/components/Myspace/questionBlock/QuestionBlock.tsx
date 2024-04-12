@@ -3,13 +3,14 @@ import { useDispatch } from 'react-redux';
 import { updateQuestion } from '../questionBlockList/questionBlockListSlice';
 import { useState } from 'react';
 import OptionList, { option } from './OptionList';
+import TextIcon from '@/assets/icons/text-icon.svg?react';
 
 const questionTypeLabels = {
   single: '객관식',
   checkbox: '체크박스',
   dropdown: '드롭다운',
-  long: '단답형',
-  short: '장문형',
+  long: '장문형',
+  short: '단답형',
   text: '텍스트',
 };
 
@@ -68,15 +69,15 @@ const QuestionBlock = ({ questionType, questionId }: QuestionBlockProps) => {
         <input
           {...register('title')}
           placeholder="질문을 입력해주세요."
-          className="text-lg w-full bg-transparent hover:bg-slate-100 outline-none border-b border-b-transparent focus:border-slate-300 focus:bg-slate-100 border-slate-300"
+          className="text-lg w-full bg-transparent hover:bg-slate-100 outline-none border-b border-b-transparent focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
         />
         <input
           {...register('description')}
           placeholder="질문에 대해 추가로 필요한 설명이나 제한사항을 입력하세요."
-          className="w-full bg-transparent outline-none border-b border-b-transparent  hover:bg-slate-100  focus:border-slate-300 focus:bg-slate-100 border-slate-300"
+          className="w-full bg-transparent outline-none border-b border-b-transparent  hover:bg-slate-100  focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
         />
       </header>
-      <section className="py-1 text-slate-500">
+      <section className="py-1 mb-4 text-slate-500">
         {questionType === 'single' ||
         questionType === 'checkbox' ||
         questionType === 'dropdown' ? (
@@ -86,11 +87,15 @@ const QuestionBlock = ({ questionType, questionId }: QuestionBlockProps) => {
             setOptionList={setOptionList}
           />
         ) : (
-          <input
-            type="text"
-            value={questionTypeLabels[questionType]}
-            readOnly
-          />
+          <div className="flex items-center pl-6 mt-2">
+            <TextIcon className="stroke-slate-400" />
+            <input
+              type="text"
+              value={questionTypeLabels[questionType]}
+              className="ml-4 bg-transparent outline-none text-slate-400"
+              readOnly
+            />
+          </div>
         )}
       </section>
     </div>

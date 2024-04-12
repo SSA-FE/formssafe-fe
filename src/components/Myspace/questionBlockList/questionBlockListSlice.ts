@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { option, questionType } from '../questionBlock/QuestionBlock';
+import { questionType } from '../questionBlock/QuestionBlock';
+import { option } from '../questionBlock/OptionList';
 
 type questionBlock = {
   id: string;
@@ -19,7 +20,7 @@ const initialState: QuestionBlockList = {
   questionList: [
     {
       id: crypto.randomUUID(),
-      type: 'single',
+      type: 'text',
       isRequired: true,
       isPrivacy: false,
     },

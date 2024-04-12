@@ -64,7 +64,7 @@ const OptionList = ({
               placeholder={`옵션 ${idx + 1}`}
               onChange={(e) => handleUpdateOption(option.id, e.target.value)}
               autoFocus
-              className="text outline-none bg-transparent w-full focus:bg-slate-50 px-2 py-1"
+              className="text outline-none bg-transparent w-full focus:bg-slate-50 px-2 py-1 placeholder:text-slate-400"
             />
             <button
               type="button"
@@ -76,13 +76,13 @@ const OptionList = ({
           </div>
         ))}
       </div>
-      <div className="flex items-center pl-6 mt-2 mb-4 py-1 border-l-2 border-l-transparent">
+      <div className="flex items-center pl-6 mt-2 py-1 border-l-2 border-l-transparent">
         <div className="w-4 h-4 mr-3">{questionTypeIcons[questionType]}</div>
         <input
           type="button"
           value="옵션 추가"
           onClick={handleAddOption}
-          className="bg-transparent text-slate-400 text-left px-2 py-1 border-b border-transparent hover:border-slate-200"
+          className="bg-transparent text-slate-400 text-left px-2 py-1 border-b placeholder:text-slate-400 border-transparent hover:border-slate-200"
         />
       </div>
     </>
