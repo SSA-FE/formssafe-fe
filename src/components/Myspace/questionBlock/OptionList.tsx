@@ -32,15 +32,10 @@ const OptionList = ({
   };
 
   const handleUpdateOption = (optionId: string, value: string) => {
-    const index = optionList.findIndex((option) => option.id === optionId);
-    if (index !== -1) {
-      const newOptionList = [
-        ...optionList.slice(0, index),
-        { id: optionId, value: value },
-        ...optionList.slice(index + 1),
-      ];
-      setOptionList(newOptionList);
-    }
+    const newOptionList = optionList.map((option) =>
+      option.id === optionId ? { id: optionId, value: value } : option
+    );
+    setOptionList(newOptionList);
   };
 
   const handleRemoveOption = (optionId: string) => {
