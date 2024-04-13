@@ -14,6 +14,7 @@ type UserType = {
   nickname: string;
   imageUrl: string;
   email: string;
+  isActive: boolean;
 } | null;
 
 type Nickname = {
@@ -42,9 +43,14 @@ function LoginRedirect() {
   });
 
   const fetchUser = useCallback(async () => {
-    const response = await instance.get(`${API.USERS}/profile`);
-    return response.data;
-  }, []);
+    try {
+      const response = await instance.get(`${API.USERS}/profile`);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      navigate('/');
+    }
+  }, [navigate]);
 
   const fetchGoogleLogin = useCallback(
     async (code: string) => {
@@ -57,7 +63,9 @@ function LoginRedirect() {
         );
         if (response.status === 200) {
           const fetchedUser = await fetchUser();
-          setUser(fetchedUser);
+          if (fetchedUser) {
+            setUser(fetchedUser);
+          }
         }
       } catch (error) {
         console.error(error);
@@ -77,9 +85,12 @@ function LoginRedirect() {
   const handleValid = async (data: Nickname) => {
     try {
       await updateUser({ nickname: data.nickname }).unwrap();
-      navigate('/myspace');
+      if (user?.isActive) {
+        navigate('/myspace');
+      }
     } catch (error) {
       console.error(error);
+      navigate('/');
     }
   };
 
@@ -91,15 +102,11 @@ function LoginRedirect() {
 
   useEffect(() => {
     if (!user) return;
-
-    const destination =
-      user.nickname && !user.nickname.startsWith('user-') ? '/myspace' : '/';
+    const destination = user.isActive ? '/myspace' : '/';
     navigate(destination);
   }, [user, navigate]);
 
-  const isModalOpen = user?.nickname
-    ? user.nickname.startsWith('user-')
-    : false;
+  const isModalOpen = user?.isActive === false;
 
   return (
     <Modal maxWidth={'max-w-nicknamemodal'} state={isModalOpen}>
