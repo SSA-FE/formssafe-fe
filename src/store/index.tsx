@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import usersReducer from '@components/users/userSlice';
 import questionBlockListReducer from '@/components/Myspace/questionBlockList/questionBlockListSlice';
+import { userApi } from '@api/userApi';
 
 export const store = configureStore({
   reducer: {
-    // import한 reducer를 넣어줌
     questionBlockList: questionBlockListReducer,
-    users: usersReducer,
+    [userApi.reducerPath]: userApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(userApi.middleware);
   },
 });
 
