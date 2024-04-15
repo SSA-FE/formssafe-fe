@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import questionBlockFormReducer from '@components/Myspace/questionBlockForm/questionBlockFormSlice';
+import questionBlockListReducer from '@/components/Myspace/questionBlockList/questionBlockListSlice';
 import { userApi } from '@api/userApi';
 
 export const store = configureStore({
   reducer: {
-    questionBlockForm: questionBlockFormReducer,
+    questionBlockList: questionBlockListReducer,
     [userApi.reducerPath]: userApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
