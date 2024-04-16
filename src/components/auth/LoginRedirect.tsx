@@ -84,11 +84,12 @@ function LoginRedirect() {
 
   const handleValid = async (data: Nickname) => {
     try {
-      await updateUser({ nickname: data.nickname }).unwrap();
-      if (user?.isActive) {
-        navigate('/myspace');
-      }
+      await updateUser({
+        nickname: data.nickname,
+      });
+      navigate('/myspace');
     } catch (error) {
+      // TODO: error handling
       console.error(error);
       navigate('/');
     }
@@ -102,8 +103,10 @@ function LoginRedirect() {
 
   useEffect(() => {
     if (!user) return;
-    const destination = user.isActive ? '/myspace' : '/';
-    navigate(destination);
+    const destination = user.isActive ? '/myspace' : '';
+    if (destination) {
+      navigate(destination);
+    }
   }, [user, navigate]);
 
   const isModalOpen = user?.isActive === false;
