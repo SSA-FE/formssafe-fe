@@ -1,19 +1,38 @@
 import TempSaveIcon from '@/assets/icons/temp-save-icon.svg?react';
 
-interface ISurveyCard {
-  tags?: string[];
+interface Tag {
+  id: number;
+  name: string;
+  count: number;
+}
+
+interface SurveyCardProps {
+  title: string;
+  // TODO: description 추가
+  tags?: Tag[];
   questionCnt: number;
   expectTime: number;
+  startDate: string;
   isTemp: boolean;
 }
 
-const SurveyCard = ({ tags, questionCnt, expectTime, isTemp }: ISurveyCard) => {
+const SurveyCard = ({
+  title,
+  tags,
+  questionCnt,
+  expectTime,
+  startDate,
+  isTemp,
+}: SurveyCardProps) => {
+  const dateObject = new Date(startDate);
+  const formattedDate = `${dateObject.getFullYear()}/${String(dateObject.getMonth() + 1).padStart(2, '0')}/${String(dateObject.getDate()).padStart(2, '0')}`;
+
   return (
     <div className="w-full border rounded-lg max-w-surveyCard border-neutral-300">
       <div className="flex items-center justify-between w-full gap-2 px-5 pt-4 pb-[10px] border-neutral-300 border-b-[1px]">
         <div className="flex items-center gap-x-2">
           <h1 className="text-base font-bold text-neutral-600 whitespace-nowrap">
-            좋아하는 음식
+            {title}
           </h1>
           {isTemp && (
             <p className="w-[14px] h-[14px]">
@@ -23,7 +42,7 @@ const SurveyCard = ({ tags, questionCnt, expectTime, isTemp }: ISurveyCard) => {
         </div>
 
         <h2 className="gap-4 text-xs font-normal hmm text-neutral-400 whitespace-nowrap">
-          LastEdit on 2023/02/16
+          LastEdit on {formattedDate}
         </h2>
       </div>
       <div className="flex flex-col p-4 gap-y-4">
@@ -35,23 +54,19 @@ const SurveyCard = ({ tags, questionCnt, expectTime, isTemp }: ISurveyCard) => {
           <p>
             <strong>문항수</strong>&nbsp;{questionCnt}
             개&nbsp;
-            <strong>소요시간</strong>&nbsp;30분
           </p>
           <p>
-            <strong>예상시간</strong>&nbsp;{expectTime}초
-          </p>
-          <p>
-            <strong>임시저장본</strong>
+            <strong>예상소요시간</strong>&nbsp;{expectTime}분
           </p>
         </div>
         <div className="flex h-6 gap-x-2">
           {tags?.map((tag) => {
             return (
               <span
-                key={tag}
+                key={tag.id}
                 className="flex items-center justify-center px-3 text-xs font-bold cursor-pointer whitespace-nowrap text-neutral-100 bg-neutral-500 rounded-xl"
               >
-                #{tag}
+                #{tag.name}
               </span>
             );
           })}
