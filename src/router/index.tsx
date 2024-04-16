@@ -11,6 +11,7 @@ import NotFound from '@/pages/NotFound';
 const Home = React.lazy(() => import('@/pages/Home'));
 const Myspace = React.lazy(() => import('@/pages/Myspace'));
 const Editor = React.lazy(() => import('@/pages/Editor'));
+const Stat = React.lazy(() => import('@/pages/Stat'));
 const LoginRedirect = React.lazy(
   () => import('@/components/auth/LoginRedirect')
 );
@@ -30,6 +31,10 @@ const Router = () => {
         {
           path: '/editor',
           element: <Editor />,
+        },
+        {
+          path: '/stat',
+          element: <Stat />,
         },
       ],
     },
