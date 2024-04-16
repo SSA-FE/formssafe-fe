@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import dropdownIcon from '@/assets/icons/dropdown-icon.svg';
 
 const SortDropdown = () => {
-  const options = ['최근에 수정된 순서', '많은 응답자순', '가까운 마감일자순'];
+  const options = ['생성일순', '응답자순', '가까운 마감순'];
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(options[0]);
