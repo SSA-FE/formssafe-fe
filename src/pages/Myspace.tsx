@@ -1,27 +1,14 @@
-import { useFetchRegisteredSurveysQuery } from '@/api/activityApi';
-import SurveyCard from '@/components/Myspace/SurveyCard';
-import Toolbar from '@/components/Myspace/Toolbar';
-import { Survey } from '@/api/activityApi';
+import MyspacePanel from '@/components/Myspace/MyspacePanel';
+import MyspaceMain from '@/components/Myspace/MyspaceMain';
+import { useState } from 'react';
 
 const Myspace = () => {
-  const { data: MySurveyList, isLoading } = useFetchRegisteredSurveysQuery();
-  console.log(MySurveyList);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
+  const [surveyStatus, setSurveyStatus] = useState('mySurveys');
   return (
-    <>
-      <Toolbar />
-      <div className="flex flex-wrap">
-        {MySurveyList &&
-          Array.isArray(MySurveyList) &&
-          MySurveyList.map((survey: Survey) => (
-            <SurveyCard key={survey.id} {...survey} />
-          ))}
-      </div>
-    </>
+    <div className="w-full h-screen bg-neutral-100">
+      <MyspacePanel setSurveyStatus={setSurveyStatus} />
+      <MyspaceMain surveyStatus={surveyStatus} />
+    </div>
   );
 };
 
