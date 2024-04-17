@@ -3,7 +3,7 @@ import User from './User';
 
 const UserResultForm = () => {
   return (
-    <div className="w-[310px] h-[682px] py-4 px-2 border-r-[0.5px] border-blue-300">
+    <div className="w-[310px] h-[682px] py-4 px-2 border-r-[0.5px] border-blue-300 bg-white">
       {/* 개별 질문리스트 헤더  */}
       <div className="gap-2">
         {/* 전체설문조회 : StatusBar */}

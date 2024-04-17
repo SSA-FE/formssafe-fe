@@ -7,8 +7,9 @@ function Stat() {
     <div>
       <FormToolBar />
 
-      <div className="flex">
+      <div className="flex bg-blue-50">
         <UserResultForm />
+        <div className="flex-1 h-[2000px]"></div>
         <RemoteForm />
       </div>
     </div>
