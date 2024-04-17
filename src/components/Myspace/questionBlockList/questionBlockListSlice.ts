@@ -50,7 +50,15 @@ export const questionBlockListSlice = createSlice({
         state.questionList.splice(index, 1);
       }
     },
-    reorderQuestion: () => {},
+    reorderQuestion: (
+      state,
+      action: PayloadAction<{ fromIndex: number; toIndex: number }>
+    ) => {
+      const { fromIndex, toIndex } = action.payload;
+      const targetBlock = state.questionList[fromIndex];
+      state.questionList.splice(fromIndex, 1);
+      state.questionList.splice(toIndex, 0, targetBlock);
+    },
   },
 });
 
