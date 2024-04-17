@@ -1,15 +1,15 @@
-import StatTopBar from '@/components/Statistic/StatTopBar';
+import FormToolBar from '@/components/Myspace/FormToolBar';
 import RemoteForm from '@/components/Statistic/remoteForm/RemoteForm';
 import UserResultForm from '@/components/Statistic/userResultForm/UserResultForm';
 
 function Stat() {
   return (
     <div>
-      <StatTopBar />
+      <FormToolBar />
 
       <div className="flex">
-        <RemoteForm />
         <UserResultForm />
+        <RemoteForm />
       </div>
     </div>
   );
