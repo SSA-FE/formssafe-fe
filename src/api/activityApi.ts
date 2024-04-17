@@ -21,6 +21,7 @@ interface Reward {
 export interface Survey {
   id: number;
   title: string;
+  description: string;
   thumbnail: string;
   author: Author;
   expectTime: number;

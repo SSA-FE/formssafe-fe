@@ -8,7 +8,7 @@ interface Tag {
 
 interface SurveyCardProps {
   title: string;
-  // TODO: description 추가
+  description: string;
   tags?: Tag[];
   questionCnt: number;
   expectTime: number;
@@ -18,6 +18,7 @@ interface SurveyCardProps {
 
 const SurveyCard = ({
   title,
+  description,
   tags,
   questionCnt,
   expectTime,
@@ -47,8 +48,7 @@ const SurveyCard = ({
       </div>
       <div className="flex flex-col p-4 gap-y-4">
         <p className="px-2 text-sm font-normal text-neutral-500">
-          좋아하는 음식을 설문조사해서 맛있는 음식을 판매합니다. 사람들이
-          좋아하는 음식은 무엇일까요?
+          {description}
         </p>
         <div className="flex flex-col px-4 py-2 text-xs border rounded-lg border-neutral-200 gap-y-1 text-neutral-400">
           <p>
