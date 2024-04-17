@@ -4,6 +4,7 @@ import { updateQuestion } from '../questionBlockList/questionBlockListSlice';
 import { useState } from 'react';
 import OptionList, { option } from './OptionList';
 import TextIcon from '@/assets/icons/text-icon.svg?react';
+import { DraggableProvided } from 'react-beautiful-dnd';
 
 const questionTypeLabels = {
   single: '객관식',
@@ -25,6 +26,7 @@ export type questionType =
 interface QuestionBlockProps {
   questionId: string;
   questionType: questionType;
+  dragHandler: DraggableProvided['dragHandleProps'];
 }
 
 interface QuestionBlockInputs {
@@ -32,7 +34,11 @@ interface QuestionBlockInputs {
   description?: string;
 }
 
-const QuestionBlock = ({ questionType, questionId }: QuestionBlockProps) => {
+const QuestionBlock = ({
+  questionType,
+  questionId,
+  dragHandler,
+}: QuestionBlockProps) => {
   const { register, handleSubmit } = useForm<QuestionBlockInputs>();
   const [optionList, setOptionList] = useState<option[]>([]);
   const dispatch = useDispatch();
@@ -58,12 +64,12 @@ const QuestionBlock = ({ questionType, questionId }: QuestionBlockProps) => {
       onBlur={handleSubmit(handleUpdateBlockData)}
       className="group/block relative w-full rounded-lg border border-transparent bg-white hover:bg-slate-50 focus-within:bg-slate-50  focus-within:border-slate-200"
     >
-      <button
-        type="button"
+      <div
+        {...dragHandler}
         className="invisible group-hover/block:visible flex absolute right-2 top-2 justify-center items-center w-6 h-6 text-neutral-400 text-sm font-bold p-2"
       >
         ⸬
-      </button>
+      </div>
       <header className="flex flex-col gap-1 p-6 pt-5 pb-2 text-slate-500">
         <p className="text-xs font-bold">{questionTypeLabels[questionType]}</p>
         <input
