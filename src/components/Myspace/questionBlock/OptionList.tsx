@@ -8,7 +8,7 @@ const questionTypeIcons = {
   dropdown: <DropdownIcon />,
 };
 
-export type option = {
+export type Option = {
   id: string;
   value: string;
 };
@@ -17,8 +17,8 @@ type OptionQuestionType = 'single' | 'checkbox' | 'dropdown';
 
 interface OptionListProps {
   questionType: OptionQuestionType;
-  optionList: option[];
-  setOptionList: React.Dispatch<React.SetStateAction<option[]>>;
+  optionList: Option[];
+  setOptionList: React.Dispatch<React.SetStateAction<Option[]>>;
 }
 
 const OptionList = ({

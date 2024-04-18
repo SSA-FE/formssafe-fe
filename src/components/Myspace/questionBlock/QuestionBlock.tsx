@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { updateQuestion } from '../questionBlockList/questionBlockListSlice';
 import { useState } from 'react';
-import OptionList, { option } from './OptionList';
+import OptionList, { Option } from './OptionList';
 import TextIcon from '@/assets/icons/text-icon.svg?react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import TextBlock from './TextBlock';
@@ -16,7 +16,7 @@ const questionTypeLabels = {
   text: '텍스트',
 };
 
-export type questionType =
+export type QuestionType =
   | 'single'
   | 'checkbox'
   | 'dropdown'
@@ -26,7 +26,7 @@ export type questionType =
 
 interface QuestionBlockProps {
   questionId: string;
-  questionType: questionType;
+  questionType: QuestionType;
   dragHandler: DraggableProvided['dragHandleProps'];
 }
 
@@ -41,7 +41,7 @@ const QuestionBlock = ({
   dragHandler,
 }: QuestionBlockProps) => {
   const { register, handleSubmit } = useForm<QuestionBlockInputs>();
-  const [optionList, setOptionList] = useState<option[]>([]);
+  const [optionList, setOptionList] = useState<Option[]>([]);
   const dispatch = useDispatch();
 
   const handleUpdateBlockData: SubmitHandler<QuestionBlockInputs> = (data) => {
