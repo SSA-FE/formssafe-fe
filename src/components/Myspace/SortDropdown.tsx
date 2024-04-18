@@ -11,6 +11,11 @@ interface SortDropdownProps {
 
 const SortDropdown = ({ bgColor, width, height }: SortDropdownProps) => {
   const options = ['생성일순', '응답자순', '가까운 마감순'];
+  const optionToSort: { [key: string]: string } = {
+    생성일순: 'createdtime',
+    응답자순: 'responseCnt',
+    '가까운 마감순': 'endTime',
+  };
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -23,20 +28,20 @@ const SortDropdown = ({ bgColor, width, height }: SortDropdownProps) => {
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
-    dispatch(updateSort({ sort: option }));
+    dispatch(updateSort({ sort: optionToSort[option] }));
     setIsOpen(false);
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  };
-
   useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);

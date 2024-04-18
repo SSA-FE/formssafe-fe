@@ -21,18 +21,23 @@ interface Reward {
 export interface Survey {
   id: number;
   title: string;
-  description: string;
-  thumbnail: string;
+  description?: string;
+  thumbnail?: string;
   author: Author;
   expectTime: number;
   questionCnt: number;
   responseCnt: number;
   startDate: string;
   endDate: string;
-  reward: Reward;
-  tags: Tag[];
+  reward?: Reward;
+  tags?: Tag[];
   status: string;
   isTemp: boolean;
+}
+
+interface SurveyRequest {
+  sort?: string;
+  keyword?: string;
 }
 
 interface SurveyResponse {
@@ -43,12 +48,16 @@ export const activityApi = createApi({
   reducerPath: 'activityApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
   endpoints: (builder) => ({
-    fetchParticipatedSurveys: builder.query<SurveyResponse, void>({
-      query: () => ({ url: `${API.ACTIVITY}/responses` }),
+    fetchParticipatedSurveys: builder.query<SurveyResponse, SurveyRequest>({
+      query: (request) => ({
+        url: `${API.ACTIVITY}/responses`,
+        params: request,
+      }),
     }),
-    fetchRegisteredSurveys: builder.query<SurveyResponse, void>({
-      query: () => ({
+    fetchRegisteredSurveys: builder.query<SurveyResponse, SurveyRequest>({
+      query: (request) => ({
         url: `${API.ACTIVITY}/forms`,
+        params: request,
       }),
     }),
   }),

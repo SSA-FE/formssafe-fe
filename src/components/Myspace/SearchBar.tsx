@@ -16,6 +16,7 @@ const SearchBar = ({ placeholder, bgColor, width, height }: SearchBarProps) => {
 
   const handleOnclick = () => {
     dispatch(updateKeyword({ keyword }));
+    setKeyword('');
   };
 
   return (
@@ -28,6 +29,11 @@ const SearchBar = ({ placeholder, bgColor, width, height }: SearchBarProps) => {
         placeholder={placeholder}
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleOnclick();
+          }
+        }}
       />
       <button onClick={handleOnclick}>
         <img src={searchIcon} alt="검색 아이콘" />
