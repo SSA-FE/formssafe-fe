@@ -1,11 +1,16 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { updateQuestion } from '../questionBlockList/questionBlockListSlice';
+import {
+  setActiveBlockId,
+  updateQuestion,
+} from '../questionBlockList/questionBlockListSlice';
 import { useState } from 'react';
 import OptionList, { Option } from './OptionList';
 import TextIcon from '@/assets/icons/text-icon.svg?react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import TextBlock from './TextBlock';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const questionTypeLabels = {
   single: '객관식',
@@ -42,6 +47,7 @@ const QuestionBlock = ({
 }: QuestionBlockProps) => {
   const { register, handleSubmit } = useForm<QuestionBlockInputs>();
   const [optionList, setOptionList] = useState<Option[]>([]);
+  const questionBlock = useSelector((store: RootState) => store.questionBlock);
   const dispatch = useDispatch();
 
   const handleUpdateBlockData: SubmitHandler<QuestionBlockInputs> = (data) => {
@@ -52,10 +58,11 @@ const QuestionBlock = ({
         title: data.title,
         description: data.description,
         options: optionList,
-        isRequired: true,
-        isPrivacy: false,
+        isRequired: questionBlock.isRequired,
+        isPrivacy: questionBlock.isPrivacy,
       })
     );
+    dispatch(setActiveBlockId({ id: '' }));
   };
 
   return (
@@ -63,6 +70,14 @@ const QuestionBlock = ({
       tabIndex={0}
       role="button"
       onBlur={handleSubmit(handleUpdateBlockData)}
+      onClick={() => {
+        dispatch(setActiveBlockId({ id: questionId }));
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === 'Space') {
+          dispatch(setActiveBlockId({ id: questionId }));
+        }
+      }}
       className="group/block p-6 relative w-full rounded-lg border border-transparent bg-white hover:bg-slate-50 focus-within:bg-slate-50  focus-within:border-slate-200"
     >
       <div

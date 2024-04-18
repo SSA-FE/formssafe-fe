@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { QuestionBlock } from '../questionBlock/questionBlockSlice';
 interface QuestionBlockList {
   questionList: QuestionBlock[];
+  activeBlockId: string;
 }
 
 const initialState: QuestionBlockList = {
@@ -13,6 +14,7 @@ const initialState: QuestionBlockList = {
       isPrivacy: false,
     },
   ],
+  activeBlockId: '',
 };
 
 export const questionBlockListSlice = createSlice({
@@ -47,9 +49,17 @@ export const questionBlockListSlice = createSlice({
       state.questionList.splice(fromIndex, 1);
       state.questionList.splice(toIndex, 0, targetBlock);
     },
+    setActiveBlockId: (state, action: PayloadAction<{ id: string }>) => {
+      state.activeBlockId = action.payload.id;
+    },
   },
 });
 
-export const { addQuestion, updateQuestion, removeQuestion, reorderQuestion } =
-  questionBlockListSlice.actions;
+export const {
+  addQuestion,
+  updateQuestion,
+  removeQuestion,
+  reorderQuestion,
+  setActiveBlockId,
+} = questionBlockListSlice.actions;
 export default questionBlockListSlice.reducer;
