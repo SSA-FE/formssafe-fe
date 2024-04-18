@@ -29,7 +29,7 @@ const SurveyCard = ({
   const formattedDate = `${dateObject.getFullYear()}/${String(dateObject.getMonth() + 1).padStart(2, '0')}/${String(dateObject.getDate()).padStart(2, '0')}`;
 
   return (
-    <div className="w-full bg-white border rounded-lg max-w-surveyCard border-neutral-300 ">
+    <div className="w-full bg-white border rounded-lg max-w-surveyCard border-neutral-300">
       <div className="flex items-center justify-between w-full gap-2 px-5 pt-4 pb-[10px] border-neutral-300 border-b-[1px]">
         <div className="flex items-center gap-x-2">
           <h1 className="w-40 overflow-hidden text-base font-bold overflow-ellipsis text-neutral-600 whitespace-nowrap">

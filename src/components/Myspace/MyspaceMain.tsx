@@ -32,7 +32,7 @@ const MyspaceMain = ({ surveyStatus }: { surveyStatus: string }) => {
   return (
     <div className="w-full min-h-screen bg-neutral-100 ">
       <Toolbar />
-      <div className="flex flex-wrap gap-4 px-8">
+      <div className="flex flex-wrap gap-4 px-8 pb-4">
         {SurveyList &&
           Array.isArray(SurveyList) &&
           SurveyList.map((survey: Survey) => (
