@@ -5,6 +5,7 @@ import { useState } from 'react';
 import OptionList, { option } from './OptionList';
 import TextIcon from '@/assets/icons/text-icon.svg?react';
 import { DraggableProvided } from 'react-beautiful-dnd';
+import TextBlock from './TextBlock';
 
 const questionTypeLabels = {
   single: '객관식',
@@ -29,7 +30,7 @@ interface QuestionBlockProps {
   dragHandler: DraggableProvided['dragHandleProps'];
 }
 
-interface QuestionBlockInputs {
+export interface QuestionBlockInputs {
   title: string;
   description?: string;
 }
@@ -62,7 +63,7 @@ const QuestionBlock = ({
       tabIndex={0}
       role="button"
       onBlur={handleSubmit(handleUpdateBlockData)}
-      className="group/block relative w-full rounded-lg border border-transparent bg-white hover:bg-slate-50 focus-within:bg-slate-50  focus-within:border-slate-200"
+      className="group/block p-6 relative w-full rounded-lg border border-transparent bg-white hover:bg-slate-50 focus-within:bg-slate-50  focus-within:border-slate-200"
     >
       <div
         {...dragHandler}
@@ -70,40 +71,50 @@ const QuestionBlock = ({
       >
         ⸬
       </div>
-      <header className="flex flex-col gap-1 p-6 pt-5 pb-2 text-slate-500">
-        <p className="text-xs font-bold">{questionTypeLabels[questionType]}</p>
-        <input
-          {...register('title')}
-          placeholder="질문을 입력해주세요."
-          className="text-lg w-full bg-transparent hover:bg-slate-100 outline-none border-b border-b-transparent focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
-        />
-        <input
-          {...register('description')}
-          placeholder="질문에 대해 추가로 필요한 설명이나 제한사항을 입력하세요."
-          className="w-full bg-transparent outline-none border-b border-b-transparent  hover:bg-slate-100  focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
-        />
-      </header>
-      <section className="py-1 mb-4 text-slate-500">
-        {questionType === 'single' ||
-        questionType === 'checkbox' ||
-        questionType === 'dropdown' ? (
-          <OptionList
-            questionType={questionType}
-            optionList={optionList}
-            setOptionList={setOptionList}
-          />
+      <p className="text-xs font-bold  text-slate-500 mb-1">
+        {questionTypeLabels[questionType]}
+      </p>
+      <>
+        {questionType === 'text' ? (
+          <TextBlock register={register} />
         ) : (
-          <div className="flex items-center pl-6 mt-2">
-            <TextIcon className="stroke-slate-400" />
-            <input
-              type="text"
-              value={questionTypeLabels[questionType]}
-              className="ml-4 bg-transparent outline-none text-slate-400"
-              readOnly
-            />
-          </div>
+          <>
+            <header className="flex flex-col gap-1 pb-2 text-slate-500">
+              <input
+                {...register('title')}
+                placeholder="질문을 입력해주세요."
+                className="text-lg w-full bg-transparent hover:bg-slate-100 outline-none border-b border-b-transparent focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
+              />
+              <input
+                {...register('description')}
+                placeholder="질문에 대해 추가로 필요한 설명이나 제한사항을 입력하세요."
+                className="w-full bg-transparent outline-none border-b border-b-transparent  hover:bg-slate-100  focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
+              />
+            </header>
+            <section className="py-1 mb-4 text-slate-500">
+              {questionType === 'single' ||
+              questionType === 'checkbox' ||
+              questionType === 'dropdown' ? (
+                <OptionList
+                  questionType={questionType}
+                  optionList={optionList}
+                  setOptionList={setOptionList}
+                />
+              ) : (
+                <div className="flex items-center pl-6 mt-2">
+                  <TextIcon className="stroke-slate-400" />
+                  <input
+                    type="text"
+                    value={questionTypeLabels[questionType]}
+                    className="ml-4 bg-transparent outline-none text-slate-400"
+                    readOnly
+                  />
+                </div>
+              )}
+            </section>
+          </>
         )}
-      </section>
+      </>
     </div>
   );
 };
