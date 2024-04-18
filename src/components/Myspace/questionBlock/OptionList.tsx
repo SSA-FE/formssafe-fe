@@ -59,7 +59,7 @@ const OptionList = ({
               placeholder={`옵션 ${idx + 1}`}
               onChange={(e) => handleUpdateOption(option.id, e.target.value)}
               autoFocus
-              className="text outline-none bg-transparent w-full focus:bg-slate-50 px-2 py-1 placeholder:text-slate-400"
+              className="outline-none bg-transparent w-full focus:bg-slate-50 px-2 py-1 placeholder:text-slate-400"
             />
             <button
               type="button"
