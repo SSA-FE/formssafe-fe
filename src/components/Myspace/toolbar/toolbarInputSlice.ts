@@ -17,8 +17,13 @@ export const toolbarInputSlice = createSlice({
     updateSort: (state, action: PayloadAction<toolbarInput>) => {
       state.sort = action.payload.sort;
     },
+    resetInput: (state) => {
+      state.keyword = '';
+      state.sort = '';
+    },
   },
 });
 
-export const { updateKeyword, updateSort } = toolbarInputSlice.actions;
+export const { updateKeyword, updateSort, resetInput } =
+  toolbarInputSlice.actions;
 export default toolbarInputSlice.reducer;
