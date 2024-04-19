@@ -9,7 +9,8 @@
     "lint": "eslint src --ext ts,tsx --cache --max-warnings 0",
     "format": "prettier --cache --write .",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "svgr": "npx @svgr/cli -d src/assets/icons --ignore-existing --typescript --no-dimensions public/svg"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
