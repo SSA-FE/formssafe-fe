@@ -8,7 +8,7 @@ interface Tag {
 
 interface SurveyCardProps {
   title: string;
-  description: string;
+  description?: string;
   tags?: Tag[];
   questionCnt: number;
   expectTime: number;
@@ -29,10 +29,10 @@ const SurveyCard = ({
   const formattedDate = `${dateObject.getFullYear()}/${String(dateObject.getMonth() + 1).padStart(2, '0')}/${String(dateObject.getDate()).padStart(2, '0')}`;
 
   return (
-    <div className="w-full border rounded-lg max-w-surveyCard border-neutral-300">
+    <div className="w-full bg-white border rounded-lg max-w-surveyCard border-neutral-300">
       <div className="flex items-center justify-between w-full gap-2 px-5 pt-4 pb-[10px] border-neutral-300 border-b-[1px]">
         <div className="flex items-center gap-x-2">
-          <h1 className="text-base font-bold text-neutral-600 whitespace-nowrap">
+          <h1 className="w-40 overflow-hidden text-base font-bold overflow-ellipsis text-neutral-600 whitespace-nowrap">
             {title}
           </h1>
           {isTemp && (
@@ -42,12 +42,12 @@ const SurveyCard = ({
           )}
         </div>
 
-        <h2 className="gap-4 text-xs font-normal hmm text-neutral-400 whitespace-nowrap">
+        <h2 className="gap-4 text-xs font-normal text-neutral-400 whitespace-nowrap">
           LastEdit on {formattedDate}
         </h2>
       </div>
       <div className="flex flex-col p-4 gap-y-4">
-        <p className="px-2 text-sm font-normal text-neutral-500">
+        <p className="w-full h-10 px-2 text-sm font-normal text-neutral-500 text-overflow">
           {description}
         </p>
         <div className="flex flex-col px-4 py-2 text-xs border rounded-lg border-neutral-200 gap-y-1 text-neutral-400">
