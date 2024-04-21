@@ -1,5 +1,4 @@
 import Calendar from '@components/Myspace/Calendar';
-import adjustIcon from '@/assets/icons/adjust-icon.svg';
 import trophyIcon from '@/assets/icons/trophy-icon.svg';
 
 const FormInfoBar = () => {
@@ -41,13 +40,6 @@ const FormInfoBar = () => {
             </button>
           </div>
         </div>
-      </div>
-      {/* 제한시간 */}
-      <div className="flex justify-between w-full px-4 pt-3 pb-4">
-        <h2 className="text-neutral-800">제한시간</h2>
-        <button>
-          <img src={adjustIcon} alt="시간조절 아이콘" />
-        </button>
       </div>
       {/* 마감 */}
       <div className="flex flex-col w-full px-4 pt-3 pb-4">
