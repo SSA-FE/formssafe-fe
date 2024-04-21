@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { QuestionBlock } from '../questionBlock/questionBlockSlice';
+import { QuestionBlock, QuestionType } from '../questionBlock/QuestionBlock';
+
 interface QuestionBlockList {
   questionList: QuestionBlock[];
   activeBlockId: string;
@@ -51,6 +52,39 @@ export const questionBlockListSlice = createSlice({
     },
     setActiveBlockId: (state, action: PayloadAction<{ id: string }>) => {
       state.activeBlockId = action.payload.id;
+    },
+    updateQuestionType: (
+      state,
+      action: PayloadAction<{ id: string; type: QuestionType }>
+    ) => {
+      const index = state.questionList.findIndex(
+        (question) => question.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.questionList[index].type = action.payload.type;
+      }
+    },
+    updateQuestionRequired: (
+      state,
+      action: PayloadAction<{ id: string; required: boolean }>
+    ) => {
+      const index = state.questionList.findIndex(
+        (question) => question.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.questionList[index].isRequired = action.payload.required;
+      }
+    },
+    updateQuestionPrivacy: (
+      state,
+      action: PayloadAction<{ id: string; privacy: boolean }>
+    ) => {
+      const index = state.questionList.findIndex(
+        (question) => question.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.questionList[index].isPrivacy = action.payload.privacy;
+      }
     },
   },
 });

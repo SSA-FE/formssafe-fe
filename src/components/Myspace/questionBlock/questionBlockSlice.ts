@@ -1,16 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { QuestionType } from '../questionBlock/QuestionBlock';
-import { Option } from '../questionBlock/OptionList';
-
-export interface QuestionBlock {
-  id: string;
-  type: QuestionType;
-  title?: string;
-  description?: string;
-  options?: Option[];
-  isRequired: boolean;
-  isPrivacy: boolean;
-}
+import { QuestionBlock, QuestionType } from '../questionBlock/QuestionBlock';
 
 const initialState: QuestionBlock = {
   id: crypto.randomUUID(),
@@ -26,11 +15,11 @@ export const questionBlockSlice = createSlice({
     setQuestionType: (state, action: PayloadAction<{ type: QuestionType }>) => {
       state.type = action.payload.type;
     },
-    setIsRequired: (state, action: PayloadAction<{ value: boolean }>) => {
-      state.isPrivacy = action.payload.value;
+    setIsRequired: (state, action: PayloadAction<{ isRequired: boolean }>) => {
+      state.isPrivacy = action.payload.isRequired;
     },
-    setIsPrivacy: (state, action: PayloadAction<{ value: boolean }>) => {
-      state.isPrivacy = action.payload.value;
+    setIsPrivacy: (state, action: PayloadAction<{ isPrivacy: boolean }>) => {
+      state.isPrivacy = action.payload.isPrivacy;
     },
   },
 });
