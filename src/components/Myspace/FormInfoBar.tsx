@@ -9,6 +9,7 @@ const FormInfoBar = () => {
   const [preview, setPreview] = useState<string | null>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string>('');
+  const [isHidden, setIsHidden] = useState<boolean>(false);
 
   const onChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files !== null) {
@@ -34,17 +35,26 @@ const FormInfoBar = () => {
     }
   }, [imgFile]);
 
-  const handleButtonClick = () => {
+  const handleImgButtonClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
 
+  const handleSlideButtonClick = () => {
+    setIsHidden(!isHidden);
+  };
+
   return (
-    <div className="border-r border-slate-200 w-[19rem] ml-auto h-[calc(100vh-7.75rem)] bg-white flex flex-col content-center self-stretch">
-      {/* 
-border-bottom: 4px solid var(--slate-100, #F1F5F9);
-*/}
+    <div
+      className={`border-r border-slate-200 w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white flex flex-col content-center self-stretch relative border-r  duration-1000 ease-in-out ${isHidden ? '-translate-x-[19rem]' : ''}`}
+    >
+      <button
+        className="absolute w-10 h-10 text-3xl bg-white border-r rounded-r -right-10 top-7 border-y text-slate-300"
+        onClick={handleSlideButtonClick}
+      >
+        {isHidden ? '\u00BB' : '\u00AB'}
+      </button>
 
       {/* 대표 이미지 */}
       <div className="w-full px-4 flex flex-col gap-2.5 pt-3 pb-4 border-b-4 border-slate-100">
@@ -71,7 +81,7 @@ border-bottom: 4px solid var(--slate-100, #F1F5F9);
           />
           <button
             className="bg-neutral-100 px-3.5 py-1 rounded-lg flex items-center justify-center text-xs whitespace-nowrap"
-            onClick={handleButtonClick}
+            onClick={handleImgButtonClick}
           >
             파일 선택하기
           </button>
@@ -115,11 +125,13 @@ border-bottom: 4px solid var(--slate-100, #F1F5F9);
           </div>
         </div>
       </div>
+
       {/* 마감 */}
       <div className="flex flex-col w-full px-4 pt-3 pb-4">
         <h2 className="font-bold text-neutral-400">마감일</h2>
         <Calendar />
       </div>
+
       {/* 경품정하기 */}
       <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-xs bg-blue-50">
         <h2 className="flex text-sm font-bold text-mainColor gap-x-2">

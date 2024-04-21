@@ -1,6 +1,6 @@
 const FormOptionBar = () => {
   return (
-    <div className="w-[19rem] ml-auto h-[calc(100vh-7.75rem)] border border-neutral-200 bg-white rounded flex flex-col content-center self-stretch divide-y">
+    <div className="w-[19rem] ml-auto h-[calc(100vh-8rem)] border border-neutral-200 bg-white rounded flex flex-col content-center self-stretch divide-y">
       {/* 질문 유형 */}
       <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-xs">
         <h2 className="text-neutral-800">질문 유형</h2>
