@@ -20,9 +20,19 @@ const FormInfoBar = () => {
           좋아하세요? 나는 딸기
         </div>
       </div>
+
+      {/* 설명 */}
+      <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-xs">
+        <h2 className="font-bold text-neutral-400">설명</h2>
+        <textarea
+          className="flex flex-col h-16 p-2 text-xs border outline-none resize-none gap-md border-slate-200 bg-slate-50"
+          placeholder="설명을 입력하세요."
+        />
+      </div>
+
       {/* 태그 */}
       <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-md">
-        <h2 className="text-neutral-800">태그</h2>
+        <h2 className="font-bold text-neutral-400">태그</h2>
         <div className="flex flex-col overflow-x-scroll scrollbar gap-sm whitespace-nowrap">
           <div className="flex pb-4 gap-sm">
             <button className="text-xs text-nowrap">생성버튼</button>
@@ -40,15 +50,13 @@ const FormInfoBar = () => {
         </button>
       </div>
       {/* 마감 */}
-      <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-xs">
-        <h2 className="text-neutral-400 font-bold">마감일</h2>
-        <div className="flex flex-col gap-md">
-          <Calendar />
-        </div>
+      <div className="flex flex-col w-full px-4 pt-3 pb-4">
+        <h2 className="font-bold text-neutral-400">마감일</h2>
+        <Calendar />
       </div>
       {/* 경품정하기 */}
       <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-xs bg-blue-50">
-        <h2 className="text-mainColor font-bold flex gap-x-2 text-sm">
+        <h2 className="flex text-sm font-bold text-mainColor gap-x-2">
           <img src={trophyIcon} alt="경품 아이콘" />
           경품 정하기
         </h2>

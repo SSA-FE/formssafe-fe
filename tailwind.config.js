@@ -10,7 +10,7 @@ export default {
       },
       colors: {
         primaryTag: '#06B6D4',
-        mainColor: '#64748b'
+        mainColor: '#64748b',
       },
       width: {
         sidebar: '19rem',
