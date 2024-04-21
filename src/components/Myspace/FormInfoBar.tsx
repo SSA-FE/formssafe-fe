@@ -1,23 +1,97 @@
+import { useState, useEffect, useRef } from 'react';
 import Calendar from '@components/Myspace/Calendar';
 import trophyIcon from '@/assets/icons/trophy-icon.svg';
+import infoIcon from '@/assets/icons/info-icon.svg';
+import imgIcon from '@/assets/icons/img-icon.svg';
 
 const FormInfoBar = () => {
+  const [imgFile, setImgFile] = useState<File | null>();
+  const [preview, setPreview] = useState<string | null>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [fileName, setFileName] = useState<string>('');
+
+  const onChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files !== null) {
+      const file = event.target.files[0];
+      if (file && file.type.substring(0, 5) === 'image') {
+        setImgFile(file);
+        setFileName(file.name);
+      } else {
+        setImgFile(null);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (imgFile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result as string);
+      };
+      reader.readAsDataURL(imgFile);
+    } else {
+      setPreview(null);
+    }
+  }, [imgFile]);
+
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     <div className="border-r border-slate-200 w-[19rem] ml-auto h-[calc(100vh-7.75rem)] bg-white flex flex-col content-center self-stretch">
-      {/* 좋아하는 과일 설문지 */}
-      <div className="w-full px-4 flex flex-col gap-2.5 pt-3 pb-4">
-        <h2 className="font-bold leading-6 text-neutral-600">
-          # title 좋아하는 과일 설문지 좋아하는
+      {/* 
+border-bottom: 4px solid var(--slate-100, #F1F5F9);
+*/}
+
+      {/* 대표 이미지 */}
+      <div className="w-full px-4 flex flex-col gap-2.5 pt-3 pb-4 border-b-4 border-slate-100">
+        <h2 className="flex gap-[0.75rem] font-bold leading-6 text-neutral-600">
+          <img src={imgIcon} alt="대표 이미지 아이콘" />
+          대표 이미지
         </h2>
-        <img
-          className="object-cover w-[17rem] h-24 rounded-lg"
-          src="https://picsum.photos/200/300"
-          alt="검색 아이콘"
-        />
-        <div className="p-2 text-xs rounded-lg bg-neutral-100 text-neutral-500">
-          contents 좋아하는 과일 조사하기 설문입니다. 무슨 과일을 제일
-          좋아하세요? 나는 딸기
+        <div className="flex flex-row gap-x-2">
+          <div>
+            {imgFile && (
+              <img
+                src={preview as string}
+                alt="preview-img"
+                className="object-contain w-6 h-6 max-w-6"
+              />
+            )}
+          </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={onChangeImg}
+            className="hidden"
+          />
+          <button
+            className="bg-neutral-100 px-3.5 py-1 rounded-lg flex items-center justify-center text-xs whitespace-nowrap"
+            onClick={handleButtonClick}
+          >
+            파일 선택하기
+          </button>
+          {fileName && (
+            <span className="w-full truncate text-neutral-400">{fileName}</span>
+          )}
         </div>
+      </div>
+
+      {/* 설문지 정보 */}
+      <div className="w-full px-4 flex flex-col gap-2.5 pt-3 pb-4">
+        <h2 className="flex gap-[0.75rem] font-bold leading-6 text-neutral-600">
+          <img src={infoIcon} alt="설문지 정보 아이콘" />
+          설문지 정보
+        </h2>
+        <input
+          type="text"
+          placeholder="폼나는 싸패 첫 설문지"
+          className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50"
+        />
       </div>
 
       {/* 설명 */}
