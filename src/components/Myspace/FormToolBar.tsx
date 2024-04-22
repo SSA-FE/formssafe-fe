@@ -3,7 +3,7 @@ import visibleIcon from '@/assets/icons/visible-icon.svg';
 
 const FormToolBar = () => {
   return (
-    <div className="flex w-full px-8 h-[3.25rem] min-h-[3.25rem] whitespace-nowrap justify-between items-start border-b-neutral-200 border-b">
+    <div className="flex w-full px-8 h-16 min-h-16 whitespace-nowrap justify-between items-start">
       <div className="flex gap-md">
         <button className="box-border px-6 py-2 text-sm text-white rounded bg-neutral-800">
           지금 발행하기
