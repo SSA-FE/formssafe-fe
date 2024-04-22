@@ -1,4 +1,4 @@
-import searchIcon from '@/assets/icons/search-icon.svg';
+import checkIcon from '@/assets/icons/search-icon.svg';
 
 interface SearchBarProps {
   placeholder: string;
@@ -17,7 +17,7 @@ const SearchBar = ({ placeholder, bgColor, width }: SearchBarProps) => {
         placeholder={placeholder}
       />
       <button>
-        <img src={searchIcon} alt="검색 아이콘" />
+        <img src={checkIcon} alt="검색 아이콘" />
       </button>
     </div>
   );
