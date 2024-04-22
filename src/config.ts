@@ -6,6 +6,6 @@ export const API = {
   USERS: `/api/v1/users`,
   FORM: `/api/v1/forms`,
   RESULT: `/api/v1/forms`,
-  ACTIVITY: `/api/v1/activities`,
+  ACTIVITY: `/api/v1/activity`,
   SUBMISSION: `/api/v1/forms`,
 };
