@@ -38,9 +38,6 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <button className="fixed flex items-center justify-center w-12 pb-1 text-2xl font-bold text-white bg-black rounded-full aspect-square right-8 bottom-8">
-        @
-      </button>
     </div>
   );
 };

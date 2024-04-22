@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import QuestionOptions from '@components/Myspace/QuestionOptions';
 const FormOptionBar = () => {
-  const [infoChecked, setInfoChecked] = useState(false);
-  const [replyChecked, setReplyChecked] = useState(false);
+  const [privacyChecked, setPrivacyChecked] = useState(false);
+  const [requiredChecked, setRequiredChecked] = useState(false);
 
-  const handleInfoToggle = () => {
-    setInfoChecked(!infoChecked);
+  const handlePrivacyToggle = () => {
+    setPrivacyChecked(!privacyChecked);
   };
-  const handleReplyToggle = () => {
-    setReplyChecked(!replyChecked);
+  const handleRequiredToggle = () => {
+    setRequiredChecked(!requiredChecked);
   };
 
   return (
@@ -19,7 +19,7 @@ const FormOptionBar = () => {
         {/* 개인정보 */}
         <label className="flex items-center justify-between h-12 p-4 cursor-pointer">
           <span
-            className={`text-xs font-bold ${infoChecked ? 'text-blue-300' : 'text-neutral-400'}`}
+            className={`text-xs font-bold ${privacyChecked ? 'text-blue-300' : 'text-neutral-400'}`}
           >
             개인정보
             <span className="ml-1 text-orange-400">&#9432;</span>
@@ -29,7 +29,7 @@ const FormOptionBar = () => {
               type="checkbox"
               value=""
               className="sr-only peer"
-              onClick={handleInfoToggle}
+              onClick={handlePrivacyToggle}
             />
             <div className="toggle-btn"></div>
           </div>
@@ -37,7 +37,7 @@ const FormOptionBar = () => {
         {/* 필수응답 */}
         <label className="flex items-center justify-between h-12 p-4 cursor-pointer">
           <span
-            className={`text-xs font-bold ${replyChecked ? 'text-blue-300' : 'text-neutral-400'}`}
+            className={`text-xs font-bold ${requiredChecked ? 'text-blue-300' : 'text-neutral-400'}`}
           >
             필수응답
             <span className="ml-1 text-orange-400">&#9432;</span>
@@ -47,7 +47,7 @@ const FormOptionBar = () => {
               type="checkbox"
               value=""
               className="sr-only peer"
-              onClick={handleReplyToggle}
+              onClick={handleRequiredToggle}
             />
             <div className="toggle-btn"></div>
           </div>
