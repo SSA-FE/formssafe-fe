@@ -19,6 +19,7 @@ const FormToolBar = () => {
           placeholder="질문을 검색하세요"
           bgColor="bg-neutral-100"
           width="w-[107px]"
+          height="h-[36px]"
         />
       </div>
     </div>

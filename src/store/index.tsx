@@ -1,14 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit';
-import questionBlockFormReducer from '@components/Myspace/questionBlockForm/questionBlockFormSlice';
+import questionBlockListReducer from '@/components/Myspace/questionBlockList/questionBlockListSlice';
+import toolbarInputReducer from '@/components/Myspace/toolbar/toolbarInputSlice';
 import { userApi } from '@api/userApi';
+import { activityApi } from '@/api/activityApi';
 
 export const store = configureStore({
   reducer: {
-    questionBlockForm: questionBlockFormReducer,
+    questionBlockList: questionBlockListReducer,
+    toolbarInput: toolbarInputReducer,
+
     [userApi.reducerPath]: userApi.reducer,
+    [activityApi.reducerPath]: activityApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(userApi.middleware);
+    return getDefaultMiddleware().concat(
+      userApi.middleware,
+      activityApi.middleware
+    );
   },
 });
 
