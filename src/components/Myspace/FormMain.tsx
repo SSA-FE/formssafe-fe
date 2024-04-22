@@ -2,17 +2,20 @@ import plusIcon from '@/assets/icons/plus-icon.svg';
 import QuestionBlockList from './questionBlockList/QuestionBlockList';
 import { addQuestion } from './questionBlockList/questionBlockListSlice';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const FormMain = () => {
   const dispatch = useDispatch();
+  const questionBlock = useSelector((store: RootState) => store.questionBlock);
 
   const handleAddBlock = () => {
     dispatch(
       addQuestion({
         id: crypto.randomUUID(),
-        type: 'single',
-        isRequired: true,
-        isPrivacy: false,
+        type: questionBlock.type,
+        isRequired: questionBlock.isRequired,
+        isPrivacy: questionBlock.isPrivacy,
       })
     );
   };
