@@ -95,5 +95,8 @@ export const {
   removeQuestion,
   reorderQuestion,
   setActiveBlockId,
+  updateQuestionType,
+  updateQuestionRequired,
+  updateQuestionPrivacy
 } = questionBlockListSlice.actions;
 export default questionBlockListSlice.reducer;
