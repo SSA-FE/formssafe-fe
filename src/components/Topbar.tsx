@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { useFetchUserQuery } from '@/api/userApi';
-import { InactiveAlarmIcon } from '@assets/icons';
+import { EditIcon, InactiveAlarmIcon, LogoutIcon } from '@assets/icons';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '@/api/axios';
@@ -73,7 +73,7 @@ const Topbar = () => {
     return (
       <div
         ref={modalRef}
-        className="absolute top-full right-0 border rounded-md border-slate-200 h-[240px] w-[320px] bg-white shadow-md gap-3 flex flex-col px-4 py-4"
+        className="absolute top-full right-0 border rounded-md border-slate-200 h-[240px] w-[240px] bg-white shadow-md flex flex-col px-4 py-4 justify-between"
       >
         <div className="flex flex-col items-center w-full gap-2">
           <img
@@ -104,15 +104,19 @@ const Topbar = () => {
             <p className="text-xs text-slate-800">{data?.email}</p>
           </div>
         </div>
+        <hr />
         <div className="flex flex-col gap-2">
-          <button className="text-xs text-left" onClick={handleEdit}>
-            닉네임 변경
+          <button className="flex items-center h-8" onClick={handleEdit}>
+            <div className="flex items-center justify-center w-8 h-8">
+              <EditIcon width="18" height="18" />
+            </div>
+            <p className="text-xs text-left">닉네임 변경</p>
           </button>
-          <button
-            className="text-xs text-left text-red-500"
-            onClick={handleLogout}
-          >
-            로그아웃
+          <button className="flex items-center h-8" onClick={handleLogout}>
+            <div className="flex items-center justify-center w-8 h-8">
+              <LogoutIcon width="22" height="22" />
+            </div>
+            <p className="text-xs text-left text-red-500">로그아웃</p>
           </button>
         </div>
       </div>
