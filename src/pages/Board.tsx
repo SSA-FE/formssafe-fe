@@ -1,5 +1,13 @@
+import BoardMain from '@/components/Board/BoardMain';
+import BoardPanel from '@/components/Board/panel/BoardPanel';
+
 const Board = () => {
-  return <div>보드 페이지입니다.</div>;
+  return (
+    <>
+      <BoardPanel />
+      <BoardMain />
+    </>
+  );
 };
 
 export default Board;
