@@ -3,7 +3,7 @@ import StatSortDropdown from '../StatSortDropdown';
 
 const RemoteForm = () => {
   return (
-    <div className="w-[312px] h-[21.28125rem] flex flex-col flex-1 sticky top-0 right-0 border-r bg-slate-50 border-slate-600 ">
+    <div className="h-[21.28125rem] flex flex-col flex-1 sticky top-0 right-0 bg-slate-50 ">
       {/* 개별 질문리스트 헤더  */}
       <div className="h-16 gap-2 py-3">
         {/* StatusBar */}

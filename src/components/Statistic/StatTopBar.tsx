@@ -17,7 +17,7 @@ const StatTopBar = () => {
         <div className="px-3">editor version 3.4.1</div>
       </div>
 
-      <StatSearchBar placeholder="질문을 검색하세요" />
+      <StatSearchBar width="w-[32.5rem]" placeholder="질문을 검색하세요" />
 
       {/* buttons */}
       <div className="w-[23.0625rem] flex justify-between items-center gap-4 text-xs text-slate-50 font-bold">

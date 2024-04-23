@@ -7,7 +7,7 @@ function Stat() {
     <>
       <StatTopBar />
       <div className="flex">
-        <div className="h-[calc(100vh-6rem)] bg-red-500 flex flex-col">
+        <div className="w-[19.5rem] h-[calc(100vh-6rem)] flex flex-col border-r border-slate-600">
           <RemoteForm />
           <UserResultForm />
         </div>
