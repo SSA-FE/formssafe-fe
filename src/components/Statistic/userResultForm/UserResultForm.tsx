@@ -1,25 +1,16 @@
-import StatSortDropdown from '@components/Statistic/StatSortDropdown';
 import User from './User';
 
 const UserResultForm = () => {
   return (
-    <div className="flex flex-col w-[310px] h-[calc(100vh-116px)] py-4 px-2 border-r-[0.5px] border-b-[0.5px] border-blue-300 bg-white">
+    <div className="flex flex-1 flex-col w-[312px] h-[336.5px] py-4 px-2 border-r-[0.5px] border-b-[0.5px] border-blue-300 bg-slate-100">
       {/* 개별 질문리스트 헤더  */}
-      <div className="gap-2 h-[100px]">
-        {/* 전체설문조회 : StatusBar */}
-        <div className="rounded-[40px] bg-blue-400">
-          <button className="w-full h-[36px] px-4 text-white text-xs font-bold">
-            {' '}
-            전체 설문 조회{' '}
-          </button>
-        </div>
-
+      <div className="gap-2 h-[86px]">
         {/* StatusBar */}
         <div className="w-full px-4 py-2">
-          <div className="flex items-center justify-between">
-            <h1 className="font-bold text-neutral-600">응답자 리스트</h1>
-
-            <StatSortDropdown />
+          <div className="flex items-center justify-center">
+            <h1 className="text-xs font-bold text-slate-400">
+              총 40명의 설문자
+            </h1>
           </div>
 
           {/* 총 질문 개수 */}

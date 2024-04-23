@@ -6,10 +6,11 @@ function Stat() {
   return (
     <>
       <StatTopBar />
-      <div className="flex bg-blue-50">
-        <UserResultForm />
-        <div className="flex-1 h-[2000px]"></div>
-        <RemoteForm />
+      <div className="flex">
+        <div className="h-[calc(100vh-6rem)] bg-red-500 flex flex-col">
+          <RemoteForm />
+          <UserResultForm />
+        </div>
       </div>
     </>
   );
