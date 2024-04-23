@@ -7,7 +7,6 @@ import ArrowSVG from '@/assets/icons/arrow-icon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '@/api/axios';
 import { API } from '@/config';
-import { useUpdateUserMutation } from '@api/userApi';
 
 type UserType = {
   userId: number;
@@ -29,7 +28,6 @@ const schema = z.object({
 
 function LoginRedirect() {
   const [user, setUser] = useState<UserType>(null);
-  const [updateUser] = useUpdateUserMutation();
   const navigate = useNavigate();
   const {
     register,
@@ -84,10 +82,10 @@ function LoginRedirect() {
 
   const handleValid = async (data: Nickname) => {
     try {
-      await updateUser({
-        nickname: data.nickname,
-      });
-      navigate('/myspace');
+      const response = await instance.post(`${API.USERS}/join`, data);
+      if (response.status === 200) {
+        navigate('/myspace');
+      }
     } catch (error) {
       // TODO: error handling
       console.error(error);

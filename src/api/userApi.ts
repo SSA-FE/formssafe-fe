@@ -9,10 +9,6 @@ interface User {
   isActive: boolean;
 }
 
-interface ApiResponse {
-  status: number;
-}
-
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
@@ -20,14 +16,7 @@ export const userApi = createApi({
     fetchUser: builder.query<User, void>({
       query: () => ({ url: `${API.USERS}/profile` }),
     }),
-    updateUser: builder.mutation<ApiResponse, { nickname: string }>({
-      query: (body) => ({
-        url: `${API.USERS}/join`,
-        method: 'POST',
-        body,
-      }),
-    }),
   }),
 });
 
-export const { useFetchUserQuery, useUpdateUserMutation } = userApi;
+export const { useFetchUserQuery } = userApi;
