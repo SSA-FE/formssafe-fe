@@ -7,7 +7,7 @@ import { instance } from '@/api/axios';
 import { API } from '@/config';
 
 const Topbar = () => {
-  const { data } = useFetchUserQuery();
+  const { data, refetch } = useFetchUserQuery();
   const [alarmModalOpen, setAlarmModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const location = useLocation();
@@ -45,28 +45,44 @@ const Topbar = () => {
   const AlarmModal = () => (
     <div
       ref={modalRef}
-      className="absolute top-full right-0 border rounded-md border-slate-200 h-[240px] w-[320px] bg-white py-1 shadow-md"
-    ></div>
+      className="absolute top-full right-0 border rounded-md border-slate-200 h-[244px] w-[320px] bg-white py-1 shadow-md  box-content overflow-y-auto"
+    >
+      <div className="w-full h-[60px] bg-gray-100"></div>
+      <hr />
+      <div className="w-full h-[60px] bg-gray-100"></div>
+      <hr />
+      <div className="w-full h-[60px] bg-gray-100"></div>
+      <hr />
+      <div className="w-full h-[60px] bg-gray-100"></div>
+      <hr />
+      <div className="w-full h-[60px] bg-gray-100"></div>
+      <hr />
+      <div className="w-full h-[60px] bg-gray-100"></div>
+      <hr />
+      <div className="w-full h-[60px] bg-gray-100"></div>
+    </div>
   );
 
   const ProfileModal = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [nickname, setNickname] = useState(data?.nickname || '');
-    const handleEdit = () => {
+
+    useEffect(() => {
       setNickname(data?.nickname || '');
-      setIsEditing(true);
-    };
+    }, [data]);
 
     const handleUpdateUser = async (nickname: string) => {
       try {
         const response = await instance.patch(`${API.USERS}`, { nickname });
         if (response.status === 200) {
-          setNickname(nickname);
+          refetch();
           setIsEditing(false);
         }
       } catch (error) {
         // TODO: error handling
         console.error(error);
+        setNickname(data?.nickname || '');
+        setIsEditing(false);
       }
     };
 
@@ -81,18 +97,18 @@ const Topbar = () => {
             alt="profile"
             className="object-cover w-12 h-12 rounded-full"
           />
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center w-full">
             {isEditing ? (
-              <div className="space-x-2">
+              <div className="flex space-x-2">
                 <input
                   value={nickname}
-                  className="box-border max-w-full font-bold border-2 rounded-md text-slate-800"
+                  className="box-border flex-grow font-bold border-2 rounded-md text-slate-800 w-[160px] px-2"
                   onChange={(e) =>
                     setNickname((e.target as HTMLInputElement).value)
                   }
                 />
                 <button
-                  className="h-full px-3 text-white bg-blue-500 rounded-md "
+                  className="flex-shrink-0 h-full px-3 text-white bg-blue-500 rounded-md"
                   onClick={() => handleUpdateUser(nickname)}
                 >
                   적용
@@ -106,7 +122,10 @@ const Topbar = () => {
         </div>
         <hr />
         <div className="flex flex-col gap-2">
-          <button className="flex items-center h-8" onClick={handleEdit}>
+          <button
+            className="flex items-center h-8"
+            onClick={() => setIsEditing(true)}
+          >
             <div className="flex items-center justify-center w-8 h-8">
               <EditIcon width="18" height="18" />
             </div>
