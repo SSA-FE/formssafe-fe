@@ -50,7 +50,6 @@ const Topbar = () => {
   );
 
   const ProfileModal = () => {
-    const modalRef = useRef(null);
     const [isEditing, setIsEditing] = useState(false);
     const [nickname, setNickname] = useState(data?.nickname || '');
     const handleEdit = () => {
