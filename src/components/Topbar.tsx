@@ -7,12 +7,10 @@ import { instance } from '@/api/axios';
 import { API } from '@/config';
 
 const Topbar = () => {
+  const { data } = useFetchUserQuery();
   const [alarmModalOpen, setAlarmModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-
   const location = useLocation();
-  const { data } = useFetchUserQuery();
   const modalRef = useRef(null);
   const navigate = useNavigate();
 
@@ -51,36 +49,76 @@ const Topbar = () => {
     ></div>
   );
 
-  const ProfileModal = () => (
-    <div
-      ref={modalRef}
-      className="absolute top-full right-0 border rounded-md border-slate-200 h-[108px] w-[124px] bg-white shadow-md gap-3 flex flex-col px-4 py-4"
-    >
-      {isEditing ? (
-        <input
-          type="text"
-          defaultValue={data?.nickname}
-          className="box-border font-bold border-2 text-slate-800"
-        />
-      ) : (
-        <h1 className="font-bold text-slate-800">{data?.nickname}</h1>
-      )}
-      <div className="flex flex-col gap-2">
-        <button
-          className="text-xs text-left"
-          onClick={() => setIsEditing(true)}
-        >
-          닉네임 변경
-        </button>
-        <button
-          className="text-xs text-left text-red-500"
-          onClick={handleLogout}
-        >
-          로그아웃
-        </button>
+  const ProfileModal = () => {
+    const modalRef = useRef(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [nickname, setNickname] = useState(data?.nickname || '');
+    const handleEdit = () => {
+      setNickname(data?.nickname || '');
+      setIsEditing(true);
+    };
+
+    const handleUpdateUser = async (nickname: string) => {
+      try {
+        const response = await instance.patch(`${API.USERS}`, { nickname });
+        if (response.status === 200) {
+          setNickname(nickname);
+          setIsEditing(false);
+        }
+      } catch (error) {
+        // TODO: error handling
+        console.error(error);
+      }
+    };
+
+    return (
+      <div
+        ref={modalRef}
+        className="absolute top-full right-0 border rounded-md border-slate-200 h-[240px] w-[320px] bg-white shadow-md gap-3 flex flex-col px-4 py-4"
+      >
+        <div className="flex flex-col items-center w-full gap-2">
+          <img
+            src={data?.imageUrl}
+            alt="profile"
+            className="object-cover w-12 h-12 rounded-full"
+          />
+          <div className="flex flex-col items-center">
+            {isEditing ? (
+              <div className="space-x-2">
+                <input
+                  value={nickname}
+                  className="box-border max-w-full font-bold border-2 rounded-md text-slate-800"
+                  onChange={(e) =>
+                    setNickname((e.target as HTMLInputElement).value)
+                  }
+                />
+                <button
+                  className="h-full px-3 text-white bg-blue-500 rounded-md "
+                  onClick={() => handleUpdateUser(nickname)}
+                >
+                  적용
+                </button>
+              </div>
+            ) : (
+              <h1 className="font-bold text-slate-800">{nickname}</h1>
+            )}
+            <p className="text-xs text-slate-800">{data?.email}</p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <button className="text-xs text-left" onClick={handleEdit}>
+            닉네임 변경
+          </button>
+          <button
+            className="text-xs text-left text-red-500"
+            onClick={handleLogout}
+          >
+            로그아웃
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <nav className="flex items-center justify-between w-full px-8 py-2 h-topbar min-h-16 whitespace-nowrap">
