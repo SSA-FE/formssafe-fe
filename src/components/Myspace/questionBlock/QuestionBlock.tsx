@@ -1,8 +1,11 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { updateQuestion } from '../questionBlockList/questionBlockListSlice';
+import {
+  setActiveBlockId,
+  updateQuestion,
+} from '../questionBlockList/questionBlockListSlice';
 import { useState } from 'react';
-import OptionList, { option } from './OptionList';
+import OptionList, { Option } from './OptionList';
 import TextIcon from '@/assets/icons/text-icon.svg?react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import TextBlock from './TextBlock';
@@ -16,7 +19,7 @@ const questionTypeLabels = {
   text: '텍스트',
 };
 
-export type questionType =
+export type QuestionType =
   | 'single'
   | 'checkbox'
   | 'dropdown'
@@ -24,9 +27,18 @@ export type questionType =
   | 'short'
   | 'text';
 
+export interface QuestionBlock {
+  id: string;
+  type: QuestionType;
+  title?: string;
+  description?: string;
+  options?: Option[];
+  isRequired: boolean;
+  isPrivacy: boolean;
+}
+
 interface QuestionBlockProps {
-  questionId: string;
-  questionType: questionType;
+  questionData: QuestionBlock;
   dragHandler: DraggableProvided['dragHandleProps'];
 }
 
@@ -35,25 +47,21 @@ export interface QuestionBlockInputs {
   description?: string;
 }
 
-const QuestionBlock = ({
-  questionType,
-  questionId,
-  dragHandler,
-}: QuestionBlockProps) => {
+const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
   const { register, handleSubmit } = useForm<QuestionBlockInputs>();
-  const [optionList, setOptionList] = useState<option[]>([]);
+  const [optionList, setOptionList] = useState<Option[]>([]);
   const dispatch = useDispatch();
 
   const handleUpdateBlockData: SubmitHandler<QuestionBlockInputs> = (data) => {
     dispatch(
       updateQuestion({
-        id: questionId,
-        type: questionType,
+        id: questionData.id,
+        type: questionData.type,
         title: data.title,
         description: data.description,
         options: optionList,
-        isRequired: true,
-        isPrivacy: false,
+        isRequired: questionData.isRequired,
+        isPrivacy: questionData.isPrivacy,
       })
     );
   };
@@ -63,6 +71,14 @@ const QuestionBlock = ({
       tabIndex={0}
       role="button"
       onBlur={handleSubmit(handleUpdateBlockData)}
+      onClick={() => {
+        dispatch(setActiveBlockId({ id: questionData.id }));
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === 'Space') {
+          dispatch(setActiveBlockId({ id: questionData.id }));
+        }
+      }}
       className="group/block p-6 relative w-full rounded-lg border border-transparent bg-white hover:bg-slate-50 focus-within:bg-slate-50  focus-within:border-slate-200"
     >
       <div
@@ -72,10 +88,10 @@ const QuestionBlock = ({
         ⸬
       </div>
       <p className="text-xs font-bold  text-slate-500 mb-1">
-        {questionTypeLabels[questionType]}
+        {questionTypeLabels[questionData.type]}
       </p>
       <>
-        {questionType === 'text' ? (
+        {questionData.type === 'text' ? (
           <TextBlock register={register} />
         ) : (
           <>
@@ -92,11 +108,11 @@ const QuestionBlock = ({
               />
             </header>
             <section className="py-1 mb-4 text-slate-500">
-              {questionType === 'single' ||
-              questionType === 'checkbox' ||
-              questionType === 'dropdown' ? (
+              {questionData.type === 'single' ||
+              questionData.type === 'checkbox' ||
+              questionData.type === 'dropdown' ? (
                 <OptionList
-                  questionType={questionType}
+                  questionType={questionData.type}
                   optionList={optionList}
                   setOptionList={setOptionList}
                 />
@@ -105,7 +121,7 @@ const QuestionBlock = ({
                   <TextIcon className="stroke-slate-400" />
                   <input
                     type="text"
-                    value={questionTypeLabels[questionType]}
+                    value={questionTypeLabels[questionData.type]}
                     className="ml-4 bg-transparent outline-none text-slate-400"
                     readOnly
                   />
