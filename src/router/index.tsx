@@ -6,13 +6,14 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import App from '@/App';
-import NotFound from '@/pages/NotFound';
+import NotFound from '@pages/NotFound';
 
-const Home = React.lazy(() => import('@/pages/Home'));
-const Myspace = React.lazy(() => import('@/pages/Myspace'));
-const Editor = React.lazy(() => import('@/pages/Editor'));
+const Home = React.lazy(() => import('@pages/Home'));
+const Myspace = React.lazy(() => import('@pages/Myspace'));
+const Editor = React.lazy(() => import('@pages/Editor'));
+const Board = React.lazy(() => import('@pages/Board'));
 const LoginRedirect = React.lazy(
-  () => import('@/components/auth/LoginRedirect')
+  () => import('@components/auth/LoginRedirect')
 );
 
 const Router = () => {
@@ -22,14 +23,18 @@ const Router = () => {
       element: <App />,
       errorElement: <NotFound />,
       children: [
-        { index: true, path: '/', element: <Home /> },
+        { index: true, element: <Home /> },
         {
-          path: '/myspace',
+          path: 'myspace',
           element: <Myspace />,
         },
         {
-          path: '/editor',
+          path: 'editor',
           element: <Editor />,
+        },
+        {
+          path: 'board',
+          element: <Board />,
         },
       ],
     },
