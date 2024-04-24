@@ -1,5 +1,3 @@
-import StatSearchBar from '@components/Statistic/StatSearchBar';
-
 import statCheckIcon from '@/assets/icons/stat-check-icon.svg';
 import editIcon from '@/assets/icons/edit-square-icon.svg';
 
@@ -17,15 +15,16 @@ const StatTopBar = () => {
         <div className="px-3">editor version 3.4.1</div>
       </div>
 
-      <StatSearchBar width="w-[32.5rem]" placeholder="질문을 검색하세요" />
+      <div className="flex items-center mx-auto gap-x-4">
+        <div className="p-2 border-b-2 border-black">전체요약</div>
+
+        <div className="p-2 text-slate-400">개별통계</div>
+      </div>
 
       {/* buttons */}
-      <div className="w-[23.0625rem] flex justify-between items-center gap-4 text-xs text-slate-50 font-bold">
+      <div className="w-[15.25rem] flex justify-between items-center gap-4 text-xs text-slate-50 font-bold">
         <button className="w-[6.8125rem] h-9 rounded-full bg-neutral-400 drop-shadow">
           출력하기
-        </button>
-        <button className="w-[6.8125rem] h-9 rounded-full bg-neutral-400 drop-shadow">
-          설문지로
         </button>
         <button className="w-[7.4375rem] h-9 px-6 flex items-center gap-x-4 rounded-full bg-blue-400 drop-shadow">
           <img className="w-[12px] h-[12px]" src={editIcon} alt="edit-icon" />

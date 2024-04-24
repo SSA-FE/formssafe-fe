@@ -1,11 +1,9 @@
-import StatTopBar from '@/components/Statistic/StatTopBar';
 import RemoteForm from '@/components/Statistic/remoteForm/RemoteForm';
 import UserResultForm from '@/components/Statistic/userResultForm/UserResultForm';
 
 function Stat() {
   return (
     <>
-      <StatTopBar />
       <div className="flex">
         <div className="w-[19.5rem] h-[calc(100vh-6rem)] flex flex-col border-r border-slate-600">
           <RemoteForm />

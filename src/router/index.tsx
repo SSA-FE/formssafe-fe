@@ -12,6 +12,10 @@ const Home = React.lazy(() => import('@/pages/Home'));
 const Myspace = React.lazy(() => import('@/pages/Myspace'));
 const Editor = React.lazy(() => import('@/pages/Editor'));
 const Stat = React.lazy(() => import('@/pages/Stat'));
+const StatDetail = React.lazy(() => import('@/pages/StatDetail'));
+
+const StatLayout = React.lazy(() => import('@/components/StatLayout'));
+
 const LoginRedirect = React.lazy(
   () => import('@/components/auth/LoginRedirect')
 );
@@ -34,7 +38,17 @@ const Router = () => {
         },
         {
           path: '/stat',
-          element: <Stat />,
+          element: <StatLayout />,
+          children: [
+            {
+              index: true,
+              element: <Stat />,
+            },
+            {
+              path: '/stat/:id',
+              element: <StatDetail />,
+            },
+          ],
         },
       ],
     },
