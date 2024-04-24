@@ -84,7 +84,7 @@ function LoginRedirect() {
     try {
       const response = await instance.post(`${API.USERS}/join`, data);
       if (response.status === 200) {
-        navigate('/myspace');
+        navigate('/board');
       }
     } catch (error) {
       // TODO: error handling
@@ -101,7 +101,7 @@ function LoginRedirect() {
 
   useEffect(() => {
     if (!user) return;
-    const destination = user.isActive ? '/myspace' : '';
+    const destination = user.isActive ? '/board' : '';
     if (destination) {
       navigate(destination);
     }

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useFetchUserQuery } from '@/api/userApi';
 import { EditIcon, InactiveAlarmIcon, LogoutIcon } from '@assets/icons';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -145,7 +145,12 @@ const Topbar = () => {
   return (
     <nav className="flex items-center justify-between w-full px-8 py-2 h-topbar min-h-16 whitespace-nowrap">
       <div className="flex align-middle gap-9">
-        <p className="text-base font-bold text-slate-800">폼나는 싸패</p>
+        <NavLink
+          className="text-lg font-bold text-slate-600"
+          to={location.pathname === '/' ? '/' : '/board'}
+        >
+          폼나는 싸패 💻
+        </NavLink>
         <div className="flex items-center text-sm gap-xs">
           <span className="flex items-center h-full px-4 text-neutral-500 rounded-2xl bg-neutral-200 ">
             v 3.4.1 24/02/13
