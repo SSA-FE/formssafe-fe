@@ -1,6 +1,11 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useFetchUserQuery } from '@/api/userApi';
-import { EditIcon, InactiveAlarmIcon, LogoutIcon } from '@assets/icons';
+import {
+  EditIcon,
+  InactiveAlarmIcon,
+  LogoutIcon,
+  MainLogoIcon,
+} from '@assets/icons';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '@/api/axios';
@@ -149,7 +154,7 @@ const Topbar = () => {
           className="text-lg font-bold text-slate-600"
           to={location.pathname === '/' ? '/' : '/board'}
         >
-          폼나는 싸패 💻
+          <MainLogoIcon width="100" />
         </NavLink>
         <div className="flex items-center text-sm gap-xs">
           <span className="flex items-center h-full px-4 text-neutral-500 rounded-2xl bg-neutral-200 ">
