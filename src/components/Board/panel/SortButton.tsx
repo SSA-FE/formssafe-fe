@@ -14,7 +14,7 @@ const SortButton = ({
     className={`${
       selectedButton === button
         ? 'bg-gray-200 text-neutral-500'
-        : 'bg-gray-100 text-neutral-400'
+        : 'bg-bgColor text-neutral-400'
     } rounded-[56px] font-bold text-sm px-6 py-4`}
     onClick={() => setSelectedButton(button)}
   >

@@ -23,7 +23,7 @@ const BoardPanel = () => {
           />
         ))}
       </div>
-      <div className="w-[640px] h-[60px] bg-neutral-100  rounded-[48px]">
+      <div className="w-[640px] h-[60px] bg-bgColor  rounded-[48px]">
         <SearchForm
           keyword={keyword}
           setKeyword={setKeyword}
