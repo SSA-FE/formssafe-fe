@@ -50,7 +50,7 @@ export const activityApi = createApi({
   endpoints: (builder) => ({
     fetchParticipatedSurveys: builder.query<SurveyResponse, SurveyRequest>({
       query: (request) => ({
-        url: `${API.ACTIVITY}/responses`,
+        url: `${API.ACTIVITY}/submissions`,
         params: request,
       }),
     }),
