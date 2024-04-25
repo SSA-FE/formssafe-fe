@@ -28,11 +28,11 @@ const MyspaceMain = ({ surveyStatus }: { surveyStatus: string }) => {
   const { data: SurveyList, isLoading } = selectedQuery;
 
   if (isLoading) return <div>Loading...</div>;
-  console.log(SurveyList);
+
   return (
     <div className="w-full min-h-screen bg-neutral-100 ">
       <Toolbar />
-      <div className="flex flex-wrap gap-4 px-8 pb-4">
+      <div className="flex flex-wrap gap-4 mx-8 mb-4">
         {SurveyList &&
           Array.isArray(SurveyList) &&
           SurveyList.map((survey: Survey) => (
