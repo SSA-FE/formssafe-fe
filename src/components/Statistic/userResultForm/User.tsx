@@ -5,9 +5,13 @@ interface UserProps {
 
 const User = ({ name }: UserProps) => {
   return (
-    <div className="w-full h-[40px] flex shrink-0 justify-between items-center gap-4 px-4 border-b border-slate-100">
+    <div className="w-full h-[40px] flex shrink-0 justify-between items-center gap-4 px-4 border-b border-slate-100 cursor-pointer hover:bg-slate-300">
       <div className="flex items-center gap-4 text-xs text-slate-700">
-        <img className="w-3 h-3 rounded-full" src={personIcon} alt="profile" />
+        <img
+          className="w-[20px] h-[20px] rounded-full"
+          src={personIcon}
+          alt="profile"
+        />
         {name}
       </div>
 

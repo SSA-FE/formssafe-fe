@@ -3,9 +3,10 @@ import RemoteForm from '@/components/Statistic/remoteForm/RemoteForm';
 function Stat() {
   return (
     <>
-      <div className="flex">
+      {/* height : test */}
+      <div className="flex h-[calc(200vh-6rem)]">
         {/* 사이드바 */}
-        <div className="w-[19.5rem] h-[calc(200vh-6rem)]">
+        <div className="w-[19.5rem]">
           <RemoteForm />
         </div>
 

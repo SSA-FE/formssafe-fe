@@ -16,7 +16,7 @@ const StatTopBar = () => {
         <div className="px-3">editor version 3.4.1</div>
       </div>
 
-      <div className="flex items-center mx-auto gap-x-4">
+      <div className="flex items-center mx-auto text-xs gap-x-4">
         <div className="p-2 border-b-2 border-black">
           <Link to="/stat">전체요약</Link>
         </div>
