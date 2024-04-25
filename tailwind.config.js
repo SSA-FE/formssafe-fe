@@ -11,6 +11,7 @@ export default {
       colors: {
         primaryTag: '#06B6D4',
         mainColor: '#64748b',
+        bgColor: '#FAFAFA',
       },
       width: {
         sidebar: '19rem',

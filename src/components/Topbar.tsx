@@ -1,6 +1,11 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useFetchUserQuery } from '@/api/userApi';
-import { EditIcon, InactiveAlarmIcon, LogoutIcon } from '@assets/icons';
+import {
+  EditIcon,
+  InactiveAlarmIcon,
+  LogoutIcon,
+  MainLogoIcon,
+} from '@assets/icons';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { instance } from '@/api/axios';
@@ -45,7 +50,7 @@ const Topbar = () => {
   const AlarmModal = () => (
     <div
       ref={modalRef}
-      className="absolute top-full right-0 border rounded-md border-slate-200 h-[244px] w-[320px] bg-white py-1 shadow-md  box-content overflow-y-auto"
+      className="absolute z-9999 top-full right-0 border rounded-md border-slate-200 h-[244px] w-[320px] bg-white py-1 shadow-md  box-content overflow-y-auto"
     >
       <div className="w-full h-[60px] bg-gray-100"></div>
       <hr />
@@ -144,22 +149,13 @@ const Topbar = () => {
 
   return (
     <nav className="flex items-center justify-between w-full px-8 py-2 h-topbar min-h-16 whitespace-nowrap">
-      <div className="flex align-middle gap-9">
-        <NavLink
-          className="text-lg font-bold text-slate-600"
-          to={location.pathname === '/' ? '/' : '/board'}
-        >
-          폼나는 싸패 💻
-        </NavLink>
-        <div className="flex items-center text-sm gap-xs">
-          <span className="flex items-center h-full px-4 text-neutral-500 rounded-2xl bg-neutral-200 ">
-            v 3.4.1 24/02/13
-          </span>
-          <span className="flex items-center h-full px-4 bg-primaryTag text-primaryTag rounded-2xl">
-            2024 SAFFE FORM PROJECT Create your own Form
-          </span>
-        </div>
-      </div>
+      <NavLink
+        className="text-lg font-bold text-slate-600"
+        to={location.pathname === '/' ? '/' : '/board'}
+      >
+        <MainLogoIcon width="100" />
+      </NavLink>
+
       {location.pathname !== '/' && data && (
         <div className="relative">
           <div className="flex px-3 py-2 my-1 h-14 w-[124px] items-center justify-between">

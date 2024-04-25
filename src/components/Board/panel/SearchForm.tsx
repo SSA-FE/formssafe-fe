@@ -27,7 +27,7 @@ const SearchForm = ({
       <input
         id="searchInput"
         name="searchInput"
-        className="w-full text-base font-bold border-none outline-none bg-neutral-100 text-neutral-400 placeholder-neutral-400"
+        className="w-full text-base font-bold border-none outline-none bg-bgColor text-neutral-400 placeholder-neutral-400"
         placeholder="설문을 검색해보세요."
         value={keyword}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
