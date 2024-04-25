@@ -5,6 +5,7 @@ import toolbarInputReducer from '@/components/Myspace/toolbar/toolbarInputSlice'
 
 import { userApi } from '@api/userApi';
 import { activityApi } from '@/api/activityApi';
+import { viewApi } from '@/api/viewApi';
 
 export const store = configureStore({
   reducer: {
@@ -13,11 +14,14 @@ export const store = configureStore({
     toolbarInput: toolbarInputReducer,
     [userApi.reducerPath]: userApi.reducer,
     [activityApi.reducerPath]: activityApi.reducer,
+    [viewApi.reducerPath]: viewApi.reducer,
   },
+
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(
       userApi.middleware,
-      activityApi.middleware
+      activityApi.middleware,
+      viewApi.middleware
     );
   },
 });
