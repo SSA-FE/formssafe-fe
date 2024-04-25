@@ -1,4 +1,4 @@
-import BoardMain from '@/components/Board/BoardMain';
+import BoardMain from '@/components/Board/main/BoardMain';
 import BoardPanel from '@/components/Board/panel/BoardPanel';
 
 const Board = () => {
