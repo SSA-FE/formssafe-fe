@@ -3,6 +3,7 @@ import { updateKeyword } from '@components/Myspace/toolbar/toolbarInputSlice';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+
 interface SearchBarProps {
   placeholder: string;
   bgColor: string;
