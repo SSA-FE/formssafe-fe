@@ -6,7 +6,7 @@ interface Tag {
   count: number;
 }
 
-interface SurveyCardProps {
+interface FormCardProps {
   title: string;
   description?: string;
   tags?: Tag[];
@@ -16,7 +16,7 @@ interface SurveyCardProps {
   isTemp?: boolean;
 }
 
-const SurveyCard = ({
+const FormCard = ({
   title,
   description,
   tags,
@@ -24,7 +24,7 @@ const SurveyCard = ({
   // expectTime,
   startDate,
   // isTemp,
-}: SurveyCardProps) => {
+}: FormCardProps) => {
   const dateObject = new Date(startDate);
   const formattedDate = `${dateObject.getFullYear()}/${String(dateObject.getMonth() + 1).padStart(2, '0')}/${String(dateObject.getDate()).padStart(2, '0')}`;
 
@@ -33,11 +33,11 @@ const SurveyCard = ({
       <div>
         <img src={defaultImg} alt="기본이미지" className="w-full h-[128px]" />
         <div className="flex flex-col gap-1 px-2 py-2">
-          <h1 className="overflow-hidden overflow-ellipsis w-full h-6 text-base font-bold text-neutral-700 whitespace-nowrap">
+          <h1 className="w-full h-6 overflow-hidden text-base font-bold overflow-ellipsis text-neutral-700 whitespace-nowrap">
             {title}
           </h1>
           <p className="text-xs text-neutral-400">{formattedDate} 편집됨</p>
-          <p className="text-sm text-neutral-500  text-overflow w-full h-10">
+          <p className="w-full h-10 text-sm text-neutral-500 text-overflow">
             {description}
           </p>
         </div>
@@ -58,4 +58,4 @@ const SurveyCard = ({
   );
 };
 
-export default SurveyCard;
+export default FormCard;
