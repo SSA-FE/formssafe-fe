@@ -6,7 +6,7 @@ import Loading from './Loading';
 export default function Layout() {
   return (
     <Suspense fallback={<Loading />}>
-      <Topbar />
+      <Topbar bgColor="bg-_bg-home" />
       <Outlet />
     </Suspense>
   );
