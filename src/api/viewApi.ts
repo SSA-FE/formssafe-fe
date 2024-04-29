@@ -10,6 +10,7 @@ interface Tag {
 interface Author {
   userId: number;
   nickname: string;
+  email?: string;
 }
 
 interface Reward {
@@ -18,12 +19,12 @@ interface Reward {
   count: number;
 }
 
-export interface Survey {
+export interface Form {
   id: number;
   title: string;
   description?: string;
   thumbnail?: string;
-  author?: Author;
+  author: Author;
   expectTime: number;
   questionCnt: number;
   responseCnt: number;
@@ -34,11 +35,20 @@ export interface Survey {
   status: string;
 }
 
-interface SurveyResponse {
-  surveys: Survey[];
+interface Cursor {
+  sort: string;
+  top: number;
+  startDate: string;
+  endDate: string;
+  responseCnt: number;
 }
 
-interface SurveyRequest {
+export interface FormResponse {
+  forms: Form[];
+  cursor: Cursor;
+}
+
+interface FormRequest {
   keyword?: string;
   sort?: string;
   category?: string[];
@@ -51,7 +61,7 @@ export const viewApi = createApi({
   reducerPath: 'viewApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
   endpoints: (builder) => ({
-    fetchSurveyList: builder.query<SurveyResponse, SurveyRequest>({
+    fetchSurveyList: builder.query<FormResponse, FormRequest>({
       query: (request) => ({
         url: `${API.VIEW}/forms`,
         params: request,
