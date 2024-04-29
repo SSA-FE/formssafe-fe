@@ -67,7 +67,7 @@ const CategoryDropdown = ({
               <li key={category}>
                 <button
                   onClick={() => handleSelectCategory(category)}
-                  className="flex items-center pl-6 pr-4 w-full py-2 hover:bg-neutral-100"
+                  className="flex items-center w-full py-2 pl-6 pr-4 hover:bg-neutral-100"
                 >
                   {category}
                 </button>
