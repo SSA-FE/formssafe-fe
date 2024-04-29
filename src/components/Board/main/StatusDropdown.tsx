@@ -7,7 +7,7 @@ interface StatusDropdownProps {
 }
 
 const StatusDropdown = ({ isOpen, handleDropdown }: StatusDropdownProps) => {
-  const dropdownRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const statusList = ['전체 설문', '진행중인 설문', '마감된 설문'];
   const [, setSelectedOption] = useState(statusList[0]);
 
@@ -38,8 +38,7 @@ const StatusDropdown = ({ isOpen, handleDropdown }: StatusDropdownProps) => {
   };
 
   return (
-    <button
-      onClick={handleDropdown}
+    <div
       ref={dropdownRef}
       className={`flex flex-col border rounded-[20px] ${isOpen ? 'bg-gray-200' : 'bg-white hover:bg-gray-100'}   border-gray-200 `}
     >
@@ -72,7 +71,7 @@ const StatusDropdown = ({ isOpen, handleDropdown }: StatusDropdownProps) => {
           </ul>
         </div>
       )}
-    </button>
+    </div>
   );
 };
 

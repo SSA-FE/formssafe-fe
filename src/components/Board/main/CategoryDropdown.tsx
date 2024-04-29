@@ -10,7 +10,7 @@ const CategoryDropdown = ({
   isOpen,
   handleDropdown,
 }: CategoryDropdownProps) => {
-  const dropdownRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const categoryList = [
     '커피/음료',
     '상품권',
@@ -47,17 +47,19 @@ const CategoryDropdown = ({
   };
 
   return (
-    <button
-      onClick={handleDropdown}
+    <div
       ref={dropdownRef}
       className={`flex flex-col border rounded-[20px] ${isOpen ? 'bg-gray-200' : 'bg-white hover:bg-gray-100'}   border-gray-200 `}
     >
       <div className="px-6 space-x-4 w-[160px] h-full">
         <div className="flex items-center justify-center w-full h-10">
-          <div className="flex items-center h-full space-x-3">
+          <button
+            className="flex items-center h-full space-x-3"
+            onClick={handleDropdown}
+          >
             <CategoryListIcon width={20} height={20} />
             <p className="text-sm font-bold text-gray-700">카테고리</p>
-          </div>
+          </button>
         </div>
       </div>
       {isOpen && (
@@ -67,7 +69,7 @@ const CategoryDropdown = ({
               <li key={category}>
                 <button
                   onClick={() => handleSelectCategory(category)}
-                  className="flex items-center pl-6 pr-4 w-full py-2 hover:bg-neutral-100"
+                  className="flex items-center w-full py-2 pl-6 pr-4 hover:bg-neutral-100"
                 >
                   {category}
                 </button>
@@ -76,7 +78,7 @@ const CategoryDropdown = ({
           </ul>
         </div>
       )}
-    </button>
+    </div>
   );
 };
 
