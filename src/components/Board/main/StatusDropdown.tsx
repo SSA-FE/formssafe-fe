@@ -44,13 +44,10 @@ const StatusDropdown = ({ isOpen, handleDropdown }: StatusDropdownProps) => {
     >
       <div className="  px-6 space-x-4  w-[160px] h-full">
         <div className="flex items-center justify-center w-full h-10">
-          <button
-            onClick={handleDropdown}
-            className="flex items-center h-full space-x-3"
-          >
+          <div className="flex items-center h-full space-x-3">
             <StatusIcon width="25" height="25" />
             <p className="text-sm font-bold text-gray-700">설문상태</p>
-          </button>
+          </div>
         </div>
       </div>
       {isOpen && (
