@@ -1,4 +1,3 @@
-import BoardToolbar from './BoardToolbar';
 import { Form } from '@/api/viewApi';
 
 import { useFetchSurveyListQuery } from '@/api/viewApi';
@@ -18,9 +17,8 @@ const BoardMain = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="flex flex-col min-h-screen min-w-min mx-[100px] py-4 gap-4 ">
-      <BoardToolbar />
-      <div className="flex flex-wrap justify-center gap-4 px-8 pb-4">
+    <div className="flex flex-col min-h-screen py-2 border-t min-w-min border-slate-200">
+      <div className="flex flex-wrap justify-start gap-2 pb-4 mx-auto">
         {FormList &&
           Array.isArray(FormList) &&
           FormList.map((form: Form) => <FormCard key={form.id} {...form} />)}

@@ -5,19 +5,13 @@ import { ChangeEvent, FormEvent } from 'react';
 interface SearchFormProps {
   keyword: string;
   setKeyword: (keyword: string) => void;
-  handleKeyword: () => void;
 }
 
-const SearchForm = ({
-  keyword,
-  setKeyword,
-  handleKeyword,
-}: SearchFormProps) => (
+const SearchForm = ({ keyword, setKeyword }: SearchFormProps) => (
   <form
-    className="flex items-center w-full h-full px-3 space-x-4"
+    className="flex items-center w-[480px] h-[50px] px-3 space-x-4 bg-blue-50 rounded-[48px] border border-blue-200"
     onSubmit={(e: FormEvent) => {
       e.preventDefault();
-      handleKeyword();
     }}
   >
     <button type="submit">
@@ -27,7 +21,7 @@ const SearchForm = ({
       <input
         id="searchInput"
         name="searchInput"
-        className="w-full text-base font-bold border-none outline-none bg-bgColor text-neutral-400 placeholder-neutral-400"
+        className="w-full text-[14px] font-bold bg-transparent border-none outline-none text-slate-400 placeholder-neutral-400 m-0 p-0"
         placeholder="설문을 검색해보세요."
         value={keyword}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
