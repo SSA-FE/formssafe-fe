@@ -6,14 +6,13 @@ const FormOptionBar = ({
 }: {
   setSelectedQuestionType: (type: string) => void;
 }) => {
-  const [privacyChecked, setPrivacyChecked] = useState(false);
-  const [requiredChecked, setRequiredChecked] = useState(false);
+  const [toggleState, setToggleState] = useState({
+    privacy: false,
+    required: false,
+  });
 
-  const handlePrivacyToggle = () => {
-    setPrivacyChecked(!privacyChecked);
-  };
-  const handleRequiredToggle = () => {
-    setRequiredChecked(!requiredChecked);
+  const handleToggle = (type: 'privacy' | 'required') => {
+    setToggleState((prevState) => ({ ...prevState, [type]: !prevState[type] }));
   };
 
   const onQuestionTypeSelected = (type: string) => {
@@ -33,7 +32,7 @@ const FormOptionBar = ({
         {/* 개인정보 */}
         <label className="flex items-center justify-between h-12 p-4 cursor-pointer">
           <span
-            className={`text-xs font-bold ${privacyChecked ? 'text-blue-300' : 'text-neutral-400'}`}
+            className={`text-xs font-bold ${toggleState.privacy ? 'text-blue-300' : 'text-neutral-400'}`}
           >
             개인정보
             <span className="ml-1 text-orange-400">&#9432;</span>
@@ -43,7 +42,7 @@ const FormOptionBar = ({
               type="checkbox"
               value=""
               className="sr-only peer"
-              onClick={handlePrivacyToggle}
+              onClick={() => handleToggle('privacy')}
             />
             <div className="toggle-btn"></div>
           </div>
@@ -51,7 +50,7 @@ const FormOptionBar = ({
         {/* 필수응답 */}
         <label className="flex items-center justify-between h-12 p-4 cursor-pointer">
           <span
-            className={`text-xs font-bold ${requiredChecked ? 'text-blue-300' : 'text-neutral-400'}`}
+            className={`text-xs font-bold ${toggleState.required ? 'text-blue-300' : 'text-neutral-400'}`}
           >
             필수응답
             <span className="ml-1 text-orange-400">&#9432;</span>
@@ -61,7 +60,7 @@ const FormOptionBar = ({
               type="checkbox"
               value=""
               className="sr-only peer"
-              onClick={handleRequiredToggle}
+              onClick={() => handleToggle('required')}
             />
             <div className="toggle-btn"></div>
           </div>
