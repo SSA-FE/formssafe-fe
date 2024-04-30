@@ -46,6 +46,6 @@
     @apply text-orange-400 text-sm;
   }
   .toggle-btn {
-    @apply relative w-10 h-5 bg-neutral-100 rounded-full peer-checked:border-blue-200 peer-checked:after:translate-x-full   peer-checked:after:bg-blue-300 peer-checked:after:border-blue-200  after:absolute after:top-[1px] after:start-[2px] after:border-gray-200 after:border border after:rounded-full after:h-4 after:w-4 after:duration-300 peer-checked:bg-blue-100 after:bg-neutral-400 ease-in-out;
+    @apply relative w-[2.3rem] h-5 bg-neutral-100 rounded-full peer-checked:border-blue-200 peer-checked:after:translate-x-full peer-checked:after:bg-blue-300 peer-checked:after:border-blue-200 after:absolute after:top-[1.8px] after:start-[2px] after:border-gray-200 after:border border after:rounded-full after:h-4 after:w-4 after:duration-300 peer-checked:bg-blue-100 after:bg-neutral-400 ease-in-out;
   }
 }
