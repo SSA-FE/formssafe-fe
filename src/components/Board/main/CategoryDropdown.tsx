@@ -10,7 +10,7 @@ const CategoryDropdown = ({
   isOpen,
   handleDropdown,
 }: CategoryDropdownProps) => {
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLButtonElement>(null);
   const categoryList = [
     '커피/음료',
     '상품권',
@@ -47,38 +47,44 @@ const CategoryDropdown = ({
   };
 
   return (
-    <div
+    <button
       ref={dropdownRef}
-      className={`flex flex-col border rounded-[20px] ${isOpen ? 'bg-gray-200' : 'bg-white hover:bg-gray-100'}   border-gray-200 `}
+      className={`flex flex-col border rounded-[20px] ${isOpen ? 'bg-slate-100' : 'hover:bg-slate-50'}   border-slate-200`}
+      onClick={handleDropdown}
     >
       <div className="px-6 space-x-4 w-[160px] h-full">
         <div className="flex items-center justify-center w-full h-10">
-          <button
-            className="flex items-center h-full space-x-3"
-            onClick={handleDropdown}
-          >
-            <CategoryListIcon width={20} height={20} />
-            <p className="text-sm font-bold text-gray-700">카테고리</p>
-          </button>
+          <div className="flex items-center h-full space-x-3">
+            <CategoryListIcon width={20} height={20} fill="#64748b" />
+            <p className="text-sm font-bold text-slate-500">카테고리</p>
+          </div>
         </div>
       </div>
       {isOpen && (
-        <div className="relative top-0 z-10 mt-1 bg-white rounded-lg shadow w-[160px]">
-          <ul className="py-2 text-sm text-neutral-400">
+        <div className="relative top-0 z-10 mt-1 bg-white rounded-lg shadow w-[160px] border border-slate-200">
+          <ul className="py-2 text-sm text-slate-400">
             {categoryList.map((category) => (
               <li key={category}>
-                <button
+                <div
                   onClick={() => handleSelectCategory(category)}
-                  className="flex items-center w-full py-2 pl-6 pr-4 hover:bg-neutral-100"
+                  className="flex items-center justify-center w-full py-2 hover:bg-slate-400 hover:text-slate-50"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      handleSelectCategory(category);
+                    }
+                  }}
                 >
                   {category}
-                </button>
+                </div>
               </li>
             ))}
           </ul>
         </div>
       )}
-    </div>
+    </button>
   );
 };
 
