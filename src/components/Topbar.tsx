@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { instance } from '@/api/axios';
 import { API } from '@/config';
 
-const Topbar = () => {
+const Topbar = ({ bgColor }: { bgColor: string }) => {
   const { data, refetch } = useFetchUserQuery();
   const [alarmModalOpen, setAlarmModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
@@ -155,7 +155,9 @@ const Topbar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between w-full px-8 py-2 h-topbar min-h-16 whitespace-nowrap">
+    <nav
+      className={`flex items-center justify-between w-full px-8 py-2 bg-transparent h-topbar min-h-16 whitespace-nowrap ${bgColor}`}
+    >
       <NavLink
         className="text-lg font-bold text-slate-600"
         to={location.pathname === '/' ? '/' : '/board'}
