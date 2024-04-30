@@ -8,7 +8,7 @@ interface MyspacePanelProps {
 }
 
 const MyspacePanel = ({ setSurveyStatus }: MyspacePanelProps) => {
-  const [activeButton, setActiveButton] = useState('보관함');
+  const [activeTap, setActiveTap] = useState('보관함');
   const dispatch = useDispatch();
 
   return (
@@ -21,9 +21,9 @@ const MyspacePanel = ({ setSurveyStatus }: MyspacePanelProps) => {
       </Link>
       <div className="flex space-x-4 font-bold bg-transparent border-none">
         <button
-          className={`px-6 py-2 ${activeButton === '보관함' ? 'border-b-2 border-neutral-800 ' : 'text-neutral-400 border-none'}`}
+          className={`px-6 py-2 ${activeTap === '보관함' ? 'border-b-2 border-neutral-800 ' : 'text-neutral-400 border-none'}`}
           onClick={() => {
-            setActiveButton('보관함');
+            setActiveTap('보관함');
             setSurveyStatus('mySurveys');
             dispatch(resetInput());
           }}
@@ -31,9 +31,9 @@ const MyspacePanel = ({ setSurveyStatus }: MyspacePanelProps) => {
           보관함
         </button>
         <button
-          className={`px-6 py-2 ${activeButton === '참여한 설문' ? 'border-b-2  border-neutral-800 ' : 'text-neutral-400 border-none'}`}
+          className={`px-6 py-2 ${activeTap === '참여한 설문' ? 'border-b-2  border-neutral-800 ' : 'text-neutral-400 border-none'}`}
           onClick={() => {
-            setActiveButton('참여한 설문');
+            setActiveTap('참여한 설문');
             setSurveyStatus('participatedSurveys');
             dispatch(resetInput());
           }}
