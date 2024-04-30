@@ -1,11 +1,31 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import QuestionOptions from '@/components/Myspace/QuestionOptions';
 import OptionsToggle from '@/components/Myspace/OptionsToggle';
-
+import { updateQuestion } from '@/components/Myspace/questionBlockList/questionBlockListSlice';
 const FormOptionBar = ({
   setSelectedQuestionType,
+  selectedQuestionId,
 }: {
   setSelectedQuestionType: (type: string) => void;
+  selectedQuestionId: string;
 }) => {
+  const dispatch = useDispatch();
+  const [toggleState, setToggleState] = useState({
+    privacy: true,
+    required: false,
+  });
+
+  const handleToggle = (type: 'privacy' | 'required') => {
+    setToggleState((prevState) => {
+      const newToggleState = { ...prevState, [type]: !prevState[type] };
+      dispatch(
+        updateQuestion({ id: selectedQuestionId, [type]: newToggleState[type] })
+      );
+      return newToggleState;
+    });
+  };
+
   const onQuestionTypeSelected = (type: string) => {
     setSelectedQuestionType(type);
   };
@@ -20,7 +40,11 @@ const FormOptionBar = ({
         onQuestionTypeSelected={onQuestionTypeSelected}
       />
       {/* 개인정보와 필수응답 */}
-      <OptionsToggle />
+      <OptionsToggle
+        selectedQuestionId={selectedQuestionId}
+        toggleState={toggleState}
+        handleToggle={handleToggle}
+      />
 
       {/* 삭제하기 */}
       <div className="flex flex-col w-full px-4 pt-3 pb-4 border-t gap-xs border-slate-50">

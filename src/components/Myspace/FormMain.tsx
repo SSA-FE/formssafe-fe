@@ -4,8 +4,6 @@ import { addQuestion } from './questionBlockList/questionBlockListSlice';
 import { useDispatch } from 'react-redux';
 import { questionType } from '@/types/questionTypes';
 
-import React from 'react';
-
 type FormMainProps = {
   selectedQuestionType: questionType;
 };

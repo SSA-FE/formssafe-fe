@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { questionType } from '../questionBlock/QuestionBlock';
+import { questionType } from '@/types/questionTypes';
 import { option } from '../questionBlock/OptionList';
 
 type questionBlock = {
@@ -32,14 +32,22 @@ export const questionBlockListSlice = createSlice({
   initialState,
   reducers: {
     addQuestion: (state, action: PayloadAction<questionBlock>) => {
+      action.payload.isRequired = true;
+      action.payload.isPrivacy = false;
       state.questionList.push(action.payload);
     },
-    updateQuestion: (state, action: PayloadAction<questionBlock>) => {
+    updateQuestion: (
+      state,
+      action: PayloadAction<Partial<questionBlock> & { id: string }>
+    ) => {
       const index = state.questionList.findIndex(
         (question) => question.id === action.payload.id
       );
       if (index !== -1) {
-        state.questionList[index] = action.payload;
+        state.questionList[index] = {
+          ...state.questionList[index],
+          ...action.payload,
+        };
       }
     },
     removeQuestion: (state, action: PayloadAction<{ id: string }>) => {

@@ -17,6 +17,7 @@ const Editor = () => {
         <FormInfoBar />
         <FormMain selectedQuestionType={selectedQuestionType} />
         <FormOptionBar
+          selectedQuestionId={selectedQuestionType}
           setSelectedQuestionType={
             setSelectedQuestionType as (type: string) => void
           }
