@@ -14,20 +14,25 @@ interface QuestionOptionsProps {
   onQuestionTypeSelected: (type: questionType) => void;
 }
 
-const QuestionOptions = ({ onQuestionTypeSelected }: QuestionOptionsProps) => {
+const questionTypeIcons = {
+  single: <SingleIcon />,
+  checkbox: <CheckboxIcon />,
+  dropdown: <DropdownIcon />,
+  text: <TextIcon />,
+  long: <SentenceIcon />,
+  short: <SentenceIcon />,
+};
+
+const QuestionOptions = ({
+  setSelectedQuestionType,
+  onQuestionTypeSelected,
+}: QuestionOptionsProps) => {
   const [selectedButton, setSelectedButton] = useState<questionType>('single');
-  const questionTypeIcons = {
-    single: <SingleIcon />,
-    checkbox: <CheckboxIcon />,
-    dropdown: <DropdownIcon />,
-    text: <TextIcon />,
-    long: <SentenceIcon />,
-    short: <SentenceIcon />,
-  };
 
   const addQuestionWithType = (type: questionType) => {
     setSelectedButton(type);
     onQuestionTypeSelected(type);
+    setSelectedQuestionType(type);
   };
 
   return (
@@ -37,9 +42,7 @@ const QuestionOptions = ({ onQuestionTypeSelected }: QuestionOptionsProps) => {
         {Object.keys(questionTypeIcons).map((type) => (
           <button
             key={type}
-            onClick={() => {
-              addQuestionWithType(type as questionType);
-            }}
+            onClick={() => addQuestionWithType(type as questionType)}
             className={`flex items-center justify-center w-10 h-10 rounded ${
               selectedButton === type
                 ? 'bg-blue-500 shadow-inner shadow-blue-600'
