@@ -1,6 +1,11 @@
 import { useState } from 'react';
-import QuestionOptions from '@components/Myspace/QuestionOptions';
-const FormOptionBar = () => {
+import QuestionOptions from './QuestionOptions';
+
+const FormOptionBar = ({
+  setSelectedQuestionType,
+}: {
+  setSelectedQuestionType: (type: string) => void;
+}) => {
   const [privacyChecked, setPrivacyChecked] = useState(false);
   const [requiredChecked, setRequiredChecked] = useState(false);
 
@@ -11,10 +16,19 @@ const FormOptionBar = () => {
     setRequiredChecked(!requiredChecked);
   };
 
+  const onQuestionTypeSelected = (type: string) => {
+    setSelectedQuestionType(type);
+  };
+
   return (
     <div className="w-[19rem] ml-auto h-[calc(100vh-8rem)] border border-neutral-200 bg-white rounded flex flex-col content-center self-stretch">
       {/* 질문 유형 */}
-      <QuestionOptions />
+      <QuestionOptions
+        setSelectedQuestionType={(type) =>
+          setSelectedQuestionType(type as string)
+        }
+        onQuestionTypeSelected={onQuestionTypeSelected}
+      />
       <div className="flex flex-col w-full">
         {/* 개인정보 */}
         <label className="flex items-center justify-between h-12 p-4 cursor-pointer">
