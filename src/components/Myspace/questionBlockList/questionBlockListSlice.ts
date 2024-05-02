@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { questionType, QuestionBlock } from '@/types/questionTypes';
+import { questionType, questionBlock } from '@/types/questionTypes';
 
 interface QuestionBlockList {
-  questionList: QuestionBlock[];
+  questionList: questionBlock[];
   activeBlockId: string;
 }
 
@@ -22,10 +22,10 @@ export const questionBlockListSlice = createSlice({
   name: 'questionBlockList',
   initialState,
   reducers: {
-    addQuestion: (state, action: PayloadAction<QuestionBlock>) => {
+    addQuestion: (state, action: PayloadAction<questionBlock>) => {
       state.questionList.push(action.payload);
     },
-    updateQuestion: (state, action: PayloadAction<QuestionBlock>) => {
+    updateQuestion: (state, action: PayloadAction<questionBlock>) => {
       const index = state.questionList.findIndex(
         (question) => question.id === action.payload.id
       );

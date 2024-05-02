@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { QuestionBlock, questionType } from '@/types/questionTypes';
+import { questionBlock, questionType } from '@/types/questionTypes';
 
-const initialState: QuestionBlock = {
+const initialState: questionBlock = {
   id: crypto.randomUUID(),
   type: 'single',
   isRequired: true,
