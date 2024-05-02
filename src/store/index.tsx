@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import questionBlockListReducer from '@/components/Myspace/questionBlockList/questionBlockListSlice';
 import questionBlockReducer from '@/components/Myspace/questionBlock/questionBlockSlice';
 import toolbarInputReducer from '@/components/Myspace/toolbar/toolbarInputSlice';
+import boardViewReducer from '@/components/Board/boardViewSlice';
 
 import { userApi } from '@api/userApi';
 import { activityApi } from '@/api/activityApi';
@@ -12,6 +13,7 @@ export const store = configureStore({
     questionBlockList: questionBlockListReducer,
     questionBlock: questionBlockReducer,
     toolbarInput: toolbarInputReducer,
+    boardView: boardViewReducer,
     [userApi.reducerPath]: userApi.reducer,
     [activityApi.reducerPath]: activityApi.reducer,
     [viewApi.reducerPath]: viewApi.reducer,
