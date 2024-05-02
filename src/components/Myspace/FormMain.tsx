@@ -1,12 +1,12 @@
 import plusIcon from '@/assets/icons/plus-icon.svg';
 import QuestionBlockList from './questionBlockList/QuestionBlockList';
 import { addQuestion } from './questionBlockList/questionBlockListSlice';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
 const FormMain = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const questionBlock = useSelector((store: RootState) => store.questionBlock);
 
   const handleAddBlock = () => {
