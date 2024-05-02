@@ -79,15 +79,15 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
           dispatch(setActiveBlockId({ id: questionData.id }));
         }
       }}
-      className="group/block p-6 relative w-full rounded-lg border border-transparent bg-white hover:bg-slate-50 focus-within:bg-slate-50  focus-within:border-slate-200"
+      className="relative w-full p-6 bg-white border border-transparent rounded-lg group/block hover:bg-slate-50 focus-within:bg-slate-50 focus-within:border-slate-200"
     >
       <div
         {...dragHandler}
-        className="invisible group-hover/block:visible flex absolute right-2 top-2 justify-center items-center w-6 h-6 text-neutral-400 text-sm font-bold p-2"
+        className="absolute flex items-center justify-center invisible w-6 h-6 p-2 text-sm font-bold group-hover/block:visible right-2 top-2 text-neutral-400"
       >
         ⸬
       </div>
-      <p className="text-xs font-bold  text-slate-500 mb-1">
+      <p className="mb-1 text-xs font-bold text-slate-500">
         {questionTypeLabels[questionData.type]}
       </p>
       <>
@@ -99,12 +99,12 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
               <input
                 {...register('title')}
                 placeholder="질문을 입력해주세요."
-                className="text-lg w-full bg-transparent hover:bg-slate-100 outline-none border-b border-b-transparent focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
+                className="w-full text-lg bg-transparent border-b outline-none hover:bg-slate-100 border-b-transparent focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
               />
               <input
                 {...register('description')}
                 placeholder="질문에 대해 추가로 필요한 설명이나 제한사항을 입력하세요."
-                className="w-full bg-transparent outline-none border-b border-b-transparent  hover:bg-slate-100  focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
+                className="w-full bg-transparent border-b outline-none border-b-transparent hover:bg-slate-100 focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
               />
             </header>
             <section className="py-1 mb-4 text-slate-500">

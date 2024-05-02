@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { resetInput } from './toolbar/toolbarInputSlice';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
 
 interface MyspacePanelProps {
   setSurveyStatus: (value: string) => void;
@@ -9,7 +9,7 @@ interface MyspacePanelProps {
 
 const MyspacePanel = ({ setSurveyStatus }: MyspacePanelProps) => {
   const [activeTap, setActiveTap] = useState('보관함');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <div className="flex flex-col px-8 items-start space-y-2 border-b-[1px] bg-white">

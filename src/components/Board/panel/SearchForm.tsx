@@ -1,5 +1,11 @@
 import { SearchIcon } from '@/assets/icons';
 import { useState, KeyboardEvent, ChangeEvent } from 'react';
+import {
+  setKeyword,
+  setTag,
+  removeTag,
+} from '@components/Board/boardViewSlice';
+import { useAppDispatch } from '@hooks/useAppDispatch';
 
 interface Tag {
   id: number;
@@ -9,6 +15,7 @@ interface Tag {
 const SearchForm = () => {
   const [input, setInput] = useState('');
   const [tags, setTags] = useState<Tag[]>([]);
+  const dispatch = useAppDispatch();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -16,19 +23,34 @@ const SearchForm = () => {
 
   const addTag = (text: string) => {
     setTags([...tags, { id: Date.now(), text }]);
-    setInput('');
   };
 
-  const removeTag = (id: number) => {
+  const removeTagFromState = (id: number) => {
     setTags(tags.filter((tag) => tag.id !== id));
+
+    const tagToRemove = tags.find((tag) => tag.id === id);
+    if (!tagToRemove) return;
+
+    const sanitizedInput = tagToRemove.text.slice(1).replace(/\s/g, '');
+    dispatch(removeTag(sanitizedInput));
   };
 
   const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
+      if (input.startsWith('#') && tags.some((tag) => tag.text === input)) {
+        setInput('');
+        return;
+      }
+
       if (input.startsWith('#')) {
         addTag(input);
+        const sanitizedInput = input.slice(1).replace(/\s/g, '');
+        dispatch(setTag(sanitizedInput));
+      } else {
+        dispatch(setKeyword(input));
       }
+      setInput('');
     }
   };
 
@@ -43,7 +65,7 @@ const SearchForm = () => {
       (e.type === 'keydown' &&
         (e as React.KeyboardEvent<HTMLButtonElement>).key === 'Enter')
     ) {
-      removeTag(id);
+      removeTagFromState(id);
     }
   };
 
@@ -55,7 +77,7 @@ const SearchForm = () => {
       {tags.map((tag) => (
         <button
           key={tag.id}
-          className="flex items-center justify-center text-xs font-bold rounded-xl text-slate-200 bg-slate-400 py-0 px-2 h-6 cursor-pointer whitespace-nowrap"
+          className="flex items-center justify-center h-6 px-2 py-0 text-xs font-bold cursor-pointer rounded-xl text-slate-200 bg-slate-400 whitespace-nowrap"
           onClick={(e) => handleTagInteraction(tag.id, e)}
           onKeyDown={(e) => handleTagInteraction(tag.id, e)}
         >

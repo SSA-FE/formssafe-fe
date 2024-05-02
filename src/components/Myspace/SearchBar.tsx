@@ -1,7 +1,7 @@
 import { SearchIcon } from '@/assets/icons';
 import { updateKeyword } from '@components/Myspace/toolbar/toolbarInputSlice';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@hooks/useAppDispatch';
 
 interface SearchBarProps {
   placeholder: string;
@@ -11,7 +11,7 @@ interface SearchBarProps {
 }
 
 const SearchBar = ({ placeholder, bgColor, width, height }: SearchBarProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [keyword, setKeyword] = useState('');
 
   const handleOnclick = () => {

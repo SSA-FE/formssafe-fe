@@ -1,4 +1,6 @@
 import { StatusIcon } from '@/assets/icons';
+import { useAppDispatch } from '@hooks/useAppDispatch';
+import { setStatus } from '@components/Board/boardViewSlice';
 import { useEffect, useRef, useState } from 'react';
 
 interface StatusDropdownProps {
@@ -6,9 +8,18 @@ interface StatusDropdownProps {
   handleDropdown: () => void;
 }
 
-const StatusDropdown = ({ isOpen, handleDropdown }: StatusDropdownProps) => {
+const StatusDropdown: React.FC<StatusDropdownProps> = ({
+  isOpen,
+  handleDropdown,
+}) => {
+  const dispatch = useAppDispatch();
   const dropdownRef = useRef<HTMLButtonElement>(null);
   const statusList = ['전체 설문', '진행중인 설문', '마감된 설문'];
+  const formStatusCodes: { [key: string]: string } = {
+    '전체 설문': '',
+    '진행중인 설문': 'progress',
+    '마감된 설문': 'done',
+  };
   const [, setSelectedOption] = useState(statusList[0]);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -22,18 +33,19 @@ const StatusDropdown = ({ isOpen, handleDropdown }: StatusDropdownProps) => {
 
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('click', handleClickOutside);
     } else {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, [isOpen]);
 
   const handleSelectStatus = (status: string) => {
     setSelectedOption(status);
+    dispatch(setStatus(formStatusCodes[status]));
     handleDropdown();
   };
 
