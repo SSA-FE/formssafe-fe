@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Topbar from '@/components/Topbar';
+import Topbar from '@/components/topbar/Topbar';
 import { Suspense } from 'react';
 import Loading from './Loading';
 
