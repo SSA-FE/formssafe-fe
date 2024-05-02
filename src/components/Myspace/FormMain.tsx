@@ -25,7 +25,7 @@ const FormMain: React.FC<FormMainProps> = ({ selectedQuestionType }) => {
   };
 
   return (
-    <div className="flex-1 w-full h-full px-4">
+    <div className="flex-1 w-full h-[calc(100vh-8rem)] px-4 overflow-y-scroll pb-10">
       <div className="flex flex-col">
         <QuestionBlockList />
       </div>
