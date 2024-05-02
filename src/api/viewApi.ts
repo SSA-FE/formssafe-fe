@@ -54,7 +54,10 @@ interface FormRequest {
   category?: string[];
   status?: string;
   tag?: string[];
-  page?: number;
+  top?: number;
+  startDate?: string;
+  endDate?: string;
+  responseCnt?: number;
 }
 
 export const viewApi = createApi({
