@@ -64,7 +64,7 @@ const FormCard = ({
         <img
           src={defaultImg}
           alt="기본이미지"
-          className="w-full h-[128px] rounded"
+          className="w-full z-0 h-[128px] rounded"
         />
         <div className="absolute bottom-0 left-0 flex flex-wrap w-full gap-1 px-2 py-2">
           {tagElements}
