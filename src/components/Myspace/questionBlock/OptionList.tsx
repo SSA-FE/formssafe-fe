@@ -1,6 +1,7 @@
 import SingleIcon from '@/assets/icons/option-prefix-single.svg?react';
 import CheckboxIcon from '@/assets/icons/option-prefix-checkbox.svg?react';
 import DropdownIcon from '@/assets/icons/option-prefix-dropdown.svg?react';
+import { Option } from '@/types/questionTypes';
 
 const questionTypeIcons = {
   single: <SingleIcon />,
@@ -8,17 +9,12 @@ const questionTypeIcons = {
   dropdown: <DropdownIcon />,
 };
 
-export type option = {
-  id: string;
-  value: string;
-};
-
 type OptionQuestionType = 'single' | 'checkbox' | 'dropdown';
 
 interface OptionListProps {
   questionType: OptionQuestionType;
-  optionList: option[];
-  setOptionList: React.Dispatch<React.SetStateAction<option[]>>;
+  optionList: Option[];
+  setOptionList: React.Dispatch<React.SetStateAction<Option[]>>;
 }
 
 const OptionList = ({

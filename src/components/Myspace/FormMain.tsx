@@ -1,8 +1,9 @@
 import plusIcon from '@/assets/icons/plus-icon.svg';
 import QuestionBlockList from './questionBlockList/QuestionBlockList';
 import { addQuestion } from './questionBlockList/questionBlockListSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { questionType } from '@/types/questionTypes';
+import { RootState } from '@/store';
 
 type FormMainProps = {
   selectedQuestionType: questionType;
@@ -10,14 +11,15 @@ type FormMainProps = {
 
 const FormMain: React.FC<FormMainProps> = ({ selectedQuestionType }) => {
   const dispatch = useDispatch();
+  const questionBlock = useSelector((store: RootState) => store.questionBlock);
 
-  const handleAddBlock = (type: questionType) => {
+  const handleAddBlock = () => {
     dispatch(
       addQuestion({
         id: crypto.randomUUID(),
-        type: type,
-        isRequired: true,
-        isPrivacy: false,
+        type: selectedQuestionType,
+        isRequired: questionBlock.isRequired,
+        isPrivacy: questionBlock.isPrivacy,
       })
     );
   };
@@ -28,7 +30,7 @@ const FormMain: React.FC<FormMainProps> = ({ selectedQuestionType }) => {
         <QuestionBlockList />
       </div>
       <button
-        onClick={() => handleAddBlock(selectedQuestionType)}
+        onClick={handleAddBlock}
         className="w-8 h-8 rounded-full bg-[#d9d9d9] flex justify-center items-center mx-auto mt-8"
       >
         <img

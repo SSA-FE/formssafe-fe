@@ -19,9 +19,6 @@ const OptionsToggle = ({
     required: toggleState.required,
   });
 
-  console.log('selectedQuestionId', selectedQuestionId);
-  console.log('toggleState', toggleState);
-
   useEffect(() => {
     setLocalToggleState({
       privacy: true,

@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import QuestionOptions from '@/components/Myspace/QuestionOptions';
 import OptionsToggle from '@/components/Myspace/OptionsToggle';
 import { updateQuestion } from '@/components/Myspace/questionBlockList/questionBlockListSlice';
+import { questionType } from '@/types/questionTypes';
+
 const FormOptionBar = ({
   setSelectedQuestionType,
   selectedQuestionId,
@@ -19,8 +21,14 @@ const FormOptionBar = ({
   const handleToggle = (type: 'privacy' | 'required') => {
     setToggleState((prevState) => {
       const newToggleState = { ...prevState, [type]: !prevState[type] };
+      const currentQuestionType: questionType = 'single';
       dispatch(
-        updateQuestion({ id: selectedQuestionId, [type]: newToggleState[type] })
+        updateQuestion({
+          id: selectedQuestionId,
+          type: currentQuestionType,
+          isRequired: false,
+          isPrivacy: false,
+        })
       );
       return newToggleState;
     });

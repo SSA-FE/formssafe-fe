@@ -49,8 +49,7 @@ const QuestionBlockList = () => {
                   <div ref={provided.innerRef} {...provided.draggableProps}>
                     <QuestionBlock
                       dragHandler={provided.dragHandleProps}
-                      questionId={question.id}
-                      questionType={question.type}
+                      questionData={question}
                     />
                   </div>
                 )}

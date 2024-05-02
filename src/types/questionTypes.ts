@@ -14,3 +14,18 @@ export const questionTypeLabels: Record<questionType, string> = {
   short: '단답형',
   text: '텍스트',
 };
+
+export interface questionBlock {
+  id: string;
+  type: questionType;
+  title?: string;
+  description?: string;
+  options?: Option[];
+  isRequired: boolean;
+  isPrivacy: boolean;
+}
+
+export type Option = {
+  id: string;
+  value: string;
+};

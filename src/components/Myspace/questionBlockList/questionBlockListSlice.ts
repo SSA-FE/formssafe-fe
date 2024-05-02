@@ -1,19 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { questionType } from '@/types/questionTypes';
-import { option } from '../questionBlock/OptionList';
-
-type questionBlock = {
-  id: string;
-  type: questionType;
-  title?: string;
-  description?: string;
-  options?: option[];
-  isRequired: boolean;
-  isPrivacy: boolean;
-};
+import { questionType, QuestionBlock } from '@/types/questionTypes';
 
 interface QuestionBlockList {
-  questionList: questionBlock[];
+  questionList: QuestionBlock[];
+  activeBlockId: string;
 }
 
 const initialState: QuestionBlockList = {
@@ -25,21 +15,17 @@ const initialState: QuestionBlockList = {
       isPrivacy: false,
     },
   ],
+  activeBlockId: '',
 };
 
 export const questionBlockListSlice = createSlice({
   name: 'questionBlockList',
   initialState,
   reducers: {
-    addQuestion: (state, action: PayloadAction<questionBlock>) => {
-      action.payload.isRequired = true;
-      action.payload.isPrivacy = false;
+    addQuestion: (state, action: PayloadAction<QuestionBlock>) => {
       state.questionList.push(action.payload);
     },
-    updateQuestion: (
-      state,
-      action: PayloadAction<Partial<questionBlock> & { id: string }>
-    ) => {
+    updateQuestion: (state, action: PayloadAction<QuestionBlock>) => {
       const index = state.questionList.findIndex(
         (question) => question.id === action.payload.id
       );
@@ -67,9 +53,53 @@ export const questionBlockListSlice = createSlice({
       state.questionList.splice(fromIndex, 1);
       state.questionList.splice(toIndex, 0, targetBlock);
     },
+    setActiveBlockId: (state, action: PayloadAction<{ id: string }>) => {
+      state.activeBlockId = action.payload.id;
+    },
+    updateQuestionType: (
+      state,
+      action: PayloadAction<{ id: string; type: questionType }>
+    ) => {
+      const index = state.questionList.findIndex(
+        (question) => question.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.questionList[index].type = action.payload.type;
+      }
+    },
+    updateQuestionRequired: (
+      state,
+      action: PayloadAction<{ id: string; required: boolean }>
+    ) => {
+      const index = state.questionList.findIndex(
+        (question) => question.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.questionList[index].isRequired = action.payload.required;
+      }
+    },
+    updateQuestionPrivacy: (
+      state,
+      action: PayloadAction<{ id: string; privacy: boolean }>
+    ) => {
+      const index = state.questionList.findIndex(
+        (question) => question.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.questionList[index].isPrivacy = action.payload.privacy;
+      }
+    },
   },
 });
 
-export const { addQuestion, updateQuestion, removeQuestion, reorderQuestion } =
-  questionBlockListSlice.actions;
+export const {
+  addQuestion,
+  updateQuestion,
+  removeQuestion,
+  reorderQuestion,
+  setActiveBlockId,
+  updateQuestionType,
+  updateQuestionRequired,
+  updateQuestionPrivacy,
+} = questionBlockListSlice.actions;
 export default questionBlockListSlice.reducer;
