@@ -1,12 +1,10 @@
 import { SearchIcon } from '@/assets/icons';
-import { useState, KeyboardEvent, ChangeEvent, useEffect } from 'react';
+import { useState, KeyboardEvent, ChangeEvent } from 'react';
 import {
   setKeyword,
   setTag,
   removeTag,
 } from '@components/Board/boardViewSlice';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 
 interface Tag {
@@ -17,14 +15,7 @@ interface Tag {
 const SearchForm = () => {
   const [input, setInput] = useState('');
   const [tags, setTags] = useState<Tag[]>([]);
-
   const dispatch = useAppDispatch();
-
-  const boardView = useSelector((state: RootState) => state.boardView);
-
-  useEffect(() => {
-    console.log(boardView);
-  }, [boardView]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
