@@ -1,15 +1,18 @@
 import { CategoryListIcon } from '@/assets/icons';
 import { useEffect, useRef, useState } from 'react';
+import { useAppDispatch } from '@hooks/useAppDispatch';
+import { setCategory } from '@components/Board/boardViewSlice';
 
 interface CategoryDropdownProps {
   isOpen: boolean;
   handleDropdown: () => void;
 }
 
-const CategoryDropdown = ({
+const CategoryDropdown: React.FC<CategoryDropdownProps> = ({
   isOpen,
   handleDropdown,
-}: CategoryDropdownProps) => {
+}) => {
+  const dispatch = useAppDispatch();
   const dropdownRef = useRef<HTMLButtonElement>(null);
   const categoryList = [
     '커피/음료',
@@ -31,18 +34,19 @@ const CategoryDropdown = ({
 
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('click', handleClickOutside);
     } else {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, [isOpen]);
 
   const handleSelectCategory = (category: string) => {
     setSelectedCategory(category);
+    dispatch(setCategory(category));
     handleDropdown();
   };
 
