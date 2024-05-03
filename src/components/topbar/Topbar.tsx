@@ -84,7 +84,7 @@ const Topbar = () => {
           className="text-lg font-bold text-slate-600"
           to={location.pathname === '/' ? '/' : '/board'}
         >
-          <MainLogoIcon width="100" />
+          <MainLogoIcon width="80" height="20" />
         </NavLink>
 
         {location.pathname !== '/' && data && (
