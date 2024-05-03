@@ -6,8 +6,11 @@ const Myspace = () => {
   const [surveyStatus, setSurveyStatus] = useState('mySurveys');
   return (
     <div className="w-full h-screen bg-neutral-100 ">
-      <MyspacePanel setSurveyStatus={setSurveyStatus} />
-      <MyspaceMain surveyStatus={surveyStatus} />
+      <MyspacePanel />
+      <MyspaceMain
+        setSurveyStatus={setSurveyStatus}
+        surveyStatus={surveyStatus}
+      />
     </div>
   );
 };

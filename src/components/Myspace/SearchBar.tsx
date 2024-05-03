@@ -21,11 +21,11 @@ const SearchBar = ({ placeholder, bgColor, width, height }: SearchBarProps) => {
 
   return (
     <div
-      className={`box-content  flex items-center justify-between pr-4 pl-6 border border-neutral-200 rounded-[1.125rem] gap-md ${bgColor} ${height} ${width}`}
+      className={`box-content  flex items-center justify-between pr-3 pl-6 border border-neutral-200 rounded-[1.125rem] gap-md ${bgColor} ${height} ${width}`}
     >
       <input
         type="text"
-        className={`font-bold bg-transparent outline-none text-neutral-400 placeholder-neutral-400 caret-neutral-400 text-sm w-full`}
+        className={` bg-transparent outline-none text-slate-400 placeholder-neutral-400 caret-neutral-400 text-xs font-bold w-full`}
         placeholder={placeholder}
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
