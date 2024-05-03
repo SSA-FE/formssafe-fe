@@ -2,11 +2,24 @@ import type { SVGProps } from 'react';
 const SvgEditIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="edit-icon_svg__icon"
-    viewBox="0 0 1024 1024"
+    fill="none"
+    viewBox="0 0 12 12"
     {...props}
   >
-    <path d="M396.8 543.808V627.2h83.392l371.2-371.2L768 172.608zM320 512 768 64l192 192-448 448H320zm499.2 371.2V512H896v448H64V128h448v76.8H140.8v678.4z" />
+    <path
+      stroke="#F1F5F9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M10 8v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h2"
+    />
+    <path
+      stroke="#F1F5F9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M6.25 7.9 11 3.1 8.9 1 4.15 5.75 4 8z"
+    />
   </svg>
 );
 export default SvgEditIcon;
