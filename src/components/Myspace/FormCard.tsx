@@ -59,7 +59,7 @@ const FormCard = ({
   }
 
   return (
-    <div className="group w-[256px] h-[252px] bg-white hover:bg-slate-200 rounded flex flex-col justify-between p-2 gap-4 border border-slate-200 shadow-sm">
+    <div className="group min-w-[256px] h-[252px] bg-white hover:bg-slate-200 rounded flex flex-col justify-between p-2 gap-4 border border-slate-200 hover:border-slate-300 shadow-sm">
       <div className="relative group">
         <img
           src={defaultImg}
@@ -69,7 +69,7 @@ const FormCard = ({
         <div className="absolute bottom-0 left-0 flex flex-wrap w-full gap-1 px-2 py-2">
           {tagElements}
         </div>
-        <div className="absolute top-0 left-0 w-full h-[128px] bg-black bg-opacity-50 text-slate-50 text-sm p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-100">
+        <div className="absolute top-0 left-0 w-full h-[128px] bg-black bg-opacity-50  text-slate-50 text-sm p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-100">
           <p>
             <strong>문항수:</strong> {questionCnt}문항
           </p>
