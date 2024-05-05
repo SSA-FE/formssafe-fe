@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 interface StateProps {
   toggleState: {
@@ -19,19 +21,27 @@ const OptionsToggle = ({
     required: toggleState.required,
   });
 
+  const activeBlockId = useSelector(
+    (state: RootState) => state.questionBlockList.activeBlockId
+  );
+
   useEffect(() => {
-    setLocalToggleState({
-      privacy: true,
-      required: false,
-    });
-  }, [selectedQuestionId]);
+    if (selectedQuestionId === activeBlockId) {
+      setLocalToggleState({
+        privacy: toggleState.privacy,
+        required: toggleState.required,
+      });
+    }
+  }, [selectedQuestionId, toggleState.privacy, toggleState.required]);
 
   const toggleHandler = (type: 'privacy' | 'required') => {
-    setLocalToggleState((prevState) => ({
-      ...prevState,
-      [type]: !prevState[type],
-    }));
-    handleToggle(type);
+    if (selectedQuestionId === activeBlockId) {
+      setLocalToggleState((prevState) => ({
+        ...prevState,
+        [type]: !prevState[type],
+      }));
+      handleToggle(type);
+    }
   };
 
   return (
@@ -53,6 +63,7 @@ const OptionsToggle = ({
             className="sr-only peer"
             checked={localToggleState.privacy}
             onChange={() => toggleHandler('privacy')}
+            disabled={selectedQuestionId !== activeBlockId}
           />
           <div className="toggle-btn"></div>
         </div>
@@ -74,6 +85,7 @@ const OptionsToggle = ({
             className="sr-only peer"
             checked={localToggleState.required}
             onChange={() => toggleHandler('required')}
+            disabled={selectedQuestionId !== activeBlockId}
           />
           <div className="toggle-btn"></div>
         </div>
