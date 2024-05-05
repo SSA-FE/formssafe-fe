@@ -1,47 +1,62 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  updateQuestionPrivacy,
+  updateQuestionRequired,
+  setActiveBlockId,
+} from '@/components/Myspace/questionBlockList/questionBlockListSlice';
 import { RootState } from '@/store';
 
-interface StateProps {
-  toggleState: {
-    privacy: boolean;
-    required: boolean;
-  };
-  handleToggle: (type: 'privacy' | 'required') => void;
+interface OptionsToggleProps {
   selectedQuestionId: string;
 }
 
-const OptionsToggle = ({
-  toggleState,
-  handleToggle,
-  selectedQuestionId,
-}: StateProps) => {
-  const [localToggleState, setLocalToggleState] = useState({
-    privacy: toggleState.privacy,
-    required: toggleState.required,
-  });
-
-  const activeBlockId = useSelector(
-    (state: RootState) => state.questionBlockList.activeBlockId
+const OptionsToggle = ({ selectedQuestionId }: OptionsToggleProps) => {
+  const dispatch = useDispatch();
+  const question = useSelector((state: RootState) =>
+    state.questionBlockList.questionList.find(
+      (q) => q.id === selectedQuestionId
+    )
   );
 
+  const [localToggleState, setLocalToggleState] = useState({
+    privacy: question?.isPrivacy || false,
+    required: question?.isRequired || false,
+  });
+
   useEffect(() => {
-    if (selectedQuestionId === activeBlockId) {
+    if (question) {
       setLocalToggleState({
-        privacy: toggleState.privacy,
-        required: toggleState.required,
+        privacy: question.isPrivacy,
+        required: question.isRequired,
       });
     }
-  }, [selectedQuestionId, toggleState.privacy, toggleState.required]);
+  }, [selectedQuestionId, question]);
 
   const toggleHandler = (type: 'privacy' | 'required') => {
-    if (selectedQuestionId === activeBlockId) {
-      setLocalToggleState((prevState) => ({
-        ...prevState,
-        [type]: !prevState[type],
-      }));
-      handleToggle(type);
+    const updatedState = {
+      ...localToggleState,
+      [type]: !localToggleState[type],
+    };
+    setLocalToggleState(updatedState);
+
+    if (type === 'privacy') {
+      dispatch(
+        updateQuestionPrivacy({
+          id: selectedQuestionId,
+          privacy: updatedState.privacy,
+        })
+      );
+    } else if (type === 'required') {
+      dispatch(
+        updateQuestionRequired({
+          id: selectedQuestionId,
+          required: updatedState.required,
+        })
+      );
     }
+
+    dispatch(setActiveBlockId({ id: selectedQuestionId }));
   };
 
   return (
@@ -63,7 +78,6 @@ const OptionsToggle = ({
             className="sr-only peer"
             checked={localToggleState.privacy}
             onChange={() => toggleHandler('privacy')}
-            disabled={selectedQuestionId !== activeBlockId}
           />
           <div className="toggle-btn"></div>
         </div>
@@ -85,7 +99,6 @@ const OptionsToggle = ({
             className="sr-only peer"
             checked={localToggleState.required}
             onChange={() => toggleHandler('required')}
-            disabled={selectedQuestionId !== activeBlockId}
           />
           <div className="toggle-btn"></div>
         </div>

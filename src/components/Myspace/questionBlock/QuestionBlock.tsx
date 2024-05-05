@@ -42,6 +42,7 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
         isPrivacy: questionData.isPrivacy,
       })
     );
+    console.log('Question Data:', questionData);
   };
 
   return (
