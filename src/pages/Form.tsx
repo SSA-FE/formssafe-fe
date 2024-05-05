@@ -1,47 +1,61 @@
 import FormBody from '@/components/Form/FormBody';
 import FormHeader from '@/components/Form/FormHeader';
+import { QuestionType } from '@/components/Myspace/questionBlock/QuestionBlock';
 
-interface Form {
+interface Author {
+  userId: number;
+  nickname: string;
+  email: string;
+}
+
+interface Reward {
+  name: string;
+  category: string;
+  count: number;
+}
+
+interface Tag {
+  id: number;
+  name: string;
+}
+
+interface Option {
+  id: number;
+  value: string;
+}
+
+interface Content {
+  id: number;
+  type: QuestionType;
+  title?: string;
+  description?: string;
+  options?: Option[];
+  isRequired: boolean;
+  isPrivacy: boolean;
+}
+
+export interface Form {
   id: number;
   title: string;
   description: string;
   image: string[];
-  author: {
-    userId: number;
-    nickname: string;
-    email: string;
-  };
+  author: Author;
   startDate: string;
   endDate: string;
   expectTime: number;
   privacyDisposalDate: string;
-  contents: [
-    {
-      id: number;
-      type: string;
-      description: string;
-      options: string[];
-    },
-  ];
-  reward: {
-    name: string;
-    category: string;
-    count: number;
-  };
-  tags: [
-    {
-      id: number;
-      name: string;
-    },
-  ];
+  contents: Content[];
+  reward: Reward;
+  tags: Tag[];
   status: string;
   questionCnt: number;
 }
 
 const dummy = {
   id: 0,
-  title: 'string',
-  description: 'string',
+  title: '좋아하는 과일 설문지',
+  description:
+    '자전거 도둑, 달걀은 달걀로 갚으렴, 시인의 꿈, 옥상의 민들레꽃, 할머니는 우리 편, 마지막 임금님 작중 수남을 귀여워해주는 손님 중 하나가 야학이라도 다녀볼 생각 없냐라고 한 게 공부를 하기 시작한 계기가 되었고, 용품점 사장님은 그런 수남을 라며 손님들에게애ㅍ',
   image: [
     'https://cdn.pixabay.com/photo/2024/02/04/11/35/frozen-8551960_1280.jpg',
   ],
@@ -51,29 +65,46 @@ const dummy = {
     email: 'string',
   },
   startDate: '2024-04-28T06:43:39.135Z',
-  endDate: '2024-04-28T06:43:39.135Z',
-  expectTime: 0,
+  endDate: '2024-05-28T06:43:39.135Z',
+  expectTime: 20,
   privacyDisposalDate: '2024-04-28T06:43:39.135Z',
   contents: [
     {
-      id: 'string',
-      type: 'string',
-      description: 'string',
+      id: 1,
+      type: 'single' as QuestionType,
+      title: '첫번째루 질문드리고싶은건요',
+      description: '딱히 없어요',
+      options: [
+        {
+          id: 1,
+          value: 'dddd',
+        },
+      ],
+      isRequired: false,
+      isPrivacy: false,
     },
   ],
   reward: {
     name: 'string',
     category: 'string',
-    count: 0,
+    count: 5,
   },
   tags: [
     {
       id: 0,
-      name: 'string',
+      name: '보상',
+    },
+    {
+      id: 1,
+      name: '심리',
+    },
+    {
+      id: 2,
+      name: '과일',
     },
   ],
   status: 'string',
-  questionCnt: 0,
+  questionCnt: 10,
 };
 
 const Form = () => {
@@ -84,8 +115,8 @@ const Form = () => {
         alt="thumbnail"
         className="w-full h-24 object-cover"
       />
-      <div className="max-w-[76.8rem] flex flex-col mx-auto bg-white">
-        <FormHeader />
+      <div className="max-w-[832px] flex flex-col mx-auto bg-white">
+        <FormHeader formData={dummy} />
         <FormBody />
       </div>
     </div>

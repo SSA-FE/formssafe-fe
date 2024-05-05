@@ -54,9 +54,12 @@ const Router = () => {
           path: 'board',
           element: <Board />,
         },
+        {
+          path: 'form/:id',
+          element: <Form />,
+        },
       ],
     },
-    { path: 'form/:id', element: <Form /> },
     { path: '/join', element: <LoginRedirect /> },
   ];
 
