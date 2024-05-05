@@ -3,16 +3,16 @@ const SvgSearchIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
-    viewBox="0 0 32 32"
+    viewBox="0 0 30 30"
     {...props}
   >
-    <rect width={32} height={32} fill="#6ED1F9" rx={16} />
+    <rect width={30} height={30} fill="#60A5FA" rx={15} />
     <path
       stroke="#fff"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      d="M19.634 19.61 23 23m-1.556-7.778a6.222 6.222 0 1 1-12.444 0 6.222 6.222 0 0 1 12.444 0"
+      d="M17.077 17.063 19 19m-.889-4.444a3.556 3.556 0 1 1-7.111 0 3.556 3.556 0 0 1 7.111 0"
     />
   </svg>
 );

@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import QuestionBlock from '../questionBlock/QuestionBlock';
 import { reorderQuestion } from './questionBlockListSlice';
@@ -10,9 +10,10 @@ import {
   DroppableProvided,
   DropResult,
 } from 'react-beautiful-dnd';
+import { useAppDispatch } from '@hooks/useAppDispatch';
 
 const QuestionBlockList = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { questionList } = useSelector(
     (state: RootState) => state.questionBlockList
   );

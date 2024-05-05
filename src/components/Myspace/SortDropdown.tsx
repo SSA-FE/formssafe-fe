@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import dropdownIcon from '@/assets/icons/dropdown-icon.svg';
-import { useDispatch } from 'react-redux';
 import { updateSort } from './toolbar/toolbarInputSlice';
+import { useAppDispatch } from '@hooks/useAppDispatch';
 
 interface SortDropdownProps {
   bgColor: string;
@@ -11,13 +11,12 @@ interface SortDropdownProps {
 
 const SortDropdown = ({ bgColor, width, height }: SortDropdownProps) => {
   const options = ['생성일순', '응답자순', '가까운 마감순'];
-  const optionToSort: { [key: string]: string } = {
+  const formOptionCodes: { [key: string]: string } = {
     생성일순: 'createdtime',
     응답자순: 'responseCnt',
     '가까운 마감순': 'endTime',
   };
-  const dispatch = useDispatch();
-
+  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -28,7 +27,7 @@ const SortDropdown = ({ bgColor, width, height }: SortDropdownProps) => {
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
-    dispatch(updateSort({ sort: optionToSort[option] }));
+    dispatch(updateSort({ sort: formOptionCodes[option] }));
     setIsOpen(false);
   };
 
