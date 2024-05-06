@@ -6,7 +6,7 @@ import {
   TextIcon,
   SentenceIcon,
 } from '@/assets/icons/optionsIcons';
-import { questionType, questionTypes } from '@/types/questionTypes';
+import { questionType, questionTypesInfo } from '@/types/questionTypes';
 
 interface QuestionOptionsProps {
   setSelectedQuestionType: React.Dispatch<React.SetStateAction<questionType>>;
@@ -56,10 +56,10 @@ const QuestionOptions = ({
       </div>
       <div className="flex flex-col w-full p-2 border border-blue-100 blue-100 bg-blue-50 gap-sm">
         <span className="text-xs font-bold text-slate-500">
-          {questionTypes[selectedButton].label}
+          {questionTypesInfo[selectedButton].label}
         </span>
         <div className="w-full text-xs text-slate-400">
-          {questionTypes[selectedButton].description}
+          {questionTypesInfo[selectedButton].description}
         </div>
       </div>
     </div>
