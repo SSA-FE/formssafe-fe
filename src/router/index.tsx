@@ -44,7 +44,7 @@ const Router = () => {
               element: <Stat />,
             },
             {
-              path: 'stat/:id',
+              path: '/stat/:id',
               element: <StatDetail />,
             },
           ],
