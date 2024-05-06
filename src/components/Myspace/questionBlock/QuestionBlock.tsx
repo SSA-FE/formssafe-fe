@@ -9,11 +9,7 @@ import OptionList from './OptionList';
 import TextIcon from '@/assets/icons/text-icon.svg?react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import TextBlock from './TextBlock';
-import {
-  questionBlock,
-  Option,
-  questionTypeLabels,
-} from '@/types/questionTypes';
+import { questionBlock, Option, questionTypes } from '@/types/questionTypes';
 
 interface QuestionBlockProps {
   questionData: questionBlock;
@@ -67,7 +63,7 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
       </div>
 
       <p className="mb-1 text-xs font-bold text-slate-500">
-        {questionTypeLabels[questionData.type]}
+        {questionTypes[questionData.type].label}
       </p>
       <>
         {questionData.type === 'text' ? (
@@ -100,7 +96,7 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
                   <TextIcon className="stroke-slate-400" />
                   <input
                     type="text"
-                    value={questionTypeLabels[questionData.type]}
+                    value={questionTypes[questionData.type].label}
                     className="ml-4 bg-transparent outline-none text-slate-400"
                     readOnly
                   />
