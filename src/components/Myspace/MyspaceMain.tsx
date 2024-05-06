@@ -8,6 +8,7 @@ import { Form } from '@/api/activityApi';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import Loading from '@components/Loading';
 
 const MyspaceMain = ({ surveyStatus }: { surveyStatus: string }) => {
   const [FormList, setFormList] = useState<Form[] | null>(null);
@@ -34,7 +35,7 @@ const MyspaceMain = ({ surveyStatus }: { surveyStatus: string }) => {
     }
   }, [data]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="w-full min-h-screen bg-neutral-100 ">
