@@ -24,7 +24,6 @@ const FormMain: React.FC<FormMainProps> = ({ selectedQuestionType }) => {
     };
     dispatch(addQuestion(newQuestion));
     dispatch(setActiveBlockId({ id: newQuestionId }));
-    console.log('addNewQuestion---------->', newQuestion);
   };
 
   return (

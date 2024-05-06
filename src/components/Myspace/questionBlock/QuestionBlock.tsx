@@ -42,7 +42,6 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
         isPrivacy: questionData.isPrivacy,
       })
     );
-    console.log('updateQuestion---------->', questionData);
   };
 
   return (
