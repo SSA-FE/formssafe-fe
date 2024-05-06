@@ -1,27 +1,32 @@
 import plusIcon from '@/assets/icons/plus-icon.svg';
 import QuestionBlockList from './questionBlockList/QuestionBlockList';
-import { addQuestion } from './questionBlockList/questionBlockListSlice';
-import { useAppDispatch } from '@hooks/useAppDispatch';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import {
+  addQuestion,
+  setActiveBlockId,
+} from '@/components/Myspace/questionBlockList/questionBlockListSlice';
+import { useDispatch } from 'react-redux';
+import { questionType } from '@/types/questionTypes';
 
-const FormMain = () => {
-  const dispatch = useAppDispatch();
-  const questionBlock = useSelector((store: RootState) => store.questionBlock);
+type FormMainProps = {
+  selectedQuestionType: questionType;
+};
 
+const FormMain: React.FC<FormMainProps> = ({ selectedQuestionType }) => {
+  const dispatch = useDispatch();
   const handleAddBlock = () => {
-    dispatch(
-      addQuestion({
-        id: crypto.randomUUID(),
-        type: questionBlock.type,
-        isRequired: questionBlock.isRequired,
-        isPrivacy: questionBlock.isPrivacy,
-      })
-    );
+    const newQuestionId = crypto.randomUUID();
+    const newQuestion = {
+      id: newQuestionId,
+      type: selectedQuestionType,
+      isRequired: true,
+      isPrivacy: false,
+    };
+    dispatch(addQuestion(newQuestion));
+    dispatch(setActiveBlockId({ id: newQuestionId }));
   };
 
   return (
-    <div className="flex-1 w-full h-full px-4">
+    <div className="flex-1 w-full h-[calc(100vh-8rem)] px-4 overflow-y-scroll pb-10">
       <div className="flex flex-col">
         <QuestionBlockList />
       </div>

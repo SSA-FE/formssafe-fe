@@ -1,50 +1,28 @@
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import {
   setActiveBlockId,
   updateQuestion,
-} from '../questionBlockList/questionBlockListSlice';
-import { useState } from 'react';
-import OptionList, { Option } from './OptionList';
+} from '@/components/Myspace/questionBlockList/questionBlockListSlice';
+import OptionList from './OptionList';
 import TextIcon from '@/assets/icons/text-icon.svg?react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import TextBlock from './TextBlock';
-
-const questionTypeLabels = {
-  single: '객관식',
-  checkbox: '체크박스',
-  dropdown: '드롭다운',
-  long: '장문형',
-  short: '단답형',
-  text: '텍스트',
-};
-
-export type QuestionType =
-  | 'single'
-  | 'checkbox'
-  | 'dropdown'
-  | 'long'
-  | 'short'
-  | 'text';
-
-export interface QuestionBlock {
-  id: string;
-  type: QuestionType;
-  title?: string;
-  description?: string;
-  options?: Option[];
-  isRequired: boolean;
-  isPrivacy: boolean;
-}
+import {
+  questionBlock,
+  Option,
+  questionTypesInfo,
+} from '@/types/questionTypes';
 
 interface QuestionBlockProps {
-  questionData: QuestionBlock;
+  questionData: questionBlock;
   dragHandler: DraggableProvided['dragHandleProps'];
 }
 
 export interface QuestionBlockInputs {
   title: string;
-  description?: string;
+  description: string;
 }
 
 const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
@@ -87,8 +65,9 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
       >
         ⸬
       </div>
+
       <p className="mb-1 text-xs font-bold text-slate-500">
-        {questionTypeLabels[questionData.type]}
+        {questionTypesInfo[questionData.type].label}
       </p>
       <>
         {questionData.type === 'text' ? (
@@ -121,7 +100,7 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
                   <TextIcon className="stroke-slate-400" />
                   <input
                     type="text"
-                    value={questionTypeLabels[questionData.type]}
+                    value={questionTypesInfo[questionData.type].label}
                     className="ml-4 bg-transparent outline-none text-slate-400"
                     readOnly
                   />
