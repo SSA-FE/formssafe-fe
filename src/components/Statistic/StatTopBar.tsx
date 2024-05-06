@@ -1,8 +1,13 @@
 import statCheckIcon from '@/assets/icons/stat-check-icon.svg';
 import editIcon from '@/assets/icons/edit-square-icon.svg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const StatTopBar = () => {
+  const location = useLocation();
+
+  const focusNav = 'border-b-2 border-black';
+  const blurNav = 'text-slate-400';
+
   return (
     <div className="flex items-center w-full h-12 px-8 py-2">
       {/* text */}
@@ -17,11 +22,15 @@ const StatTopBar = () => {
       </div>
 
       <div className="flex items-center mx-auto text-xs gap-x-4">
-        <div className="p-2 border-b-2 border-black">
+        <div
+          className={`p-2 ${location.pathname === '/stat' ? focusNav : blurNav}`}
+        >
           <Link to="/stat">전체요약</Link>
         </div>
 
-        <div className="p-2 text-slate-400">
+        <div
+          className={`p-2 ${location.pathname === '/stat' ? blurNav : focusNav}`}
+        >
           <Link to="/stat/1">개별통계</Link>
         </div>
       </div>
