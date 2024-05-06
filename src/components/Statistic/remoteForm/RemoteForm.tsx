@@ -1,5 +1,5 @@
 import Question from '@components/Statistic/remoteForm/Question';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 interface RemoteFormProps {
   type: string;
@@ -23,9 +23,6 @@ const RemoteForm = ({ data }: { data: RemoteFormProps[] }) => {
   const titleList = useRef<string[]>(
     data.map((item: RemoteFormProps) => item.title)
   );
-  useEffect(() => {
-    console.log(titleList.current.length);
-  }, []);
   return (
     <div className="w-[15rem] h-[21.28125rem] mt-4 mx-auto flex flex-col flex-1 sticky top-10 rounded-lg drop-shadow-md bg-slate-50 ">
       {/* 개별 질문리스트 헤더  */}
@@ -42,7 +39,7 @@ const RemoteForm = ({ data }: { data: RemoteFormProps[] }) => {
           {/* 총 질문 개수 */}
           <div className="h-6 flex items-center gap-2.5">
             <span className="font-bold text-[10px] text-neutral-400">
-              총 40개의 질문
+              총 {titleList.current.length}개의 질문
             </span>
           </div>
         </div>
