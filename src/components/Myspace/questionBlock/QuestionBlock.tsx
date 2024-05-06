@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import {
   setActiveBlockId,
   updateQuestion,
-} from '../questionBlockList/questionBlockListSlice';
+} from '@/components/Myspace/questionBlockList/questionBlockListSlice';
 import OptionList from './OptionList';
 import TextIcon from '@/assets/icons/text-icon.svg?react';
 import { DraggableProvided } from 'react-beautiful-dnd';
@@ -22,7 +22,7 @@ interface QuestionBlockProps {
 
 export interface QuestionBlockInputs {
   title: string;
-  description?: string;
+  description: string;
 }
 
 const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
@@ -42,6 +42,7 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
         isPrivacy: questionData.isPrivacy,
       })
     );
+    console.log('updateQuestion---------->', questionData);
   };
 
   return (

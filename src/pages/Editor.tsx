@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import FormInfoBar from '@/components/Myspace/FormInfoBar';
 import FormMain from '@/components/Myspace/FormMain';
 import FormOptionBar from '@/components/Myspace/FormOptionBar';
@@ -10,17 +9,17 @@ const Editor = () => {
   const [selectedQuestionType, setSelectedQuestionType] =
     useState<questionType>('single');
 
+  const handleQuestionTypeSelected = (type: string) => {
+    setSelectedQuestionType(type as questionType);
+  };
+
   return (
     <div>
       <FormToolBar />
       <div className="flex bg-white">
         <FormInfoBar />
         <FormMain selectedQuestionType={selectedQuestionType} />
-        <FormOptionBar
-          setSelectedQuestionType={
-            setSelectedQuestionType as (type: string) => void
-          }
-        />
+        <FormOptionBar setSelectedQuestionType={handleQuestionTypeSelected} />
       </div>
     </div>
   );

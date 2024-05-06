@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState, Dispatch, cloneElement } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   SingleIcon,
   CheckboxIcon,
@@ -7,9 +8,11 @@ import {
   SentenceIcon,
 } from '@/assets/icons/optionsIcons';
 import { questionType, questionTypesInfo } from '@/types/questionTypes';
+import { setActiveBlockId } from '@/components/Myspace/questionBlockList/questionBlockListSlice';
+import { RootState } from '@/store';
 
 interface QuestionOptionsProps {
-  setSelectedQuestionType: React.Dispatch<React.SetStateAction<questionType>>;
+  setSelectedQuestionType: Dispatch<React.SetStateAction<string>>;
   onQuestionTypeSelected: (type: questionType) => void;
 }
 
@@ -26,12 +29,26 @@ const QuestionOptions = ({
   setSelectedQuestionType,
   onQuestionTypeSelected,
 }: QuestionOptionsProps) => {
-  const [selectedButton, setSelectedButton] = useState<questionType>('single');
+  const dispatch = useDispatch();
+  const activeBlockId = useSelector(
+    (state: RootState) => state.questionBlockList.activeBlockId
+  );
+  const activeBlock = useSelector((state: RootState) =>
+    state.questionBlockList.questionList.find(
+      (block) => block.id === activeBlockId
+    )
+  );
+  const [selectedButton, setSelectedButton] = useState(
+    activeBlock ? activeBlock.type : 'single'
+  );
 
   const addQuestionWithType = (type: questionType) => {
     setSelectedButton(type);
     onQuestionTypeSelected(type);
     setSelectedQuestionType(type);
+    if (activeBlock) {
+      dispatch(setActiveBlockId({ id: activeBlock.id }));
+    }
   };
 
   return (
@@ -48,7 +65,7 @@ const QuestionOptions = ({
                 : 'bg-neutral-100 shadow shadow-neutral-200'
             }`}
           >
-            {React.cloneElement(questionTypeIcons[type as questionType], {
+            {cloneElement(questionTypeIcons[type as questionType], {
               fillColor: selectedButton === type ? '#fff' : '#A3A3A3',
             })}
           </button>

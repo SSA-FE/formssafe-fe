@@ -1,9 +1,11 @@
 import plusIcon from '@/assets/icons/plus-icon.svg';
 import QuestionBlockList from './questionBlockList/QuestionBlockList';
-import { addQuestion } from './questionBlockList/questionBlockListSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  addQuestion,
+  setActiveBlockId,
+} from '@/components/Myspace/questionBlockList/questionBlockListSlice';
+import { useDispatch } from 'react-redux';
 import { questionType } from '@/types/questionTypes';
-import { RootState } from '@/store';
 
 type FormMainProps = {
   selectedQuestionType: questionType;
@@ -11,17 +13,18 @@ type FormMainProps = {
 
 const FormMain: React.FC<FormMainProps> = ({ selectedQuestionType }) => {
   const dispatch = useDispatch();
-  const questionBlock = useSelector((store: RootState) => store.questionBlock);
 
   const handleAddBlock = () => {
-    dispatch(
-      addQuestion({
-        id: crypto.randomUUID(),
-        type: selectedQuestionType,
-        isRequired: questionBlock.isRequired,
-        isPrivacy: questionBlock.isPrivacy,
-      })
-    );
+    const newQuestionId = crypto.randomUUID();
+    const newQuestion = {
+      id: newQuestionId,
+      type: selectedQuestionType,
+      isRequired: true,
+      isPrivacy: false,
+    };
+    dispatch(addQuestion(newQuestion));
+    dispatch(setActiveBlockId({ id: newQuestionId }));
+    console.log('addNewQuestion---------->', newQuestion);
   };
 
   return (
