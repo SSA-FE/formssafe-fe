@@ -13,7 +13,6 @@ type FormMainProps = {
 
 const FormMain: React.FC<FormMainProps> = ({ selectedQuestionType }) => {
   const dispatch = useDispatch();
-
   const handleAddBlock = () => {
     const newQuestionId = crypto.randomUUID();
     const newQuestion = {

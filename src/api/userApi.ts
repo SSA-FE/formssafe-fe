@@ -1,16 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL, API } from '@/config';
 
-interface User {
+export interface User {
   userId: number;
   nickname: string;
   imageUrl: string;
   email: string;
   isActive: boolean;
-}
-
-interface ApiResponse {
-  status: number;
 }
 
 export const userApi = createApi({
@@ -20,14 +16,7 @@ export const userApi = createApi({
     fetchUser: builder.query<User, void>({
       query: () => ({ url: `${API.USERS}/profile` }),
     }),
-    updateUser: builder.mutation<ApiResponse, { nickname: string }>({
-      query: (body) => ({
-        url: `${API.USERS}/join`,
-        method: 'POST',
-        body,
-      }),
-    }),
   }),
 });
 
-export const { useFetchUserQuery, useUpdateUserMutation } = userApi;
+export const { useFetchUserQuery } = userApi;

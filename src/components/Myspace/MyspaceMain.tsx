@@ -3,13 +3,14 @@ import {
   useFetchParticipatedSurveysQuery,
 } from '@/api/activityApi';
 import Toolbar from '@/components/Myspace/toolbar/Toolbar';
-import SurveyCard from '@/components/Myspace/SurveyCard';
-import { Survey } from '@/api/activityApi';
+import FormCard from '@/components/Myspace/FormCard';
+import { Form } from '@/api/activityApi';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
 const MyspaceMain = ({ surveyStatus }: { surveyStatus: string }) => {
+  const [FormList, setFormList] = useState<Form[] | null>(null);
   const toolbarInput = useSelector((state: RootState) => state.toolbarInput);
   const registeredSurveysQuery = useFetchRegisteredSurveysQuery(toolbarInput);
   const participatedSurveysQuery =
@@ -25,19 +26,23 @@ const MyspaceMain = ({ surveyStatus }: { surveyStatus: string }) => {
     );
   }, [surveyStatus, registeredSurveysQuery, participatedSurveysQuery]);
 
-  const { data: SurveyList, isLoading } = selectedQuery;
+  const { data, isLoading } = selectedQuery;
+
+  useEffect(() => {
+    if (data) {
+      setFormList(data.forms);
+    }
+  }, [data]);
 
   if (isLoading) return <div>Loading...</div>;
-  console.log(SurveyList);
+
   return (
     <div className="w-full min-h-screen bg-neutral-100 ">
       <Toolbar />
-      <div className="flex flex-wrap gap-4 px-8 pb-4">
-        {SurveyList &&
-          Array.isArray(SurveyList) &&
-          SurveyList.map((survey: Survey) => (
-            <SurveyCard key={survey.id} {...survey} />
-          ))}
+      <div className="flex flex-wrap gap-4 mx-8 mb-4">
+        {FormList &&
+          Array.isArray(FormList) &&
+          FormList.map((form: Form) => <FormCard key={form.id} {...form} />)}
       </div>
     </div>
   );

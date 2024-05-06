@@ -10,6 +10,7 @@ interface Tag {
 interface Author {
   userId: number;
   nickname: string;
+  email?: string;
 }
 
 interface Reward {
@@ -18,7 +19,7 @@ interface Reward {
   count: number;
 }
 
-export interface Survey {
+export interface Form {
   id: number;
   title: string;
   description?: string;
@@ -32,29 +33,37 @@ export interface Survey {
   reward?: Reward;
   tags?: Tag[];
   status: string;
-  isTemp: boolean;
 }
 
-interface SurveyRequest {
+interface Cursor {
+  sort: string;
+  top: number;
+  startDate: string;
+  endDate: string;
+  responseCnt: number;
+}
+
+export interface FormResponse {
+  forms: Form[];
+  cursor: Cursor;
+}
+
+interface FormRequest {
   sort?: string;
   keyword?: string;
-}
-
-interface SurveyResponse {
-  surveys: Survey[];
 }
 
 export const activityApi = createApi({
   reducerPath: 'activityApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
   endpoints: (builder) => ({
-    fetchParticipatedSurveys: builder.query<SurveyResponse, SurveyRequest>({
+    fetchParticipatedSurveys: builder.query<FormResponse, FormRequest>({
       query: (request) => ({
-        url: `${API.ACTIVITY}/responses`,
+        url: `${API.ACTIVITY}/submissions`,
         params: request,
       }),
     }),
-    fetchRegisteredSurveys: builder.query<SurveyResponse, SurveyRequest>({
+    fetchRegisteredSurveys: builder.query<FormResponse, FormRequest>({
       query: (request) => ({
         url: `${API.ACTIVITY}/forms`,
         params: request,

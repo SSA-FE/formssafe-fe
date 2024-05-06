@@ -1,7 +1,7 @@
-import searchIcon from '@/assets/icons/search-icon.svg';
+import { SearchIcon } from '@/assets/icons';
 import { updateKeyword } from '@components/Myspace/toolbar/toolbarInputSlice';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@hooks/useAppDispatch';
 
 interface SearchBarProps {
   placeholder: string;
@@ -11,7 +11,7 @@ interface SearchBarProps {
 }
 
 const SearchBar = ({ placeholder, bgColor, width, height }: SearchBarProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [keyword, setKeyword] = useState('');
 
   const handleOnclick = () => {
@@ -36,7 +36,7 @@ const SearchBar = ({ placeholder, bgColor, width, height }: SearchBarProps) => {
         }}
       />
       <button onClick={handleOnclick}>
-        <img src={searchIcon} alt="검색 아이콘" />
+        <SearchIcon width="20" height="20" />
       </button>
     </div>
   );
