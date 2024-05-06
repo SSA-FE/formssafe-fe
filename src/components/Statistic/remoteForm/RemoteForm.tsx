@@ -1,6 +1,31 @@
 import Question from '@components/Statistic/remoteForm/Question';
+import { useEffect, useRef } from 'react';
 
-const RemoteForm = () => {
+interface RemoteFormProps {
+  type: string;
+  title: string;
+  description?: string;
+  responseCnt: number;
+  options: {
+    labels?: string[];
+    users: userType[];
+    values: number[] | string[];
+  };
+}
+
+interface userType {
+  id: number;
+  nickname: string;
+  pick?: number;
+}
+
+const RemoteForm = ({ data }: { data: RemoteFormProps[] }) => {
+  const titleList = useRef<string[]>(
+    data.map((item: RemoteFormProps) => item.title)
+  );
+  useEffect(() => {
+    console.log(titleList.current.length);
+  }, []);
   return (
     <div className="w-[15rem] h-[21.28125rem] mt-4 mx-auto flex flex-col flex-1 sticky top-10 rounded-lg drop-shadow-md bg-slate-50 ">
       {/* 개별 질문리스트 헤더  */}
@@ -25,33 +50,8 @@ const RemoteForm = () => {
 
       {/* 개별 질문리스트 */}
       <div className="h-[17.28125rem] flex flex-col items-start overflow-y-scroll">
-        {[
-          '제일 좋아하는 과일이 뭔가요?ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-          '제일 좋아하는 과일이 뭔가요?',
-        ].map((q: string, index: number) => (
-          <Question question={q} key={'q_' + index} />
+        {titleList.current.map((title: string, index: number) => (
+          <Question question={title} number={index} key={'q_' + index} />
         ))}
       </div>
     </div>
