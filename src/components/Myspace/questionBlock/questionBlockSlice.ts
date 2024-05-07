@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { QuestionBlock, QuestionType } from '../questionBlock/QuestionBlock';
+import { questionBlock, questionType } from '@/types/questionTypes';
 
-const initialState: QuestionBlock = {
+const initialState: questionBlock = {
   id: crypto.randomUUID(),
   type: 'single',
   isRequired: true,
@@ -12,7 +12,7 @@ export const questionBlockSlice = createSlice({
   name: 'questionBlock',
   initialState,
   reducers: {
-    setQuestionType: (state, action: PayloadAction<{ type: QuestionType }>) => {
+    setQuestionType: (state, action: PayloadAction<{ type: questionType }>) => {
       state.type = action.payload.type;
     },
     setIsRequired: (state, action: PayloadAction<{ isRequired: boolean }>) => {

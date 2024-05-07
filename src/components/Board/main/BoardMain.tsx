@@ -1,8 +1,8 @@
 import { Form } from '@/api/viewApi';
-
 import { useFetchSurveyListQuery } from '@/api/viewApi';
 import { useEffect, useState } from 'react';
 import FormCard from '@/components/Myspace/FormCard';
+import Loading from '@/components/Loading';
 
 const BoardMain = () => {
   const [FormList, setFormList] = useState<Form[] | null>(null);
@@ -14,7 +14,7 @@ const BoardMain = () => {
     }
   }, [data]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="flex flex-col min-h-screen py-2 border-t min-w-min border-slate-200">

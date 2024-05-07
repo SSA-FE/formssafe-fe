@@ -7,6 +7,7 @@ import { Form } from '@/api/activityApi';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import Loading from '@components/Loading';
 import { resetInput } from './toolbar/toolbarInputSlice';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 
@@ -42,7 +43,7 @@ const MyspaceMain = ({ surveyStatus, setSurveyStatus }: MyspaceMainProps) => {
     }
   }, [data]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   return (
     <>

@@ -18,6 +18,7 @@ const StatLayout = React.lazy(() => import('@/components/StatLayout'));
 const LoginRedirect = React.lazy(
   () => import('@components/auth/LoginRedirect')
 );
+const Form = React.lazy(() => import('@pages/Form'));
 
 const Router = () => {
   const routes: RouteObject[] = [
@@ -60,6 +61,14 @@ const Router = () => {
               element: <StatDetail />,
             },
           ],
+        },
+        {
+          path: 'board',
+          element: <Board />,
+        },
+        {
+          path: 'form/:id',
+          element: <Form />,
         },
       ],
     },
