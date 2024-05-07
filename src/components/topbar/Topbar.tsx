@@ -98,12 +98,27 @@ const Topbar = () => {
         />
       )}
       <nav className="flex items-center justify-between w-full px-8 py-2 bg-transparent h-topbar min-h-16 whitespace-nowrap">
-        <NavLink
-          className="text-lg font-bold text-slate-600"
-          to={location.pathname === '/' ? '/' : '/board'}
-        >
-          <MainLogoIcon width="80" height="20" />
-        </NavLink>
+        <div className="flex gap-8 items-center">
+          <NavLink className="text-lg font-bold text-slate-600" to="/">
+            <MainLogoIcon width="80" />
+          </NavLink>
+          <div className="flex space-x-4 font-bold text-sm">
+            <NavLink to="/board">
+              <span
+                className={`${location.pathname === '/board' ? 'text-blue-500 hover:border-b-[1px] hover:border-blue-500' : 'text-slate-800 hover:border-b-[1px] hover:border-slate-800'}  py-0 leading-none inline-block`}
+              >
+                보드
+              </span>
+            </NavLink>
+            <NavLink to="/myspace">
+              <span
+                className={`${location.pathname === '/myspace' ? 'text-blue-500 hover:border-b-[1px] hover:border-blue-500' : 'text-slate-800 hover:border-b-[1px] hover:border-slate-800'}  py-0 leading-none inline-block`}
+              >
+                마이스페이스
+              </span>
+            </NavLink>
+          </div>
+        </div>
 
         {location.pathname !== '/' && user.imageUrl && (
           <div className="relative">
