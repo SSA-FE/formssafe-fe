@@ -17,7 +17,7 @@ interface MyspaceMainProps {
 }
 
 const MyspaceMain = ({ surveyStatus, setSurveyStatus }: MyspaceMainProps) => {
-  const [activeTap, setActiveTap] = useState('보관함');
+  const [activeTap, setActiveTap] = useState('등록한 설문');
   const dispatch = useAppDispatch();
   const [FormList, setFormList] = useState<Form[] | null>(null);
   const toolbarInput = useSelector((state: RootState) => state.toolbarInput);

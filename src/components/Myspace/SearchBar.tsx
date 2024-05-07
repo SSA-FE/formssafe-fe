@@ -16,7 +16,6 @@ const SearchBar = ({ placeholder, bgColor, width, height }: SearchBarProps) => {
 
   const handleOnclick = () => {
     dispatch(updateKeyword({ keyword }));
-    setKeyword('');
   };
 
   return (
