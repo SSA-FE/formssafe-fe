@@ -1,45 +1,19 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { resetInput } from './toolbar/toolbarInputSlice';
-import { useAppDispatch } from '@/hooks/useAppDispatch';
+import MyspaceToolbar from './toolbar/MyspaceToolbar';
+import { EditIcon } from '@assets/icons';
 
-interface MyspacePanelProps {
-  setSurveyStatus: (value: string) => void;
-}
-
-const MyspacePanel = ({ setSurveyStatus }: MyspacePanelProps) => {
-  const [activeTap, setActiveTap] = useState('보관함');
-  const dispatch = useAppDispatch();
-
+const MyspacePanel = () => {
   return (
-    <div className="flex flex-col px-8 items-start space-y-2 border-b-[1px] bg-white">
-      <Link
-        to="/editor"
-        className="box-border px-5 py-2 text-sm font-bold text-white bg-blue-400 rounded"
-      >
-        새 설문 만들기
-      </Link>
-      <div className="flex space-x-4 font-bold bg-transparent border-none">
-        <button
-          className={`px-6 py-2 ${activeTap === '보관함' ? 'border-b-2 border-neutral-800 ' : 'text-neutral-400 border-none'}`}
-          onClick={() => {
-            setActiveTap('보관함');
-            setSurveyStatus('mySurveys');
-            dispatch(resetInput());
-          }}
+    <div className="flex flex-col items-start w-full h-12 px-8 space-y-2 bg-white min-w-min">
+      <div className="flex justify-between w-full">
+        <MyspaceToolbar />
+        <Link
+          to="/editor"
+          className="shadow-md box-border flex w-auto px-5 py-2 space-x-2 text-xs font-bold text-white bg-blue-500 rounded-[38px] h-9 whitespace-nowrap"
         >
-          보관함
-        </button>
-        <button
-          className={`px-6 py-2 ${activeTap === '참여한 설문' ? 'border-b-2  border-neutral-800 ' : 'text-neutral-400 border-none'}`}
-          onClick={() => {
-            setActiveTap('참여한 설문');
-            setSurveyStatus('participatedSurveys');
-            dispatch(resetInput());
-          }}
-        >
-          참여한 설문
-        </button>
+          <EditIcon width="10" />
+          <p className="flex items-center">설문 작성하기</p>
+        </Link>
       </div>
     </div>
   );

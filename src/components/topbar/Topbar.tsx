@@ -1,17 +1,35 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { useFetchUserQuery } from '@api/userApi';
+import { useSelector } from 'react-redux';
+import { User, useFetchUserQuery } from '@api/userApi';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { setUser } from '@components/topbar/topbarSlice';
 import { InactiveAlarmIcon, MainLogoIcon } from '@assets/icons';
 import { useEffect, useRef, useState } from 'react';
 
 import AlarmModal from './AlarmModal';
 import ProfileModal from './ProfileModal';
+import { RootState } from '@/store';
 
 const Topbar = () => {
   const { data, refetch } = useFetchUserQuery();
   const [alarmModalOpen, setAlarmModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const user: User = useSelector((state: RootState) => state.topbarSlice);
   const location = useLocation();
   const modalRef = useRef(null);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (location.pathname === '/board') {
+      refetch();
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setUser(data));
+    }
+  }, [data, location.pathname]);
 
   const handleModalButtonClick = (
     event: React.MouseEvent,
@@ -75,7 +93,7 @@ const Topbar = () => {
           modalRef={modalRef}
           profileModalOpen={profileModalOpen}
           setProfileModalOpen={setProfileModalOpen}
-          data={data}
+          data={user}
           refetch={refetch}
         />
       )}
@@ -84,10 +102,10 @@ const Topbar = () => {
           className="text-lg font-bold text-slate-600"
           to={location.pathname === '/' ? '/' : '/board'}
         >
-          <MainLogoIcon width="100" />
+          <MainLogoIcon width="80" height="20" />
         </NavLink>
 
-        {location.pathname !== '/' && data && (
+        {location.pathname !== '/' && user.imageUrl && (
           <div className="relative">
             <div className="flex px-3 py-2 my-1 h-14 w-[124px] items-center justify-between">
               <button
@@ -101,7 +119,7 @@ const Topbar = () => {
                 onClick={(event) => handleModalButtonClick(event, 'profile')}
               >
                 <img
-                  src={data?.imageUrl}
+                  src={user?.imageUrl}
                   alt="profile"
                   className="object-cover rounded-full h-7 w-7"
                 />

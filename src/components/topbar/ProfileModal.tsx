@@ -4,7 +4,9 @@ import { instance } from '@/api/axios';
 import { API } from '@/config';
 import { useCallback, useEffect, useState } from 'react';
 import { User } from '@/api/userApi';
+import { resetUser } from '@components/topbar/topbarSlice';
 import { EditIcon, LogoutIcon } from '@assets/icons';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
 
 interface ProfileModalProps {
   modalRef: React.RefObject<HTMLDivElement>;
@@ -17,9 +19,12 @@ interface ProfileModalProps {
 const ProfileModal: React.FC<ProfileModalProps> = ({
   modalRef,
   profileModalOpen,
+  setProfileModalOpen,
   data,
   refetch,
 }) => {
+  const dispatch = useAppDispatch();
+
   const [isEditing, setIsEditing] = useState(false);
   const [nickname, setNickname] = useState(data?.nickname || '');
   const navigate = useNavigate();
@@ -47,7 +52,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
     try {
       const response = await instance.get(`${API.AUTH}/logout`);
       if (response.status === 200) {
-        navigate('/');
+        setProfileModalOpen(false);
+        dispatch(resetUser());
+        window.location.href = '/';
       }
     } catch (error) {
       console.error(error);
@@ -81,11 +88,13 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
       `}
     >
       <div className="flex flex-col items-center w-full gap-2">
-        <img
-          src={data?.imageUrl}
-          alt="profile"
-          className="object-cover w-12 h-12 rounded-full"
-        />
+        {data?.imageUrl && (
+          <img
+            src={data.imageUrl}
+            alt="profile"
+            className="object-cover w-12 h-12 rounded-full"
+          />
+        )}
         <div className="flex flex-col items-center w-full">
           {isEditing ? (
             <div className="flex space-x-2">
