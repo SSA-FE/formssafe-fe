@@ -9,10 +9,10 @@ const MyspacePanel = () => {
         <MyspaceToolbar />
         <Link
           to="/editor"
-          className="shadow-md box-border flex w-auto px-5 py-2 space-x-2 text-xs font-bold text-white bg-blue-500 rounded-[38px] h-9 whitespace-nowrap"
+          className="shadow-md flex items-center w-auto px-5 py-2 space-x-2 text-xs font-bold text-white bg-blue-500 rounded-[38px] h-9 whitespace-nowrap"
         >
-          <EditIcon width="10" />
-          <p className="flex items-center">설문 작성하기</p>
+          <EditIcon width="10" strokeColor="#F1F5F9" />
+          <p className="flex items-center p-0 m-0">설문 작성하기</p>
         </Link>
       </div>
     </div>
