@@ -1,9 +1,18 @@
+import { useFetchUserQuery } from '@/api/userApi';
 import googleIcon from '@/assets/icons/google-icon.svg';
 import { GOOGLE_AUTH_URL } from '@/config';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const { isError } = useFetchUserQuery();
+  const navigate = useNavigate();
+
   const handleLogin = () => {
-    window.location.href = GOOGLE_AUTH_URL;
+    if (isError) {
+      window.location.href = GOOGLE_AUTH_URL;
+    } else {
+      navigate('/board');
+    }
   };
 
   return (
