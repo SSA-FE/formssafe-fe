@@ -8,26 +8,36 @@ interface Tag {
 }
 
 interface FormCardProps {
+  selectedSurvey: number | undefined;
+  id: number;
   title: string;
   description?: string;
   tags?: Tag[];
   questionCnt: number;
   expectTime: number;
   startDate: string;
+  endDate?: string;
   isTemp?: boolean;
 }
 
 const FormCard = ({
+  selectedSurvey,
+  id,
   title,
   description,
   tags,
   questionCnt,
   expectTime,
   startDate,
+  endDate,
   isTemp,
 }: FormCardProps) => {
-  const dateObject = new Date(startDate);
-  const formattedDate = `${dateObject.getFullYear()}/${String(dateObject.getMonth() + 1).padStart(2, '0')}/${String(dateObject.getDate()).padStart(2, '0')}`;
+  const startDateObject = new Date(startDate);
+  const endDateObject = endDate ? new Date(endDate) : undefined;
+  const formattedStartDate = `${startDateObject.getFullYear()}/${String(startDateObject.getMonth() + 1).padStart(2, '0')}/${String(startDateObject.getDate()).padStart(2, '0')}`;
+  const formattedEndDate = endDateObject
+    ? `${endDateObject.getFullYear()}/${String(endDateObject.getMonth() + 1).padStart(2, '0')}/${String(endDateObject.getDate()).padStart(2, '0')} ${String(endDateObject.getHours()).padStart(2, '0')}시 ${String(endDateObject.getMinutes()).padStart(2, '0')}분`
+    : '';
   const tagElements = [];
 
   if (tags) {
@@ -59,7 +69,9 @@ const FormCard = ({
   }
 
   return (
-    <div className="group min-w-[256px] h-[252px] bg-white hover:bg-slate-200 rounded flex flex-col justify-between p-2 gap-4 border border-slate-200 hover:border-slate-300 shadow-sm">
+    <div
+      className={`group min-w-[256px] h-[252px] bg-white hover:bg-slate-200 rounded flex flex-col justify-between p-2 gap-4 border  hover:border-slate-300 shadow-sm ${selectedSurvey === id ? 'border-blue-400' : 'border-slate-200'}`}
+    >
       <div className="relative group">
         <img
           src={defaultImg}
@@ -76,6 +88,11 @@ const FormCard = ({
           <p>
             <strong>예상 소요시간:</strong> {expectTime}분
           </p>
+          {endDate && (
+            <p>
+              <strong>마감 시각:</strong> {formattedEndDate}
+            </p>
+          )}
           {isTemp && (
             <p className="text-[#6ED1F9]">
               <strong>임시 설문</strong>
@@ -94,7 +111,7 @@ const FormCard = ({
         </div>
         <div className="flex justify-center  w-[120px] rounded-2xl bg-slate-100 group-hover:bg-slate-400">
           <p className="text-xs text-neutral-400 group-hover:text-slate-50">
-            {formattedDate} 편집됨
+            {formattedStartDate} 편집됨
           </p>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { EditIcon } from '@assets/icons';
 
 const MyspacePanel = () => {
   return (
-    <div className="w-full h-12 flex flex-col px-8 items-start space-y-2 border-b-[1px] bg-white min-w-min">
+    <div className="flex flex-col items-start w-full h-12 px-8 space-y-2 bg-white min-w-min">
       <div className="flex justify-between w-full">
         <MyspaceToolbar />
         <Link

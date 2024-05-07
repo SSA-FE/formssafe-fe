@@ -12,13 +12,9 @@ import { resetInput } from './toolbar/toolbarInputSlice';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import MyspaceSidebar from './MyspaceSidebar';
 
-interface MyspaceMainProps {
-  surveyStatus: string;
-  setSurveyStatus: (value: string) => void;
-}
-
-const MyspaceMain = ({ surveyStatus, setSurveyStatus }: MyspaceMainProps) => {
+const MyspaceMain = () => {
   const [activeTap, setActiveTap] = useState('등록한 설문');
+  const [selectedSurvey, setSelectedSurvey] = useState<number>(-1);
   const dispatch = useAppDispatch();
   const [formList, setFormList] = useState<Form[] | null>(null);
   const toolbarInput = useSelector((state: RootState) => state.toolbarInput);
@@ -30,11 +26,11 @@ const MyspaceMain = ({ surveyStatus, setSurveyStatus }: MyspaceMainProps) => {
 
   useEffect(() => {
     setSelectedQuery(
-      surveyStatus === 'mySurveys'
+      activeTap === '등록한 설문'
         ? registeredSurveysQuery
         : participatedSurveysQuery
     );
-  }, [surveyStatus, registeredSurveysQuery, participatedSurveysQuery]);
+  }, [activeTap, registeredSurveysQuery, participatedSurveysQuery]);
 
   const { data, isLoading } = selectedQuery;
 
@@ -48,14 +44,18 @@ const MyspaceMain = ({ surveyStatus, setSurveyStatus }: MyspaceMainProps) => {
 
   return (
     <div className="flex">
-      <MyspaceSidebar />
+      <MyspaceSidebar
+        activeTap={activeTap}
+        setActiveTap={setActiveTap}
+        selectedSurvey={selectedSurvey}
+        setSelectedSurvey={setSelectedSurvey}
+      />
       <div className="w-full">
         <div className="flex pl-8 space-x-4 text-sm font-bold bg-transparent bg-white border-b-[2px] border-t-[2px] border-slate-100">
           <button
             className={`px-6 py-2 whitespace-nowrap ${activeTap === '등록한 설문' ? 'text-blue-400 border-b-2 border-blue-400 ' : 'text-neutral-400 border-b-2 border-neutral-400'}`}
             onClick={() => {
               setActiveTap('등록한 설문');
-              setSurveyStatus('mySurveys');
               dispatch(resetInput());
             }}
           >
@@ -65,7 +65,6 @@ const MyspaceMain = ({ surveyStatus, setSurveyStatus }: MyspaceMainProps) => {
             className={`px-6 py-2 whitespace-nowrap ${activeTap === '참여한 설문' ? 'text-blue-400 border-b-2 border-blue-400 ' : 'text-neutral-400 border-b-2 border-neutral-400'}`}
             onClick={() => {
               setActiveTap('참여한 설문');
-              setSurveyStatus('participatedSurveys');
               dispatch(resetInput());
             }}
           >
@@ -77,7 +76,11 @@ const MyspaceMain = ({ surveyStatus, setSurveyStatus }: MyspaceMainProps) => {
             {formList &&
               Array.isArray(formList) &&
               formList.map((form: Form) => (
-                <FormCard key={form.id} {...form} />
+                <FormCard
+                  key={form.id}
+                  {...form}
+                  selectedSurvey={selectedSurvey}
+                />
               ))}
           </div>
         </div>
