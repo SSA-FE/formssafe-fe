@@ -24,7 +24,7 @@ interface Option {
   value: string;
 }
 
-interface Content {
+export interface Content {
   id: number;
   type: QuestionType;
   title?: string;
@@ -71,15 +71,35 @@ const dummy = {
   contents: [
     {
       id: 1,
-      type: 'single' as QuestionType,
+      type: 'dropdown' as QuestionType,
       title: '첫번째루 질문드리고싶은건요',
       description: '딱히 없어요',
       options: [
         {
           id: 1,
-          value: 'dddd',
+          value:
+            '자전거 도둑, 달걀은 달걀로 갚으렴, 시인의 꿈, 옥상의 민들레꽃, 할머니는 우리 편, 마지막 임금님 작중 수남을 귀여워해주는 손님 중 하나가 야학이라도 다녀볼 생각 없냐라고 한 게 공부를 하기 시작한 계기가 저 시간만 있으면 책이라고라며 손님들에게애ㅍ',
+        },
+        {
+          id: 2,
+          value:
+            '자전거 도둑, 달걀은 달걀로 갚으렴, 시인의 꿈, 옥상의 민들레꽃, 할머니는 우리 편, 마지막 임금님 작중 수남을 귀여워해주는 손님 중 하나가 야학이라도 다녀볼 생각 없냐라고',
+        },
+        {
+          id: 3,
+          value:
+            '자전거 도둑, 마지막 임금님 작중 수남을 귀여워해주는 손님 중 하나가 야학이',
         },
       ],
+      isRequired: false,
+      isPrivacy: false,
+    },
+    {
+      id: 2,
+      type: 'short' as QuestionType,
+      title: '두번째루 질문드리고싶은건요',
+      description: '딱히 없어요',
+      options: [],
       isRequired: false,
       isPrivacy: false,
     },
@@ -117,7 +137,7 @@ const Form = () => {
       />
       <div className="max-w-[832px] flex flex-col mx-auto bg-white">
         <FormHeader formData={dummy} />
-        <FormBody />
+        <FormBody questions={dummy.contents} />
       </div>
     </div>
   );

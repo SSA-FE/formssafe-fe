@@ -39,7 +39,7 @@ const FormHeader = ({ formData }: FormHeaderProps) => {
       </div>
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-bold ">{title}</h1>
+          <h1 className="text-2xl font-bold text-slate-700 ">{title}</h1>
           <p className="text-slate-500 text-xs bg-slate-100 p-1">
             <span className="font-bold">{formattedDate}</span> 배포됨
             <span className="font-bold ml-2">
