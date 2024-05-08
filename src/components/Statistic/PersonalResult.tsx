@@ -2,7 +2,7 @@ import SingleIcon from '@/assets/icons/SingleIcon';
 import PersonIcon from '@assets/icons/person-icon.svg?react';
 import { resultDummy, answerDummy } from './dummy'; // 더미 데이터
 
-const PersonalResult = ({ userId = 1 }: { userId: number }) => {
+const PersonalResult = ({ userId }: { userId: number }) => {
   const data = answerDummy.totalResponses.filter(
     (x) => x.user.id === userId
   )[0];

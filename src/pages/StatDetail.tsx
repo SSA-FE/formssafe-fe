@@ -3,7 +3,7 @@ import UserResultForm from '@/components/Statistic/userResultForm/UserResultForm
 import { useState } from 'react';
 
 const StatDetail = () => {
-  const [userId, setUserId] = useState<number>(2);
+  const [userId, setUserId] = useState<number>(1);
   return (
     <div className="flex h-[calc(200vh-6rem)] ">
       {/* 사이드바 */}
