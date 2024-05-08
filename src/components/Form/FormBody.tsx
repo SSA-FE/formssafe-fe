@@ -3,6 +3,7 @@ import AutoResizeTextarea from '../AutoResizeTextarea';
 import { useForm } from 'react-hook-form';
 import DropdownInput from './DropdownInput';
 import MultiOptionInput from './MultiOptionInput';
+import DescriptionBlock from './DescriptionBlock';
 
 interface FormBodyProps {
   questions: Content[];
@@ -41,22 +42,26 @@ const FormBody = ({ questions }: FormBodyProps) => {
         );
       case 'dropdown':
         return <DropdownInput register={register} questionData={question} />;
-      case 'text':
-        return <div></div>;
     }
   };
 
   return (
-    <div className="px-4">
+    <div className="flex flex-col gap-12 px-4 py-10 bg-white">
       {questions.map((question) => (
-        <div key={question.id} className="px-4 pb-4 flex flex-col gap-4">
-          <div className="pt-10 pb-2">
-            <h1 className="text-xl font-semibold text-slate-700 mb-1">
-              {question.title}
-            </h1>
-            <p className="text-slate-500">{question.description}</p>
-          </div>
-          {renderResponseInput(question)}
+        <div key={question.id} className="p-4 flex flex-col gap-4">
+          {question.type === 'text' ? (
+            <DescriptionBlock description={question.description as string} />
+          ) : (
+            <>
+              <div className="pb-2">
+                <h1 className="text-lg text-slate-700 mb-1">
+                  {question.title}
+                </h1>
+                <p className="text-sm text-slate-500">{question.description}</p>
+              </div>
+              {renderResponseInput(question)}
+            </>
+          )}
         </div>
       ))}
     </div>

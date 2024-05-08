@@ -21,7 +21,7 @@ const FormHeader = ({ formData }: FormHeaderProps) => {
   const dateObject = new Date(startDate);
   const formattedDate = `${dateObject.getFullYear()}/${String(dateObject.getMonth() + 1).padStart(2, '0')}/${String(dateObject.getDate()).padStart(2, '0')}`;
   return (
-    <div className="p-8 text-slate-500">
+    <div className="p-8 text-slate-500 bg-white">
       <div className="flex justify-between jus mb-4">
         <div className="text-xs bg-slate-100 px-2 py-1">
           <p>질문 {questionCnt}문항</p>

@@ -30,8 +30,8 @@ export interface Content {
   title?: string;
   description?: string;
   options?: Option[];
-  isRequired: boolean;
-  isPrivacy: boolean;
+  isRequired?: boolean;
+  isPrivacy?: boolean;
 }
 
 export interface Form {
@@ -96,9 +96,15 @@ const dummy = {
     },
     {
       id: 2,
+      type: 'text' as QuestionType,
+      description:
+        '신중하게답변해주실래요 아래질문은 절망 중요하니까요이이이이이이',
+    },
+    {
+      id: 3,
       type: 'short' as QuestionType,
       title: '두번째루 질문드리고싶은건요',
-      description: '딱히 없어요',
+      description: '',
       options: [],
       isRequired: false,
       isPrivacy: false,
@@ -129,13 +135,13 @@ const dummy = {
 
 const Form = () => {
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="bg-slate-100 min-h-screen">
       <img
         src={dummy.image[0]}
         alt="thumbnail"
         className="w-full h-24 object-cover"
       />
-      <div className="max-w-[832px] flex flex-col mx-auto bg-white">
+      <div className="max-w-[832px] flex flex-col gap-2 mx-auto">
         <FormHeader formData={dummy} />
         <FormBody questions={dummy.contents} />
       </div>
