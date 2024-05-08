@@ -34,8 +34,8 @@ const MultipleChoiceBlock = ({ data: { labels, users, values } }: any) => {
       </div>
       <div
         className={`transition-height duration-300 ease-in ${
-          isOpen ? `h-[${height}]` : 'h-0'
-        } overflow-hidden bg-[#F2F6F9] rounded-bl-lg `}
+          isOpen ? `h-[${height}] pb-4` : 'h-0'
+        } overflow-hidden bg-[#F2F6F9] rounded-bl-lg`}
         ref={resultBoxRef}
       >
         <div className="flex flex-col gap-4 px-4 ">
@@ -50,28 +50,30 @@ const MultipleChoiceBlock = ({ data: { labels, users, values } }: any) => {
             })}
           </div>
 
-          <hr />
+          <hr className="h-[1px] bg-slate-400 text-slate-400" />
 
-          <div className="flex flex-col gap-2 pb-5">
-            {users.map((user: any) => {
-              return (
-                <div className="flex items-center self-stretch justify-between px-4 pt-1 pb-2 bg-white border-l-2 border-slate-300">
-                  <div className="flex flex-row items-center justify-center gap-4 px-2 py-2">
-                    <UserIcon />
+          <div className="flex flex-col gap-2 overflow-y-auto h-80">
+            <>
+              {users.map((user: any) => {
+                return (
+                  <div className="flex items-center self-stretch justify-between px-4 pt-1 pb-2 bg-white border-l-2 border-slate-300">
+                    <div className="flex flex-row items-center justify-center gap-4 px-2 py-2">
+                      <UserIcon />
+                      <p className="text-xs font-normal text-slate-500">
+                        {user.nickname}
+                      </p>
+                    </div>
                     <p className="text-xs font-normal text-slate-500">
-                      {user.nickname}
+                      {user.pick}번
                     </p>
                   </div>
-                  <p className="text-xs font-normal text-slate-500">
-                    {user.pick}번
-                  </p>
-                </div>
-              );
-            })}
+                );
+              })}
+            </>
           </div>
         </div>
       </div>
-      <div className="flex flex-row justify-end w-full bg-white">
+      <div className="flex flex-row justify-end w-full">
         <button
           className="flex items-center justify-center px-20 py-2 rounded-bl-lg rounded-br-lg bg-slate-100"
           onClick={toggleCollapsible}
