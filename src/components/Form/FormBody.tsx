@@ -56,6 +56,9 @@ const FormBody = ({ questions }: FormBodyProps) => {
               <div className="pb-2">
                 <h1 className="text-lg text-slate-700 mb-1">
                   {question.title}
+                  {question.isRequired && (
+                    <span className="text-red-500 ml-1 text-lg">*</span>
+                  )}
                 </h1>
                 <p className="text-sm text-slate-500">{question.description}</p>
               </div>
