@@ -21,19 +21,14 @@ type Nickname = {
 };
 
 const schema = z.object({
-  nickname: z
-    .string()
-    .min(4, { message: '닉네임은 최소 네 글자 이상이어야 합니다.' }),
+  nickname: z.string().min(1),
 });
 
 function LoginRedirect() {
   const [user, setUser] = useState<UserType>(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<Nickname>({
+  const { register, handleSubmit } = useForm<Nickname>({
     resolver: zodResolver(schema),
     defaultValues: {
       nickname: '',
@@ -81,21 +76,16 @@ function LoginRedirect() {
   }, [fetchGoogleLogin]);
 
   const handleValid = async (data: Nickname) => {
+    data.nickname = data.nickname.trim().replace(/\s+/g, ' ');
+    if (data.nickname === '') return;
     try {
       const response = await instance.post(`${API.USERS}/join`, data);
       if (response.status === 200) {
         navigate('/board');
       }
     } catch (error) {
-      // TODO: error handling
       console.error(error);
-      navigate('/');
-    }
-  };
-
-  const handleEnterKey = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
+      setErrorMessage('이미 사용중인 닉네임입니다.');
     }
   };
 
@@ -111,21 +101,24 @@ function LoginRedirect() {
 
   return (
     <Modal maxWidth={'max-w-nicknamemodal'} state={isModalOpen}>
-      <form className="flex flex-col gap-y-4">
+      <form
+        className="flex flex-col gap-y-4"
+        onSubmit={handleSubmit(handleValid)}
+      >
         <label htmlFor="nickname" className="text-lg font-bold">
           닉네임을 입력하세요
         </label>
-        <p className="info-message">
-          ⓘ 닉네임은 최소 네 글자 이상이어야 합니다.
-        </p>
+        {errorMessage ? (
+          <p className="info-message">ⓘ {errorMessage}</p>
+        ) : (
+          <div className="w-full h-5"></div>
+        )}
         <input
           type="text"
           id="nickname"
-          className="w-full px-4 py-2 bg-neutral-200 rounded-2xl"
-          onKeyDown={handleEnterKey}
+          className="w-full h-8 px-4 py-2 bg-neutral-200 rounded-2xl"
           {...register('nickname')}
         />
-        {errors.nickname && <p>{errors.nickname.message}</p>}
       </form>
       <div className="flex justify-end pt-8">
         <button

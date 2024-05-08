@@ -35,7 +35,7 @@ export default {
         line: '0.0625rem',
       },
       maxWidth: {
-        nicknamemodal: '30rem',
+        nicknamemodal: '25rem',
         homeFront: '34rem',
         surveyCard: '22.625rem',
       },

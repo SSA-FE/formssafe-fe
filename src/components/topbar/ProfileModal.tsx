@@ -16,6 +16,12 @@ interface ProfileModalProps {
   refetch: () => void;
 }
 
+interface ErrorResponse {
+  response?: {
+    status: number;
+  };
+}
+
 const ProfileModal: React.FC<ProfileModalProps> = ({
   modalRef,
   profileModalOpen,
@@ -27,6 +33,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
 
   const [isEditing, setIsEditing] = useState(false);
   const [nickname, setNickname] = useState(data?.nickname || '');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,17 +41,23 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
   }, [data]);
 
   const handleUpdateUser = async (nickname: string) => {
+    nickname = nickname.trim().replace(/\s+/g, ' ');
+    if (nickname === '') return;
+    if (nickname === data?.nickname) return;
+
     try {
       const response = await instance.patch(`${API.USERS}`, { nickname });
       if (response.status === 200) {
         refetch();
+        setErrorMessage('');
         setIsEditing(false);
       }
-    } catch (error) {
+    } catch (error: unknown) {
       // TODO: error handling
       console.error(error);
-      setNickname(data?.nickname || '');
-      setIsEditing(false);
+      if ((error as ErrorResponse).response?.status === 400) {
+        setErrorMessage('이미 사용중인 닉네임입니다.');
+      }
     }
   };
 
@@ -100,7 +113,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
             <div className="flex space-x-2">
               <input
                 value={nickname}
-                className="box-border flex-grow font-bold border-2 rounded-md text-slate-800 w-[160px] px-2"
+                className="box-border flex-grow font-bold border-2 rounded-md text-slate-800 w-[140px] px-2"
                 onChange={(e) =>
                   setNickname((e.target as HTMLInputElement).value)
                 }
@@ -115,6 +128,8 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
           ) : (
             <h1 className="font-bold text-slate-800">{nickname}</h1>
           )}
+          <p className="text-xs text-red-500">{errorMessage}</p>
+
           <p className="text-xs text-slate-800">{data?.email}</p>
         </div>
       </div>
