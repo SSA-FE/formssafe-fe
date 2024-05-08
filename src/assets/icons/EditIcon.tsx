@@ -1,5 +1,13 @@
 import type { SVGProps } from 'react';
-const SvgEditIcon = (props: SVGProps<SVGSVGElement>) => (
+
+interface SvgEditIconProps extends SVGProps<SVGSVGElement> {
+  strokeColor?: string;
+}
+
+const SvgEditIcon = ({
+  strokeColor = '#1F2328',
+  ...props
+}: SvgEditIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -7,14 +15,14 @@ const SvgEditIcon = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <path
-      stroke="#1F2328"
+      stroke={strokeColor}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1}
       d="M10 8v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h2"
     />
     <path
-      stroke="#1F2328"
+      stroke={strokeColor}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1}
