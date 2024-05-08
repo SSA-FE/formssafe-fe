@@ -1,9 +1,18 @@
+import { useFetchUserQuery } from '@/api/userApi';
 import googleIcon from '@/assets/icons/google-icon.svg';
 import { GOOGLE_AUTH_URL } from '@/config';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const { isError } = useFetchUserQuery();
+  const navigate = useNavigate();
+
   const handleLogin = () => {
-    window.location.href = GOOGLE_AUTH_URL;
+    if (isError) {
+      window.location.href = GOOGLE_AUTH_URL;
+    } else {
+      navigate('/board');
+    }
   };
 
   return (
@@ -38,9 +47,6 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <button className="fixed flex items-center justify-center w-12 pb-1 text-2xl font-bold text-white bg-black rounded-full aspect-square right-8 bottom-8">
-        @
-      </button>
     </div>
   );
 };

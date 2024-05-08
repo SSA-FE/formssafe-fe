@@ -1,45 +1,19 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { resetInput } from './toolbar/toolbarInputSlice';
-import { useDispatch } from 'react-redux';
+import MyspaceToolbar from './toolbar/MyspaceToolbar';
+import { EditIcon } from '@assets/icons';
 
-interface MyspacePanelProps {
-  setSurveyStatus: (value: string) => void;
-}
-
-const MyspacePanel = ({ setSurveyStatus }: MyspacePanelProps) => {
-  const [activeButton, setActiveButton] = useState('보관함');
-  const dispatch = useDispatch();
-
+const MyspacePanel = () => {
   return (
-    <div className="flex flex-col px-8 items-start space-y-2 border-b-[1px] bg-white">
-      <Link
-        to="/editor"
-        className="box-border px-5 py-2 text-sm font-bold text-white bg-blue-400 rounded"
-      >
-        새 설문 만들기
-      </Link>
-      <div className="flex space-x-4 font-bold bg-transparent border-none">
-        <button
-          className={`px-6 py-2 ${activeButton === '보관함' ? 'border-b-2 border-neutral-800 ' : 'text-neutral-400 border-none'}`}
-          onClick={() => {
-            setActiveButton('보관함');
-            setSurveyStatus('mySurveys');
-            dispatch(resetInput());
-          }}
+    <div className="flex flex-col items-start w-full h-12 px-8 space-y-2 bg-white min-w-min">
+      <div className="flex justify-between w-full">
+        <MyspaceToolbar />
+        <Link
+          to="/editor"
+          className="shadow-md flex items-center w-auto px-5 py-2 space-x-2 text-xs font-bold text-white bg-blue-500 rounded-[38px] h-9 whitespace-nowrap"
         >
-          보관함
-        </button>
-        <button
-          className={`px-6 py-2 ${activeButton === '참여한 설문' ? 'border-b-2  border-neutral-800 ' : 'text-neutral-400 border-none'}`}
-          onClick={() => {
-            setActiveButton('참여한 설문');
-            setSurveyStatus('participatedSurveys');
-            dispatch(resetInput());
-          }}
-        >
-          참여한 설문
-        </button>
+          <EditIcon width="10" strokeColor="#F1F5F9" />
+          <p className="flex items-center p-0 m-0">설문 작성하기</p>
+        </Link>
       </div>
     </div>
   );

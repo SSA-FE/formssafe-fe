@@ -47,7 +47,7 @@ const FormInfoBar = () => {
 
   return (
     <div
-      className={`border-r border-slate-200 w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white flex flex-col content-center self-stretch relative border-r  duration-1000 ease-in-out ${isHidden ? '-translate-x-[19rem]' : ''}`}
+      className={`border-r border-slate-200 w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white flex flex-col content-center self-stretch relative border-r  duration-1000 ease-in-out z-50 ${isHidden ? '-translate-x-[19rem]' : ''}`}
     >
       <button
         className="absolute w-10 h-10 text-3xl bg-white border-r rounded-r -right-10 top-7 border-y text-slate-300"

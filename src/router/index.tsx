@@ -5,8 +5,8 @@ import {
   RouteObject,
   RouterProvider,
 } from 'react-router-dom';
-import App from '@/App';
 import NotFound from '@pages/NotFound';
+import Layout from '@components/Layout';
 
 const Home = React.lazy(() => import('@/pages/Home'));
 const Myspace = React.lazy(() => import('@/pages/Myspace'));
@@ -18,19 +18,32 @@ const StatLayout = React.lazy(() => import('@/components/StatLayout'));
 const LoginRedirect = React.lazy(
   () => import('@components/auth/LoginRedirect')
 );
+const Form = React.lazy(() => import('@pages/Form'));
 
 const Router = () => {
   const routes: RouteObject[] = [
     {
       path: '/',
-      element: <App />,
+      element: <Layout hasBackground={true} />,
       errorElement: <NotFound />,
       children: [
         { index: true, element: <Home /> },
         {
+          path: 'board',
+          element: <Board />,
+        },
+      ],
+    },
+    {
+      path: '/',
+      element: <Layout hasBackground={false} />,
+      errorElement: <NotFound />,
+      children: [
+        {
           path: 'myspace',
           element: <Myspace />,
         },
+        { path: 'join', element: <LoginRedirect /> },
         {
           path: 'editor',
           element: <Editor />,
@@ -53,9 +66,12 @@ const Router = () => {
           path: 'board',
           element: <Board />,
         },
+        {
+          path: 'form/:id',
+          element: <Form />,
+        },
       ],
     },
-    { path: '/join', element: <LoginRedirect /> },
   ];
 
   const router = createBrowserRouter([...routes]);
