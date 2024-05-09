@@ -1,11 +1,12 @@
 import statCheckIcon from '@/assets/icons/stat-check-icon.svg';
 import editIcon from '@/assets/icons/edit-square-icon.svg';
 import printIcon from '@/assets/icons/print-icon.svg';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { instance } from '@/api/axios';
 import { API } from '@/config';
 
 const StatTopBar = () => {
+  const formId = useParams<{ formId: string }>().formId;
   const location = useLocation();
 
   const focusNav = 'border-b-2 border-black';
@@ -44,15 +45,15 @@ const StatTopBar = () => {
 
       <div className="flex items-center mx-auto text-xs gap-x-4">
         <div
-          className={`p-2 ${location.pathname === '/stat' ? focusNav : blurNav}`}
+          className={`p-2 ${location.pathname.split('/').includes('detail') ? blurNav : focusNav}`}
         >
-          <Link to="/stat">전체요약</Link>
+          <Link to={`/stat/${formId}`}>전체요약</Link>
         </div>
 
         <div
-          className={`p-2 ${location.pathname === '/stat' ? blurNav : focusNav}`}
+          className={`p-2 ${location.pathname.split('/').includes('detail') ? focusNav : blurNav}`}
         >
-          <Link to="/stat/1">개별통계</Link>
+          <Link to={`/stat/${formId}/detail`}>개별통계</Link>
         </div>
       </div>
 
