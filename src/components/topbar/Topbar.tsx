@@ -16,22 +16,23 @@ const Topbar = () => {
   const [alarmModalOpen, setAlarmModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const user: User = useSelector((state: RootState) => state.topbarSlice);
-  const location = useLocation();
   const navigate = useNavigate();
   const modalRef = useRef(null);
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const path = location.pathname;
 
   useEffect(() => {
-    if (location.pathname === '/board') {
+    if (path === '/board') {
       refetch();
     }
-  }, [location.pathname]);
+  }, [path]);
 
   useEffect(() => {
     if (data) {
       dispatch(setUser(data));
     }
-  }, [data, location.pathname]);
+  }, [data, path]);
 
   const handleModalButtonClick = (
     event: React.MouseEvent,
@@ -112,18 +113,18 @@ const Topbar = () => {
           <NavLink className="text-lg font-bold text-slate-600" to="/">
             <MainLogoIcon width="80" />
           </NavLink>
-          {location.pathname !== '/' && (
+          {path !== '/' && (
             <div className="flex space-x-4 font-bold text-sm">
               <NavLink to="/board">
                 <span
-                  className={`${location.pathname === '/board' ? 'text-blue-500 hover:border-b-[1px] hover:border-blue-500' : 'text-slate-800 hover:border-b-[1px] hover:border-slate-800'}  py-0 leading-none inline-block`}
+                  className={`${path === '/board' ? 'text-blue-500 hover:border-b-[1px] hover:border-blue-500' : 'text-slate-800 hover:border-b-[1px] hover:border-slate-800'}  py-0 leading-none inline-block`}
                 >
                   보드
                 </span>
               </NavLink>
               <NavLink to="/myspace">
                 <span
-                  className={`${location.pathname === '/myspace' ? 'text-blue-500 hover:border-b-[1px] hover:border-blue-500' : 'text-slate-800 hover:border-b-[1px] hover:border-slate-800'}  py-0 leading-none inline-block`}
+                  className={`${path === '/myspace' ? 'text-blue-500 hover:border-b-[1px] hover:border-blue-500' : 'text-slate-800 hover:border-b-[1px] hover:border-slate-800'}  py-0 leading-none inline-block`}
                 >
                   마이스페이스
                 </span>
@@ -132,7 +133,7 @@ const Topbar = () => {
           )}
         </div>
 
-        {location.pathname !== '/' && user.imageUrl && (
+        {path !== '/' && user.imageUrl && (
           <div className="relative">
             <div className="flex px-3 py-2 my-1 h-14 w-[124px] items-center justify-between">
               <button
@@ -154,7 +155,7 @@ const Topbar = () => {
             </div>
           </div>
         )}
-        {location.pathname === '/' && (
+        {path === '/' && (
           <button
             className="shadow-md flex items-center w-auto px-5 py-2 space-x-2 text-xs font-bold text-white bg-blue-500 rounded-[38px] h-9 whitespace-nowrap"
             onClick={handleLogin}
