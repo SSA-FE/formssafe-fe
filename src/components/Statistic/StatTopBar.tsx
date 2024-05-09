@@ -14,7 +14,7 @@ const StatTopBar = () => {
 
   const printForm = () => {
     instance
-      .get(`${API.RESULT}/forms/42/download`, {
+      .get(`${API.RESULT}/forms/${formId}/download`, {
         responseType: 'blob',
       })
       .then((res) => {
