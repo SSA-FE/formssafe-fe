@@ -30,6 +30,7 @@ export default {
       },
       height: {
         topbar: '4rem',
+        footer: '17.5rem',
         toolbar: '2rem',
         homeFront: '28rem',
         line: '0.0625rem',
