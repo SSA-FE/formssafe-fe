@@ -18,7 +18,7 @@ function Stat() {
         {/* 설문지 */}
         <div className="flex flex-col items-start justify-start flex-1 h-auto gap-24 pt-4">
           {dummy.map((item: any, index: number) => (
-            <div id={'_content' + index}>
+            <div key={'_content' + index} id={'_content' + index}>
               <Item key={index} data={item} idx={index + 1}>
                 {item.type === 'longAns' || item.type === 'shortAns' ? (
                   <EssayQuestionBlock data={item.options} />
