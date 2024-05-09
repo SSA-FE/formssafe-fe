@@ -1,13 +1,16 @@
+import { useEndSurveyMutation } from '@/api/formApi';
 import statCheckIcon from '@/assets/icons/stat-check-icon.svg';
 import editIcon from '@/assets/icons/edit-square-icon.svg';
 import printIcon from '@/assets/icons/print-icon.svg';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { instance } from '@/api/axios';
 import { API } from '@/config';
 
 const StatTopBar = () => {
-  const formId = useParams<{ formId: string }>().formId;
+  const [endSurveyMutation] = useEndSurveyMutation();
+  const { formId } = useParams<{ formId: string }>();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const focusNav = 'border-b-2 border-black';
   const blurNav = 'text-slate-400';
@@ -28,6 +31,20 @@ const StatTopBar = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleEndSurveyClick = () => {
+    if (window.confirm('설문을 마감하시겠습니까?')) {
+      endSurveyMutation(formId as string)
+        .then(() => {
+          alert('설문이 성공적으로 마감되었습니다.');
+          navigate('/myspace');
+        })
+        .catch((err) => {
+          alert('설문 마감에 실패했습니다.');
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -66,7 +83,10 @@ const StatTopBar = () => {
           <img className="cover" src={printIcon} alt="print-icon" />
           <span>출력하기</span>
         </button>
-        <button className="flex items-center px-4 py-2 bg-blue-400 rounded-full gap-x-2 drop-shadow">
+        <button
+          onClick={handleEndSurveyClick}
+          className="flex items-center px-4 py-2 bg-blue-400 rounded-full gap-x-2 drop-shadow"
+        >
           <img className="cover" src={editIcon} alt="edit-icon" />
           <span>마감하기</span>
         </button>

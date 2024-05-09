@@ -8,6 +8,7 @@ import topbarSliceReducer from '@/components/topbar/topbarSlice';
 import { userApi } from '@api/userApi';
 import { activityApi } from '@/api/activityApi';
 import { viewApi } from '@/api/viewApi';
+import { formApi } from '@/api/formApi';
 
 export const store = configureStore({
   reducer: {
@@ -19,13 +20,15 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [activityApi.reducerPath]: activityApi.reducer,
     [viewApi.reducerPath]: viewApi.reducer,
+    [formApi.reducerPath]: formApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(
       userApi.middleware,
       activityApi.middleware,
-      viewApi.middleware
+      viewApi.middleware,
+      formApi.middleware
     );
   },
 });
