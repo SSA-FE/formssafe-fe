@@ -1,4 +1,4 @@
-import { Content } from '@/pages/Form';
+import { Content } from '@/api/viewApi';
 import { UseFormRegister } from 'react-hook-form';
 
 // TODO:form 제출 field interface 정해지면 any적용
@@ -18,8 +18,8 @@ const DropdownInput = ({ register, questionData }: DropdownInputProps) => {
     >
       <option value="none">선택하세요.</option>
       {options?.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.value}
+        <option key={option.id} value={option.detail}>
+          {option.detail}
         </option>
       ))}
     </select>

@@ -1,9 +1,9 @@
-import { Content } from '@/pages/Form';
 import AutoResizeTextarea from '../AutoResizeTextarea';
 import { useForm } from 'react-hook-form';
 import DropdownInput from './DropdownInput';
 import MultiOptionInput from './MultiOptionInput';
 import DescriptionBlock from './DescriptionBlock';
+import { Content } from '@/api/viewApi';
 
 interface FormBodyProps {
   questions: Content[];

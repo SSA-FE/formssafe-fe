@@ -1,4 +1,4 @@
-import { Content } from '@/pages/Form';
+import { Content } from '@/api/viewApi';
 import { UseFormRegister } from 'react-hook-form';
 
 // TODO:form 제출 field interface 정해지면 any적용
@@ -26,12 +26,14 @@ const MultiOptionInput = ({
             <input
               {...register('selectedOption')}
               type={type === 'single' ? 'radio' : 'checkbox'}
-              id={`option-${option.id}`}
-              value={option.value}
-              className="appearance-none border-4 rounded-full w-4 h-4 checked:border-slate-400"
+              id={`option-${questionData.id}-${option.id}`}
+              value={option.detail}
+              className={`appearance-none border-4 w-4 h-4 checked:border-slate-400 ${type === 'single' && 'rounded-full'}`}
             />
           </div>
-          <label htmlFor={`option-${option.id}`}>{option.value}</label>
+          <label htmlFor={`option-${questionData.id}-${option.id}`}>
+            {option.detail}
+          </label>
         </div>
       ))}
     </div>
