@@ -4,16 +4,23 @@ import DropdownInput from './DropdownInput';
 import MultiOptionInput from './MultiOptionInput';
 import DescriptionBlock from './DescriptionBlock';
 import { Content } from '@/api/viewApi';
+import { useFetchFormSubmissionMutation } from '@/api/submissionApi';
+import { questionType } from '@/types/questionTypes';
+import { useNavigate } from 'react-router-dom';
+
 interface FormInputData {
   [key: string]: string | string[];
 }
 
 interface FormBodyProps {
   questions: Content[];
+  surveyId: number;
 }
 
-const FormBody = ({ questions }: FormBodyProps) => {
+const FormBody = ({ surveyId, questions }: FormBodyProps) => {
   const methods = useForm<FormInputData>();
+  const navigate = useNavigate();
+  const [submitForm] = useFetchFormSubmissionMutation();
 
   const renderResponseInput = (question: Content) => {
     switch (question.type) {
@@ -35,8 +42,45 @@ const FormBody = ({ questions }: FormBodyProps) => {
     }
   };
 
+  const mapInputType = (key: string) => {
+    if (key.startsWith('single')) return 'single';
+    if (key.startsWith('checkbox')) return 'checkbox';
+    if (key.startsWith('dropdown')) return 'dropdown';
+    if (key.startsWith('long')) return 'long';
+    if (key.startsWith('short')) return 'short';
+    if (key.startsWith('text')) return 'text';
+  };
+
+  const transformContent = (value: string | string[]) => {
+    if (Array.isArray(value)) {
+      return value.map(Number); // 배열이면 각 요소를 숫자로 변환
+    } else if (!isNaN(value)) {
+      return [Number(value)]; // 숫자로 변환 가능하면 변환
+    }
+    return value as string; // 그 외에는 그대로 반환
+  };
+
+  const removePrefix = (key: string) => {
+    const index = key.indexOf('-');
+    return index !== -1 ? key.substring(index + 1) : key;
+  };
+
   const handleFormSubmit: SubmitHandler<FormInputData> = async (data) => {
-    console.log(data);
+    try {
+      await submitForm({
+        submissions: Object.entries(data).map(([key, value]) => ({
+          type: mapInputType(key) as questionType,
+          questionId: removePrefix(key),
+          content: transformContent(value),
+        })),
+        isTemp: false,
+        surveyId: surveyId,
+      }).unwrap();
+      alert('설문이 성공적으로 제출되었습니다.');
+      navigate('/board');
+    } catch (err) {
+      alert(err.data.message);
+    }
   };
 
   return (

@@ -8,7 +8,6 @@ const Form = () => {
   const { id } = useParams<{ id: string }>();
   const surveyId = Number(id);
   const { data: survey, isLoading } = useFetchSurveyDetailQuery(surveyId);
-
   if (isLoading || !survey) return <Loading />;
 
   return (
@@ -20,7 +19,7 @@ const Form = () => {
       />
       <div className="max-w-[832px] flex flex-col gap-2 mx-auto">
         <FormHeader formData={survey} />
-        <FormBody questions={survey.contents} />
+        <FormBody surveyId={surveyId} questions={survey.contents} />
       </div>
     </div>
   );
