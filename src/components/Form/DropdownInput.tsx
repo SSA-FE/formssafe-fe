@@ -1,24 +1,25 @@
 import { Content } from '@/api/viewApi';
-import { UseFormRegister } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
-// TODO:form 제출 field interface 정해지면 any적용
 interface DropdownInputProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  register: UseFormRegister<any>;
   questionData: Content;
 }
 
 // TODO: 커스텀 드롭다운으로 변경
-const DropdownInput = ({ register, questionData }: DropdownInputProps) => {
+const DropdownInput = ({ questionData }: DropdownInputProps) => {
   const options = questionData.options;
+  const { register } = useFormContext();
   return (
     <select
-      {...register('selectedOption')}
+      {...register(`${questionData.type}-${questionData.id}`)}
       className="appearance-none p-2 border-2 rounded-lg focus:outline-slate-400"
     >
       <option value="none">선택하세요.</option>
       {options?.map((option) => (
-        <option key={option.id} value={option.detail}>
+        <option
+          key={`option-${questionData.id}-${option.id}`}
+          value={option.id}
+        >
           {option.detail}
         </option>
       ))}
