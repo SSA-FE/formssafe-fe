@@ -7,6 +7,7 @@ import { Content } from '@/api/viewApi';
 import { useFetchFormSubmissionMutation } from '@/api/submissionApi';
 import { questionType } from '@/types/questionTypes';
 import { useNavigate } from 'react-router-dom';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 interface FormInputData {
   [key: string]: string | string[];
@@ -15,6 +16,9 @@ interface FormInputData {
 interface FormBodyProps {
   questions: Content[];
   surveyId: number;
+}
+interface ErrorResponse {
+  message: string;
 }
 
 const FormBody = ({ surveyId, questions }: FormBodyProps) => {
@@ -52,12 +56,13 @@ const FormBody = ({ surveyId, questions }: FormBodyProps) => {
   };
 
   const transformContent = (value: string | string[]) => {
+    const num = Number(value);
     if (Array.isArray(value)) {
-      return value.map(Number); // 배열이면 각 요소를 숫자로 변환
-    } else if (!isNaN(value)) {
-      return [Number(value)]; // 숫자로 변환 가능하면 변환
+      return value.map(Number);
+    } else if (!isNaN(num)) {
+      return [Number(value)];
     }
-    return value as string; // 그 외에는 그대로 반환
+    return value as string;
   };
 
   const removePrefix = (key: string) => {
@@ -79,7 +84,13 @@ const FormBody = ({ surveyId, questions }: FormBodyProps) => {
       alert('설문이 성공적으로 제출되었습니다.');
       navigate('/board');
     } catch (err) {
-      alert(err.data.message);
+      if ('data' in (err as FetchBaseQueryError)) {
+        const errorData = err as FetchBaseQueryError;
+        const errorMessage = (errorData.data as ErrorResponse).message;
+        alert(`Error: ${errorMessage}`);
+      } else {
+        alert('알 수 없는 에러가 발생했습니다.');
+      }
     }
   };
 
