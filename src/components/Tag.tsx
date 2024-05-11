@@ -19,6 +19,7 @@ const Tag = () => {
 
   const handleTagAdd = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      console.log('???');
       setTagList([
         ...tagList,
         {
@@ -79,7 +80,7 @@ const Tag = () => {
           setIsInputVisible(false);
           setValue('tag', '');
         }}
-        onKeyDown={(e) => handleTagAdd(e)}
+        onKeyPress={(e) => handleTagAdd(e)}
         className="tag px-2 text-white bg-blue-300 focus:outline-none"
       />
     </div>
