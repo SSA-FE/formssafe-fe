@@ -53,7 +53,9 @@ const QuestionOptions = ({
 
   return (
     <div className="flex flex-col w-full px-4 pt-4 pb-8 border-b-4 gap-md border-slate-50">
-      <h2 className="text-xs font-bold text-slate-500">질문 유형</h2>
+      <h2 className="flex gap-[0.75rem] font-bold leading-6 text-neutral-600">
+        질문유형
+      </h2>
       <div className="flex flex-row gap-x-2">
         {Object.keys(questionTypeIcons).map((type) => (
           <button

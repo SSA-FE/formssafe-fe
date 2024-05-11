@@ -1,4 +1,4 @@
-import plusIcon from '@/assets/icons/plus-icon.svg';
+import PlusIcon from '@/assets/icons/plus-icon.svg?react';
 import QuestionBlockList from './questionBlockList/QuestionBlockList';
 import {
   addQuestion,
@@ -26,19 +26,15 @@ const FormMain: React.FC<FormMainProps> = ({ selectedQuestionType }) => {
   };
 
   return (
-    <div className="flex-1 w-full h-[calc(100vh-8rem)] px-4 overflow-y-scroll pb-10">
+    <div className="bg-white flex-1 w-full h-[calc(100vh-8rem)] overflow-y-scroll pb-10 p-10 px-16">
       <div className="flex flex-col">
         <QuestionBlockList />
       </div>
       <button
         onClick={handleAddBlock}
-        className="w-8 h-8 rounded-full bg-[#d9d9d9] flex justify-center items-center mx-auto mt-8"
+        className="w-8 h-8 rounded-full bg-blue-300 flex justify-center items-center mx-auto mt-8"
       >
-        <img
-          src={plusIcon}
-          alt="설문추가 아이콘"
-          className="w-[19px] h-[19px]"
-        />
+        <PlusIcon />
       </button>
     </div>
   );

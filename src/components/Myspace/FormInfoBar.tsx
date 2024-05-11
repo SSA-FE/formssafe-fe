@@ -3,6 +3,7 @@ import Calendar from '@components/Myspace/Calendar';
 import trophyIcon from '@/assets/icons/trophy-icon.svg';
 import infoIcon from '@/assets/icons/info-icon.svg';
 import imgIcon from '@/assets/icons/img-icon.svg';
+import Tag from '@components/Tag';
 
 const FormInfoBar = () => {
   const [imgFile, setImgFile] = useState<File | null>();
@@ -47,17 +48,19 @@ const FormInfoBar = () => {
 
   return (
     <div
-      className={`border-r border-slate-200 w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white flex flex-col content-center self-stretch relative border-r  duration-1000 ease-in-out z-50 ${isHidden ? '-translate-x-[19rem]' : ''}`}
+      className={`drop-shadow-md w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white flex flex-col content-center self-stretch relative duration-1000 ease-in-out z-50 ${isHidden ? '-translate-x-[19rem]' : ''}`}
     >
       <button
-        className="absolute w-10 h-10 text-3xl bg-white border-r rounded-r -right-10 top-7 border-y text-slate-300"
         onClick={handleSlideButtonClick}
+        className="absolute flex justify-center items-center bg-white -right-10 top-7 rounded"
       >
-        {isHidden ? '\u00BB' : '\u00AB'}
+        <div className="text-slate-300 pl-4 pr-3 pb-2 text-3xl">
+          {isHidden ? '\u00BB' : '\u00AB'}
+        </div>
       </button>
 
       {/* 대표 이미지 */}
-      <div className="w-full px-4 flex flex-col gap-2.5 pt-3 pb-4 border-b-4 border-slate-100">
+      <div className="w-full p-4 flex flex-col gap-2.5 border-b-4 border-slate-100">
         <h2 className="flex gap-[0.75rem] font-bold leading-6 text-neutral-600">
           <img src={imgIcon} alt="대표 이미지 아이콘" />
           대표 이미지
@@ -99,43 +102,31 @@ const FormInfoBar = () => {
         </h2>
         <input
           type="text"
-          placeholder="폼나는 싸패 첫 설문지"
-          className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50"
+          placeholder="제목을 작성해주세요."
+          className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded"
         />
-      </div>
-
-      {/* 설명 */}
-      <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-xs">
-        <h2 className="font-bold text-neutral-400">설명</h2>
         <textarea
-          className="flex flex-col h-16 p-2 text-xs border outline-none resize-none gap-md border-slate-200 bg-slate-50"
-          placeholder="설명을 입력하세요."
+          className="flex flex-col h-16 p-2 text-xs border outline-none resize-none gap-md border-slate-200 bg-slate-50 rounded"
+          placeholder="설명을 작성해주세요."
         />
       </div>
 
       {/* 태그 */}
-      <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-md">
-        <h2 className="font-bold text-neutral-400">태그</h2>
-        <div className="flex flex-col overflow-x-scroll scrollbar gap-sm whitespace-nowrap">
-          <div className="flex pb-4 gap-sm">
-            <button className="text-xs text-nowrap">생성버튼</button>
-            <button className="h-6 px-4 text-xs text-white rounded text-nowrap bg-neutral-400">
-              생성버튼
-            </button>
-          </div>
-        </div>
+      <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-md text-sm">
+        <h2 className="font-bold text-neutral-500">태그</h2>
+        <Tag />
       </div>
 
       {/* 마감 */}
-      <div className="flex flex-col w-full px-4 pt-3 pb-4">
-        <h2 className="font-bold text-neutral-400">마감일</h2>
+      <div className="flex flex-col w-full px-4 pt-3 pb-6 border-b-4 border-slate-100 text-sm">
+        <h2 className="font-bold text-neutral-500 mb-2">마감일</h2>
         <Calendar />
       </div>
 
       {/* 경품정하기 */}
-      <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-xs bg-blue-50">
-        <h2 className="flex text-sm font-bold text-mainColor gap-x-2">
-          <img src={trophyIcon} alt="경품 아이콘" />
+      <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-xs border-b-4 border-slate-100">
+        <h2 className="flex font-bold text-neutral-600 gap-x-2">
+          <img src={trophyIcon} alt="경품 아이콘" className="w-3" />
           경품 정하기
         </h2>
         <div className="flex flex-col gap-md">

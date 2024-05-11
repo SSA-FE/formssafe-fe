@@ -27,7 +27,7 @@ const FormOptionBar = ({
   };
 
   return (
-    <div className="w-[19rem] ml-auto h-[calc(100vh-8rem)] border border-neutral-200 bg-white rounded flex flex-col content-center self-stretch">
+    <div className="w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white rounded flex flex-col content-center self-stretch overflow-y-visible ">
       {/* 질문 유형 */}
       <QuestionOptions
         setSelectedQuestionType={(type) =>
@@ -37,14 +37,13 @@ const FormOptionBar = ({
       />
       {/* 개인정보와 필수응답 */}
       <OptionsToggle selectedQuestionId={activeBlockId} />
-
       {/* 삭제하기 */}
       <div className="flex flex-col w-full px-4 pt-3 pb-4 border-t gap-xs border-slate-50">
         <button
           onClick={handleDelete}
-          className="w-full text-sm font-bold text-red-500 bg-neutral-100 h-7"
+          className="w-full text-sm font-bold text-red-500 bg-neutral-100 py-2"
         >
-          삭제하기
+          질문 삭제하기
         </button>
       </div>
     </div>

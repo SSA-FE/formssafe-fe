@@ -57,7 +57,7 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
           dispatch(setActiveBlockId({ id: questionData.id }));
         }
       }}
-      className="relative w-full p-6 bg-white border border-transparent rounded-lg group/block hover:bg-slate-50 focus-within:bg-slate-50 focus-within:border-slate-200"
+      className="relative w-full p-6 bg-slate-50 border border-transparent rounded-lg group/block hover:bg-slate-50 focus-within:bg-slate-50 focus-within:border-slate-200"
     >
       <div
         {...dragHandler}

@@ -1,26 +1,21 @@
-import SearchBar from '@/components/Myspace/SearchBar';
-import visibleIcon from '@/assets/icons/visible-icon.svg';
-
 const FormToolBar = () => {
   return (
-    <div className="flex w-full px-8 h-16 min-h-16 whitespace-nowrap justify-between items-start">
+    <div className="bg-white flex w-full px-8 h-12 whitespace-nowrap justify-between items-start">
+      <div>
+        <p className="text-xs text-blue-400 px-4 py-1 bg-blue-50 border border-blue-200">
+          2024/05/05에 마지막으로 수정됨
+        </p>
+      </div>
       <div className="flex gap-md">
-        <button className="box-border px-6 py-2 text-sm text-white rounded bg-neutral-800">
-          지금 발행하기
-        </button>
-        <button className="flex items-center py-2 pl-4 pr-6 text-sm rounded gap-md bg-neutral-300">
-          <img src={visibleIcon} alt="미리보기 아이콘" />
+        <button className="border px-8 py-2 text-xs font-bold text-slate-400 rounded-full h-9 hover:bg-slate-50">
           미리보기
         </button>
-      </div>
-      <div className="flex flex-row items-center text-xs select-none gap-md text-neutral-400">
-        <span>version-2024</span>
-        <SearchBar
-          placeholder="질문을 검색하세요"
-          bgColor="bg-neutral-100"
-          width="w-[107px]"
-          height="h-[36px]"
-        />
+        <button className="border px-8 py-2 text-xs font-bold text-slate-400 rounded-full h-9 hover:bg-slate-50">
+          임시저장
+        </button>
+        <button className="shadow-md px-8 py-2 text-xs font-bold text-white bg-blue-500 rounded-full h-9 hover:bg-blue-400">
+          발행하기
+        </button>
       </div>
     </div>
   );

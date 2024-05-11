@@ -65,7 +65,7 @@ const OptionsToggle = ({ selectedQuestionId }: OptionsToggleProps) => {
       <label className="flex items-center justify-between h-12 p-4 cursor-pointer">
         <span
           className={`text-xs font-bold ${
-            localToggleState.privacy ? 'text-blue-300' : 'text-neutral-400'
+            localToggleState.privacy ? 'text-blue-400' : 'text-neutral-400'
           }`}
         >
           개인정보
@@ -86,7 +86,7 @@ const OptionsToggle = ({ selectedQuestionId }: OptionsToggleProps) => {
       <label className="flex items-center justify-between h-12 p-4 cursor-pointer">
         <span
           className={`text-xs font-bold ${
-            localToggleState.required ? 'text-blue-300' : 'text-neutral-400'
+            localToggleState.required ? 'text-blue-400' : 'text-neutral-400'
           }`}
         >
           필수응답

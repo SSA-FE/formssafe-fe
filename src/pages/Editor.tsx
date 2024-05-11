@@ -14,9 +14,9 @@ const Editor = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-2 bg-slate-50">
       <FormToolBar />
-      <div className="flex bg-white">
+      <div className="flex gap-2">
         <FormInfoBar />
         <FormMain selectedQuestionType={selectedQuestionType} />
         <FormOptionBar setSelectedQuestionType={handleQuestionTypeSelected} />
