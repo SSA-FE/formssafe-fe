@@ -8,9 +8,10 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import React from 'react';
 import { useRef } from 'react';
-import { Bar } from 'react-chartjs-2';
-// import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Bar, getElementAtEvent } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(
   CategoryScale,
@@ -21,110 +22,185 @@ ChartJS.register(
   Legend
 );
 
-const options = {
-  interaction: {
-    mode: 'point' as const,
-    axis: 'x' as const,
-  },
-  indexAxis: 'y' as const,
-  elements: {
-    rectangle: {
-      color: 'white',
+const Chart = ({ data: { labels, values } }: any) => {
+  const maxValue = Math.max(...values);
+  const options = {
+    interaction: {
+      mode: 'point' as const,
+      axis: 'x' as const,
     },
-    bar: {
-      borderWidth: 0,
-    },
-  },
-  maintainAspectRatio: false,
-  plugins: {
-    // datalabels: {
-    //   anchor: 'end',
-    //   align: 'end',
-    //   color: '#7db1e6',
-    //   font: {
-    //     weight: 'bold',
-    //   },
-    // },
-    filler: {
-      propagate: true,
-    },
+    indexAxis: 'y' as const,
     elements: {
+      rectangle: {
+        color: 'white',
+      },
       bar: {
         borderWidth: 0,
       },
     },
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
-    tooltip: {
-      padding: 15,
-      caretPadding: 10,
-      titleMarginBottom: 10,
-      titleSpacing: 10,
-      bodySpacing: 10,
-      events: ['click'],
-    },
-  },
-  scales: {
-    x: {
-      stacked: true,
-      max: 1000,
-      beginAtZero: true,
-      grid: {
-        display: false,
-        drawBorder: false,
+    maintainAspectRatio: false,
+    plugins: {
+      filler: {
+        propagate: true,
       },
-      afterDataLimits: (scale: { max: number }) => {
-        scale.max = scale.max * 1.1;
+      elements: {
+        bar: {
+          borderWidth: 0,
+        },
       },
-    },
-    y: {
-      stacked: true,
-      ticks: {
+      legend: {
         display: false,
       },
-      grid: {
-        display: true,
-        color: '#ebebeb',
+      title: {
+        display: false,
+      },
+      datalabels: {
+        display: false,
+      },
+      tooltip: {
+        padding: 15,
+        caretPadding: 10,
+        titleMarginBottom: 10,
+        titleSpacing: 10,
+        bodySpacing: 10,
+        events: ['click'],
       },
     },
-  },
-};
+    scales: {
+      x: {
+        stacked: true,
+        max: Math.max(...values),
+        beginAtZero: true,
+        grid: {
+          display: false,
+          drawBorder: false,
+        },
+        afterDataLimits: (scale: { max: number }) => {
+          scale.max = scale.max * 1.3;
+        },
+      },
+      y: {
+        stacked: true,
+        ticks: {
+          display: false,
+        },
+        grid: {
+          display: true,
+          color: '#ebebeb',
+        },
+      },
+    },
+  };
 
-const Chart = ({ data: { labels, values } }: any) => {
   const data = {
     labels,
     datasets: [
       {
         data: values,
-        backgroundColor: '#CBD5E1',
+        backgroundColor: values.map((value: number) => {
+          if (maxValue === value) {
+            return '#489bff';
+          } else {
+            return '#CBD5E1';
+          }
+        }),
+        datalabels: {
+          display: true,
+          align: 'end',
+          anchor: 'end',
+          color: values.map((value: number) => {
+            if (maxValue === value) {
+              return '#489bff';
+            } else {
+              return '#CBD5E1';
+            }
+          }),
+          font: {
+            weight: 'bold',
+          },
+          formatter: (value: any, context: any) => {
+            const label = labels[context.dataIndex];
+            return `${value} - ${label.length >= 100 ? `${label.substring(0, 4)}...` : label}`;
+          },
+        },
       },
       {
-        data: [1100, 1100, 1100, 1100, 1100, 1100, 1100],
+        data: new Array(values.length).fill(0).map(() => maxValue * 3),
         backgroundColor: '#ffffff',
+        datalabels: {
+          display: false,
+        },
       },
     ],
   };
 
   const chartRef = useRef<any>(null);
+  const testRef = useRef<number | null>(null);
+
+  const handleClickChart = (
+    e: React.MouseEvent<HTMLCanvasElement, globalThis.MouseEvent>
+  ) => {
+    const chart = chartRef.current;
+    if (!chart) return;
+    const click_result = getElementAtEvent(chart, e);
+
+    if (click_result[0]) {
+      const clickedDatasetIndex = click_result[0].datasetIndex;
+      const clickedElementIndex = click_result[0].index;
+
+      if (testRef.current !== null && testRef.current !== undefined) {
+        if (
+          data.datasets[clickedDatasetIndex].data[testRef.current] ===
+          Math.max(...data.datasets[clickedDatasetIndex].data)
+        ) {
+          data.datasets[clickedDatasetIndex].backgroundColor[testRef.current] =
+            '#489bff';
+        } else {
+          data.datasets[clickedDatasetIndex].backgroundColor[testRef.current] =
+            '#CBD5E1';
+        }
+      }
+      data.datasets[clickedDatasetIndex].backgroundColor[clickedElementIndex] =
+        '#95b7e0';
+
+      testRef.current = clickedElementIndex;
+      chart.update();
+    }
+
+    // const chart = chartRef.current;
+    // if (!chart) return;
+    // const click_result = getElementAtEvent(chart, e);
+
+    // console.log(click_result[0]);
+    // click_result[0].element.options.backgroundColor = '#000000';
+
+    // const dataIndex = click_result[0].index;
+    // const label = labels_dummy[click_result[0].index];
+
+    // setClickType({
+    //   total: { label, cnt: total_dummy[dataIndex] },
+    //   react: { label, cnt: react_dummy[dataIndex] },
+    //   vue: { label, cnt: vue_dummy[dataIndex] },
+    // });
+  };
 
   return (
-    <>
+    <div className="flex">
       <div className="w-[60vw] h-[auto] max-w-[1000px]">
         <div className="h-[300px] bg-[#F2F6F9] pb-4">
           <Bar
             ref={chartRef}
             options={options}
             data={data}
-            // plugins={[ChartDataLabels]}
+            onClick={handleClickChart}
+            plugins={[ChartDataLabels]}
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default Chart;
+export default React.memo(Chart, (prevProps, nextProps) => {
+  return prevProps.data.labels[0] === nextProps.data.labels[0];
+});

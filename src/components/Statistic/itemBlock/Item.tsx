@@ -1,20 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const Item = ({ data: { type, title, responseCnt }, idx, children }: any) => {
+const Item = ({
+  data: { type, title, description, responseCnt },
+  idx,
+  children,
+}: any) => {
   let nType = '';
   switch (type) {
-    case 'multipleChoice':
+    case 'single':
       nType = '객관식';
       break;
-    case 'longAns':
+    case 'long':
       nType = '장문형';
       break;
-    case 'shortAns':
+    case 'short':
       nType = '단문형';
       break;
-    case 'checkBox':
+    case 'checkbox':
       nType = '체크박스';
       break;
-    case 'dropDown':
+    case 'dropdown':
       nType = '드롭다운';
       break;
     default:
@@ -28,11 +32,16 @@ const Item = ({ data: { type, title, responseCnt }, idx, children }: any) => {
         <span className="inline-flex flex-row items-center justify-center px-1 text-xs font-bold text-white bg-slate-300">
           {nType}
         </span>
-        <div className="flex flex-col gap-1 mt-3">
-          <h1 className="text-xl font-bold text-slate-600">
-            {`${idx}. ${title}`}
-          </h1>
-          <h3 className="text-base font-normal text-slate-400">
+
+        <div className="flex flex-col mt-3">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-xl font-bold text-slate-600">
+              {`${idx}. ${title}`}
+            </h1>
+            <p className="text-base text-slate-500">{description}</p>
+          </div>
+
+          <h3 className="self-end text-base font-normal text-slate-400">
             응답 {responseCnt}개
           </h3>
         </div>
