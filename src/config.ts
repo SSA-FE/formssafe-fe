@@ -11,4 +11,5 @@ export const API = {
   SUBMISSION: `/v1/forms`,
   AUTH: `/v1/auth`,
   SUBSCRIBE: `/v1/subscribe`,
+  NOTIFICATION: `/v1/notifications`,
 };
