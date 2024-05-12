@@ -1,9 +1,31 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ReactNode } from 'react';
+
+interface Options {
+  labels?: string[];
+  users: string[];
+  values: number[] | string;
+}
+
+interface answerData {
+  description: string;
+  id: string;
+  options: Options;
+  responseCnt: number;
+  title: string;
+  type: string;
+}
+
+interface ItemProps {
+  data: answerData;
+  idx: number;
+  children: ReactNode;
+}
+
 const Item = ({
   data: { type, title, description, responseCnt },
   idx,
   children,
-}: any) => {
+}: ItemProps) => {
   let nType = '';
   switch (type) {
     case 'single':
