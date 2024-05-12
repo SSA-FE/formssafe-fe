@@ -15,6 +15,7 @@ const Topbar = () => {
   const { data, isError, refetch } = useFetchUserQuery();
   const [alarmModalOpen, setAlarmModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [activeAlarmTap, setActiveAlarmTap] = useState('전체');
   const user: User = useSelector((state: RootState) => state.topbarSlice);
   const navigate = useNavigate();
   const modalRef = useRef(null);
@@ -96,7 +97,8 @@ const Topbar = () => {
         <AlarmModal
           modalRef={modalRef}
           alarmModalOpen={alarmModalOpen}
-          setAlarmModalOpen={setAlarmModalOpen}
+          activeAlarmTap={activeAlarmTap}
+          setActiveAlarmTap={setActiveAlarmTap}
         />
       )}
       {profileModalOpen && (
