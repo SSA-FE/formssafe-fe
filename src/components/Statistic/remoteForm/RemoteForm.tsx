@@ -1,28 +1,111 @@
+import { useFetchAnswerQuery } from '@/api/formApi';
 import Question from '@components/Statistic/remoteForm/Question';
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-interface RemoteFormProps {
-  type: string;
-  title: string;
-  description?: string;
+interface AnswerListType {
+  author: AuthorType;
+  contents: ContentType[];
+  description: string;
+  endDate: string;
+  expectTime: number;
+  id: number;
+  image: string[];
+  privacyDisposalDate?: string;
+  questionCnt: number;
+  recipients: RecipientType[];
   responseCnt: number;
-  options: {
-    labels?: string[];
-    users: userType[];
-    values: number[] | string[];
-  };
+  reward?: RewardType;
+  startDate: string;
+  status: string;
+  tags?: TagType[];
+  title: string;
 }
 
-interface userType {
+interface AuthorType {
+  email: string;
+  nickname: string;
+  userId: number;
+}
+
+interface ContentType {
+  description?: string;
+  id: number;
+  type: string;
+  title: string | null;
+  options?: OptionType[];
+  isRequired: boolean;
+  isPrivacy: boolean;
+}
+
+interface OptionType {
+  id: number;
+  detail: string;
+}
+
+interface RewardType {
+  category: string;
+  count: number;
+  name: string;
+}
+
+interface TagType {
+  id: number;
+  name: string;
+}
+
+interface RecipientType {
   id: number;
   nickname: string;
-  pick?: number;
 }
 
-const RemoteForm = ({ data }: { data: RemoteFormProps[] }) => {
-  const titleList = useRef<string[]>(
-    data.map((item: RemoteFormProps) => item.title)
-  );
+const RemoteForm = () => {
+  const { formId } = useParams();
+
+  const [questionListResponse, setQuestionListResponse] =
+    useState<AnswerListType>();
+  const answerQuery = useFetchAnswerQuery({ formId });
+  useEffect(() => {
+    if (answerQuery.data) {
+      setQuestionListResponse(answerQuery.data);
+    }
+  }, [answerQuery.data]);
+
+  const getTitle = async () => {
+    // 질문 항목
+    let contents = questionListResponse?.contents;
+    if (!contents) return;
+
+    contents = [...contents].splice(1);
+
+    contents.map((content: ContentType) => {
+      const labels = content.options?.map(
+        (option: OptionType) => option.detail
+      );
+
+      return {
+        id: content.id,
+        type: content.type,
+        title: content.title,
+        description: content.description,
+        options:
+          content.type === 'short' || content.type === 'long'
+            ? { users: [], values: [] }
+            : {
+                labels: labels || [],
+                users: [],
+                values: labels ? new Array(labels.length).fill(0) : [],
+              },
+      };
+    });
+  };
+
+  useEffect(() => {
+    if (questionListResponse !== null) {
+      getTitle();
+    }
+  }, [questionListResponse]);
+
   return (
     <div className="w-[15rem] h-[21.28125rem] mt-4 mx-auto flex flex-col flex-1 sticky top-10 rounded-lg drop-shadow-md bg-slate-50 ">
       {/* 개별 질문리스트 헤더  */}
@@ -39,7 +122,7 @@ const RemoteForm = ({ data }: { data: RemoteFormProps[] }) => {
           {/* 총 질문 개수 */}
           <div className="h-6 flex items-center gap-2.5">
             <span className="font-bold text-[10px] text-neutral-400">
-              총 {titleList.current.length}개의 질문
+              총 {questionListResponse?.contents.length}개의 질문
             </span>
           </div>
         </div>
@@ -47,9 +130,19 @@ const RemoteForm = ({ data }: { data: RemoteFormProps[] }) => {
 
       {/* 개별 질문리스트 */}
       <div className="h-[17.28125rem] flex flex-col items-start overflow-y-scroll">
-        {titleList.current.map((title: string, index: number) => (
-          <Question question={title} number={index} key={'q_' + index} />
-        ))}
+        {questionListResponse?.contents.map(
+          (content: ContentType, index: number) => {
+            if (content.type !== 'text') {
+              return (
+                <Question
+                  question={content.title}
+                  number={index}
+                  key={'q_' + index}
+                />
+              );
+            }
+          }
+        )}
       </div>
     </div>
   );

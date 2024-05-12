@@ -98,7 +98,7 @@ const StatResult = () => {
   return (
     <>
       {data?.map((item: any, index: number) => (
-        <div key={'_content' + index}>
+        <div key={'_content' + index} id={'_content' + index}>
           <Item key={index} data={item} idx={index + 1}>
             {item.type === 'long' || item.type === 'short' ? (
               <EssayQuestionBlock data={item.options} />

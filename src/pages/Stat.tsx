@@ -1,5 +1,4 @@
 import RemoteForm from '@/components/Statistic/remoteForm/RemoteForm';
-import { dummy } from '@/components/Statistic/itemBlock/dummy';
 import StatResult from '@/components/Statistic/StatResult';
 
 function Stat() {
@@ -8,7 +7,7 @@ function Stat() {
       <div className="flex">
         {/* 사이드바 */}
         <div className="w-[19.5rem]">
-          <RemoteForm data={dummy} />
+          <RemoteForm />
         </div>
 
         {/* 설문지 */}
