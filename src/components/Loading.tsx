@@ -1,9 +1,9 @@
-import spinner from '@assets/gif/spinner.gif';
+import { Spinner } from '@assets/icons';
 
 const Loading = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <img src={spinner} alt="loading" />
+    <div className="flex items-center justify-center w-full h-full">
+      <Spinner width="80" />
     </div>
   );
 };

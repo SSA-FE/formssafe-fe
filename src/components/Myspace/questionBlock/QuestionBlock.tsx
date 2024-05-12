@@ -1,50 +1,28 @@
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import {
   setActiveBlockId,
   updateQuestion,
-} from '../questionBlockList/questionBlockListSlice';
-import { useState } from 'react';
-import OptionList, { Option } from './OptionList';
+} from '@/components/Myspace/questionBlockList/questionBlockListSlice';
+import OptionList from './OptionList';
 import TextIcon from '@/assets/icons/text-icon.svg?react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import TextBlock from './TextBlock';
-
-const questionTypeLabels = {
-  single: '객관식',
-  checkbox: '체크박스',
-  dropdown: '드롭다운',
-  long: '장문형',
-  short: '단답형',
-  text: '텍스트',
-};
-
-export type QuestionType =
-  | 'single'
-  | 'checkbox'
-  | 'dropdown'
-  | 'long'
-  | 'short'
-  | 'text';
-
-export interface QuestionBlock {
-  id: string;
-  type: QuestionType;
-  title?: string;
-  description?: string;
-  options?: Option[];
-  isRequired: boolean;
-  isPrivacy: boolean;
-}
+import {
+  questionBlock,
+  Option,
+  questionTypesInfo,
+} from '@/types/questionTypes';
 
 interface QuestionBlockProps {
-  questionData: QuestionBlock;
+  questionData: questionBlock;
   dragHandler: DraggableProvided['dragHandleProps'];
 }
 
 export interface QuestionBlockInputs {
   title: string;
-  description?: string;
+  description: string;
 }
 
 const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
@@ -79,16 +57,17 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
           dispatch(setActiveBlockId({ id: questionData.id }));
         }
       }}
-      className="group/block p-6 relative w-full rounded-lg border border-transparent bg-white hover:bg-slate-50 focus-within:bg-slate-50  focus-within:border-slate-200"
+      className="relative w-full p-6 bg-white border border-transparent rounded-lg group/block hover:bg-slate-50 focus-within:bg-slate-50 focus-within:border-slate-200"
     >
       <div
         {...dragHandler}
-        className="invisible group-hover/block:visible flex absolute right-2 top-2 justify-center items-center w-6 h-6 text-neutral-400 text-sm font-bold p-2"
+        className="absolute flex items-center justify-center invisible w-6 h-6 p-2 text-sm font-bold group-hover/block:visible right-2 top-2 text-neutral-400"
       >
         ⸬
       </div>
-      <p className="text-xs font-bold  text-slate-500 mb-1">
-        {questionTypeLabels[questionData.type]}
+
+      <p className="mb-1 text-xs font-bold text-slate-500">
+        {questionTypesInfo[questionData.type].label}
       </p>
       <>
         {questionData.type === 'text' ? (
@@ -99,12 +78,12 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
               <input
                 {...register('title')}
                 placeholder="질문을 입력해주세요."
-                className="text-lg w-full bg-transparent hover:bg-slate-100 outline-none border-b border-b-transparent focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
+                className="w-full text-lg bg-transparent border-b outline-none hover:bg-slate-100 border-b-transparent focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
               />
               <input
                 {...register('description')}
                 placeholder="질문에 대해 추가로 필요한 설명이나 제한사항을 입력하세요."
-                className="w-full bg-transparent outline-none border-b border-b-transparent  hover:bg-slate-100  focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
+                className="w-full bg-transparent border-b outline-none border-b-transparent hover:bg-slate-100 focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
               />
             </header>
             <section className="py-1 mb-4 text-slate-500">
@@ -121,7 +100,7 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
                   <TextIcon className="stroke-slate-400" />
                   <input
                     type="text"
-                    value={questionTypeLabels[questionData.type]}
+                    value={questionTypesInfo[questionData.type].label}
                     className="ml-4 bg-transparent outline-none text-slate-400"
                     readOnly
                   />
