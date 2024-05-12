@@ -55,7 +55,7 @@ const PersonalResult = ({ userId }: { userId: number }) => {
         )[0]
       );
     }
-  }, [answerQuery.data, resultQuery.data]);
+  }, [answerQuery.data, resultQuery.data, userId]);
 
   useEffect(() => {
     if (questionListResponse && answerQuery.data) {
