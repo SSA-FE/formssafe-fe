@@ -48,6 +48,7 @@ const PersonalResult = ({ userId }: { userId: number }) => {
       setQuestionListResponse(answerQuery.data);
     }
     if (resultQuery.data) {
+      console.log(resultQuery.data);
       setData(
         resultQuery.data.totalResponses.filter(
           (x: any) => x.user.userId === userId
