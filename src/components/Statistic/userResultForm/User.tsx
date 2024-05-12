@@ -1,7 +1,7 @@
 import personIcon from '@assets/icons/person-icon.svg';
 interface UserProps {
   user: {
-    id: number;
+    userId: number;
     nickname: string;
   };
   setUserId: (userId: number) => void;
@@ -11,7 +11,9 @@ const User = (props: UserProps) => {
   return (
     <button
       className="w-full h-[40px] flex shrink-0 justify-between items-center gap-4 px-4 border-b border-slate-100 cursor-pointer hover:bg-slate-300 "
-      onClick={() => props.setUserId(props.user.id)}
+      onClick={() => {
+        props.setUserId(props.user.userId);
+      }}
     >
       <div className="flex items-center gap-4 text-xs text-slate-700">
         <img
