@@ -4,6 +4,7 @@ import questionBlockReducer from '@/components/Myspace/questionBlock/questionBlo
 import toolbarInputReducer from '@/components/Myspace/toolbar/toolbarInputSlice';
 import boardViewReducer from '@/components/Board/boardViewSlice';
 import topbarSliceReducer from '@/components/topbar/topbarSlice';
+import formMetaDataSliceReducer from '@/components/Myspace/formInfoBar/formInfoSlice';
 
 import { userApi } from '@api/userApi';
 import { activityApi } from '@/api/activityApi';
@@ -18,6 +19,7 @@ export const store = configureStore({
     toolbarInput: toolbarInputReducer,
     boardView: boardViewReducer,
     topbarSlice: topbarSliceReducer,
+    formMetaData: formMetaDataSliceReducer,
     [userApi.reducerPath]: userApi.reducer,
     [activityApi.reducerPath]: activityApi.reducer,
     [viewApi.reducerPath]: viewApi.reducer,

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import FormInfoBar from '@/components/Myspace/FormInfoBar';
 import FormMain from '@/components/Myspace/FormMain';
 import FormOptionBar from '@/components/Myspace/FormOptionBar';
 import FormToolBar from '@/components/Myspace/FormToolBar';
 import { questionType } from '@/types/questionTypes';
+import FormInfoBar from '@/components/Myspace/formInfoBar/FormInfoBar';
 
 const Editor = () => {
   const [selectedQuestionType, setSelectedQuestionType] =

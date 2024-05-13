@@ -4,20 +4,32 @@ import trophyIcon from '@/assets/icons/trophy-icon.svg';
 import infoIcon from '@/assets/icons/info-icon.svg';
 import imgIcon from '@/assets/icons/img-icon.svg';
 import Tag from '@components/Tag';
+import { useForm } from 'react-hook-form';
+// import axios from 'axios';
 
 const FormInfoBar = () => {
   const [imgFile, setImgFile] = useState<File | null>();
   const [preview, setPreview] = useState<string | null>('');
+  // const [presignedUrl, setPresignedUrl] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string>('');
   const [isHidden, setIsHidden] = useState<boolean>(false);
+  const { register } = useForm();
 
-  const onChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeImg = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files !== null) {
       const file = event.target.files[0];
       if (file && file.type.substring(0, 5) === 'image') {
         setImgFile(file);
         setFileName(file.name);
+        try {
+          // const response = await axios.get(
+          //   `{{base_url}}/v1/files/upload/${encodeURIComponent(fileName)}`
+          // );
+          // setPresignedUrl(response.data.path);
+        } catch (err) {
+          console.error(err);
+        }
       } else {
         setImgFile(null);
       }
@@ -46,11 +58,17 @@ const FormInfoBar = () => {
     setIsHidden(!isHidden);
   };
 
+  // const handleUpdateFormData = (data) => {
+  //   console.log(data);
+  // };
+
   return (
     <div
+      // onBlur={handleSubmit(handleUpdateFormData)}
       className={`drop-shadow-md w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white flex flex-col content-center self-stretch relative duration-1000 ease-in-out z-50 ${isHidden ? '-translate-x-[19rem]' : ''}`}
     >
       <button
+        type="button"
         onClick={handleSlideButtonClick}
         className="absolute flex justify-center items-center bg-white -right-10 top-7 rounded"
       >
@@ -101,11 +119,13 @@ const FormInfoBar = () => {
           설문지 정보
         </h2>
         <input
+          {...register('title')}
           type="text"
           placeholder="제목을 작성해주세요."
           className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded"
         />
         <textarea
+          {...register('description')}
           className="flex flex-col h-16 p-2 text-xs border outline-none resize-none gap-md border-slate-200 bg-slate-50 rounded"
           placeholder="설명을 작성해주세요."
         />
