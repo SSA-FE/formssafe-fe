@@ -8,7 +8,7 @@ interface Tag {
 }
 
 interface FormCardProps {
-  selectedSurvey: number | undefined;
+  selectedSurvey?: number | undefined;
   id: number;
   title: string;
   description?: string;
