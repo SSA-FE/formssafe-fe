@@ -1,7 +1,10 @@
+import { instance } from '@/api/axios';
 import {
   Notification,
   useFetchAllNotificationsQuery,
+  useFetchUnreadNotificationsQuery,
 } from '@/api/notificationApi';
+import { API } from '@/config';
 import React, { FC, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -12,24 +15,9 @@ interface AlarmModalProps {
   setActiveAlarmTap: (value: string) => void;
 }
 
-// const data: Notification[] = [
-//   {
-//     id: 3,
-//     type: 'GET_REWARD',
-//     content: "'바나나에 대한 설문' 설문의 경품에 당첨되었습니다!",
-//     contentId: 26,
-//     isRead: false,
-//     createDate: '2024-04-30T13:30:01.243007',
-//   },
-//   {
-//     id: 4,
-//     type: 'GET_REWARD',
-//     content: "'좋아하는 과일을 알려주세요' 설문의 경품에 당첨되었습니다!",
-//     contentId: 27,
-//     isRead: false,
-//     createDate: '2024-04-30T13:30:01.243007',
-//   },
-// ];
+interface Alarm extends Notification {
+  title: string;
+}
 
 const AlarmModal: FC<AlarmModalProps> = ({
   modalRef,
@@ -37,27 +25,93 @@ const AlarmModal: FC<AlarmModalProps> = ({
   activeAlarmTap,
   setActiveAlarmTap,
 }) => {
-  const [top, setTop] = useState<number | null>(null);
-  const { data, isLoading } = useFetchAllNotificationsQuery({});
+  const [top] = useState<number | null>(null); // [1
+  const [alarmList, setAlarmList] = useState<Alarm[]>([]);
 
-  const alarmList = data?.notifications.map((alarm) => {
-    const match = alarm.content.match(/'([^']*)'(.*)/);
-
-    const title = match![1];
-    const content = match![2].trim();
-
-    const dateObject = new Date(alarm.createDate);
-    const formattedDate = `${String(dateObject.getMonth() + 1).padStart(2, '0')}/${String(dateObject.getDate()).padStart(2, '0')}`;
-
-    return { ...alarm, createDate: formattedDate, title, content };
+  const allNotificationsQuery = useFetchAllNotificationsQuery({ top: top });
+  const unreadNotificationsQuery = useFetchUnreadNotificationsQuery({
+    top: top,
   });
+
+  const [selectedQuery, setSelectedQuery] = useState(allNotificationsQuery);
+
   useEffect(() => {
-    if (alarmList) {
-      console.log(alarmList);
+    setSelectedQuery(
+      activeAlarmTap === '전체'
+        ? allNotificationsQuery
+        : unreadNotificationsQuery
+    );
+  }, [activeAlarmTap, allNotificationsQuery, unreadNotificationsQuery]);
+
+  const { data } = selectedQuery;
+
+  useEffect(() => {
+    setAlarmList([]);
+  }, [selectedQuery]);
+
+  useEffect(() => {
+    if (data) {
+      const newAlarmList = data.notifications.reduce((acc: Alarm[], alarm) => {
+        const match = alarm.content.match(/'([^']*)'(.*)/);
+
+        const title = match![1];
+        const content = match![2].trim();
+
+        const dateObject = new Date(alarm.createDate);
+        const formattedDate = `${String(dateObject.getMonth() + 1).padStart(2, '0')}/${String(dateObject.getDate()).padStart(2, '0')}`;
+
+        const newAlarm = {
+          ...alarm,
+          createDate: formattedDate,
+          title,
+          content,
+        };
+
+        const exists = acc.filter((item) => item.id === newAlarm.id).length > 0;
+
+        if (!exists) {
+          acc.push(newAlarm);
+        }
+
+        return acc;
+      }, []);
+      console.log(newAlarmList);
+      setAlarmList((prevAlarmList) => [...prevAlarmList, ...newAlarmList]);
     }
-  }, [alarmList]);
+  }, [data]);
+
+  const handleRead = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+    id?: number
+  ) => {
+    const { name } = event.currentTarget;
+
+    try {
+      if (name === 'all') {
+        await instance.patch(`${API.NOTIFICATION}/read`);
+        const updatedAlarmList = alarmList.map((alarm) => ({
+          ...alarm,
+          isRead: true,
+        }));
+        setAlarmList(updatedAlarmList);
+      } else {
+        console.log(event.currentTarget);
+        await instance.patch(`${API.NOTIFICATION}/${id}/read`);
+        const updatedAlarmList = alarmList.map((alarm) => {
+          if (alarm.id === id) {
+            return { ...alarm, isRead: true };
+          }
+          return alarm;
+        });
+        setAlarmList(updatedAlarmList);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const modalRoot = document.getElementById('modal-root')!;
+
   if (!alarmModalOpen) return null;
 
   return ReactDOM.createPortal(
@@ -98,9 +152,13 @@ const AlarmModal: FC<AlarmModalProps> = ({
               안읽음
             </button>
           </div>
-          <div className="text-[10px] font-bold whitespace-nowrap text-blue-600 pb-1">
+          <button
+            name="all"
+            onClick={(event) => handleRead(event)}
+            className="text-[10px] font-bold whitespace-nowrap text-blue-600 pb-1"
+          >
             모두 읽음 표시
-          </div>
+          </button>
         </div>
         {alarmList && alarmList.length === 0 ? (
           <div className="flex items-center w-full px-4 py-2 text-xs bg-white h-14 text-slate-400">
@@ -110,8 +168,10 @@ const AlarmModal: FC<AlarmModalProps> = ({
           alarmList &&
           alarmList.map((alarm) => (
             <button
+              name="single"
               key={alarm.id}
-              className="flex flex-col w-full gap-1 px-4 py-2 bg-white h-14 "
+              onClick={(event) => handleRead(event, alarm.id)}
+              className="flex flex-col w-full gap-1 px-4 py-2 bg-white h-14"
             >
               <div className="flex items-center justify-between w-full">
                 <h1 className="overflow-hidden text-sm text-slate-800 whitespace-nowrap overflow-ellipsis">
@@ -128,19 +188,6 @@ const AlarmModal: FC<AlarmModalProps> = ({
           ))
         )}
       </div>
-      {/* {alarmList.map((alarm, idx) => (
-        <div key={idx} className="flex items-center justify-between px-4 py-2">
-          <div className="flex items-center gap-2">
-            <img
-              src={alarm.imageUrl}
-              alt="알람 이미지"
-              className="w-8 h-8 rounded-full"
-            />
-            <p className="text-sm">{alarm.content}</p>
-          </div>
-          <p className="text-xs text-neutral-500">{alarm.time}</p>
-        </div>
-      ))} */}
     </div>,
     modalRoot
   );
