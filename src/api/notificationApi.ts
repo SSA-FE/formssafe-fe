@@ -19,11 +19,6 @@ interface NotificationResponse {
   cursor: Cursor;
 }
 
-interface NotificationCountResponse {
-  notifications: Notification[];
-  cursor: Cursor;
-}
-
 export const notificationApi = createApi({
   reducerPath: 'notificationApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
@@ -38,28 +33,44 @@ export const notificationApi = createApi({
           method: 'GET',
         };
       },
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName;
-      },
+      // serializeQueryArgs: ({ endpointName }) => {
+      //   return endpointName;
+      // },
 
-      merge: (currentCache, newItems) => {
-        currentCache.notifications.push(...newItems.notifications);
-      },
+      // merge: (currentCache, newItems) => {
+      //   currentCache.notifications.push(...newItems.notifications);
+      // },
 
-      forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg;
-      },
+      // forceRefetch({ currentArg, previousArg }) {
+      //   return currentArg !== previousArg;
+      // },
     }),
-    fetchUnreadNotifications: builder.query<NotificationCountResponse, Cursor>({
-      query: (cursor) => ({
-        url: `${API.NOTIFICATION}/unread?top=${cursor.top}`,
-        method: 'GET',
-      }),
+    fetchUnreadNotifications: builder.query<NotificationResponse, Cursor>({
+      query: (cursor) => {
+        const url = cursor.top
+          ? `${API.NOTIFICATION}/unread?top=${cursor.top}`
+          : `${API.NOTIFICATION}/unread`;
+        return {
+          url,
+          method: 'GET',
+        };
+      },
+      // serializeQueryArgs: ({ endpointName }) => {
+      //   return endpointName;
+      // },
+
+      // merge: (currentCache, newItems) => {
+      //   currentCache.notifications.push(...newItems.notifications);
+      // },
+
+      // forceRefetch({ currentArg, previousArg }) {
+      //   return currentArg !== previousArg;
+      // },
     }),
   }),
 });
 
 export const {
   useFetchAllNotificationsQuery,
-  useLazyFetchAllNotificationsQuery,
+  useFetchUnreadNotificationsQuery,
 } = notificationApi;
