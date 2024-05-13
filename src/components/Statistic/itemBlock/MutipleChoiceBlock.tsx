@@ -40,19 +40,7 @@ const MultipleChoiceBlock = ({
         ref={resultBoxRef}
       >
         <div className="flex flex-col gap-4 px-4 ">
-          {/* <div className="flex flex-col gap-2">
-            {labels.map((label: string) => {
-              return (
-                <div className="flex flex-row items-center gap-3">
-                  <OptionIcon />
-                  <p className="text-sm font-normal text-slate-600">{label}</p>
-                </div>
-              );
-            })}
-          </div> */}
-
           <hr className="h-[1px] bg-slate-400 text-slate-400" />
-
           <div className="flex flex-col gap-2 overflow-y-auto h-80">
             {users && (users as User[]).length > 0 ? (
               <>
