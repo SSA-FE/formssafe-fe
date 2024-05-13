@@ -11,6 +11,7 @@ import { activityApi } from '@/api/activityApi';
 import { viewApi } from '@/api/viewApi';
 import { submissionApi } from '@/api/submissionApi';
 import { formApi } from '@/api/formApi';
+import { fileApi } from '@/api/fileApi';
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ export const store = configureStore({
     [viewApi.reducerPath]: viewApi.reducer,
     [submissionApi.reducerPath]: submissionApi.reducer,
     [formApi.reducerPath]: formApi.reducer,
+    [fileApi.reducerPath]: fileApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) => {
@@ -33,7 +35,8 @@ export const store = configureStore({
       activityApi.middleware,
       viewApi.middleware,
       submissionApi.middleware,
-      formApi.middleware
+      formApi.middleware,
+      fileApi.middleware
     );
   },
 });

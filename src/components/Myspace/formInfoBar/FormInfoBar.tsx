@@ -4,34 +4,41 @@ import trophyIcon from '@/assets/icons/trophy-icon.svg';
 import infoIcon from '@/assets/icons/info-icon.svg';
 import imgIcon from '@/assets/icons/img-icon.svg';
 import Tag from '@components/Tag';
-import { useForm } from 'react-hook-form';
-// import axios from 'axios';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { setFormMetaData } from '@/components/Myspace/formInfoBar/formInfoSlice';
+import { useFetchPresignedUrlQuery } from '@/api/fileApi';
+interface FormInfoInputs {
+  title: string;
+  description: string;
+}
 
 const FormInfoBar = () => {
   const [imgFile, setImgFile] = useState<File | null>();
   const [preview, setPreview] = useState<string | null>('');
-  // const [presignedUrl, setPresignedUrl] = useState('');
+  const [presignedUrl, setPresignedUrl] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string>('');
   const [isHidden, setIsHidden] = useState<boolean>(false);
-  const { register } = useForm();
+  const [tagList, setTagList] = useState<Tag[]>([]);
+  const [endDate, setEndDate] = useState<Date | null>(new Date());
+  const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm<FormInfoInputs>();
+
+  const { data: presignedData } = useFetchPresignedUrlQuery(fileName, {
+    skip: !fileName,
+  });
 
   const onChangeImg = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files !== null) {
       const file = event.target.files[0];
-      if (file && file.type.substring(0, 5) === 'image') {
+      if (file && file.type.startsWith('image')) {
         setImgFile(file);
         setFileName(file.name);
-        try {
-          // const response = await axios.get(
-          //   `{{base_url}}/v1/files/upload/${encodeURIComponent(fileName)}`
-          // );
-          // setPresignedUrl(response.data.path);
-        } catch (err) {
-          console.error(err);
-        }
+        setPresignedUrl(presignedData?.path as string);
       } else {
         setImgFile(null);
+        setFileName('');
       }
     }
   };
@@ -58,13 +65,26 @@ const FormInfoBar = () => {
     setIsHidden(!isHidden);
   };
 
-  // const handleUpdateFormData = (data) => {
-  //   console.log(data);
-  // };
+  const handleSetFormData: SubmitHandler<FormInfoInputs> = (data) => {
+    dispatch(
+      setFormMetaData({
+        title: data.title,
+        description: data.description,
+        tags: tagList.map((tag) => tag.value),
+        image: [presignedUrl],
+        endDate: endDate?.toISOString(),
+        reward: {
+          name: '',
+          category: 'string',
+          count: 0,
+        },
+      })
+    );
+  };
 
   return (
     <div
-      // onBlur={handleSubmit(handleUpdateFormData)}
+      onBlur={handleSubmit(handleSetFormData)}
       className={`drop-shadow-md w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white flex flex-col content-center self-stretch relative duration-1000 ease-in-out z-50 ${isHidden ? '-translate-x-[19rem]' : ''}`}
     >
       <button
@@ -119,13 +139,13 @@ const FormInfoBar = () => {
           설문지 정보
         </h2>
         <input
-          {...register('title')}
+          {...register('title', { required: true })}
           type="text"
           placeholder="제목을 작성해주세요."
           className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded"
         />
         <textarea
-          {...register('description')}
+          {...register('description', { required: true })}
           className="flex flex-col h-16 p-2 text-xs border outline-none resize-none gap-md border-slate-200 bg-slate-50 rounded"
           placeholder="설명을 작성해주세요."
         />
@@ -134,13 +154,13 @@ const FormInfoBar = () => {
       {/* 태그 */}
       <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-md text-sm">
         <h2 className="font-bold text-neutral-500">태그</h2>
-        <Tag />
+        <Tag tagList={tagList} setTagList={setTagList} />
       </div>
 
       {/* 마감 */}
       <div className="flex flex-col w-full px-4 pt-3 pb-6 border-b-4 border-slate-100 text-sm">
         <h2 className="font-bold text-neutral-500 mb-2">마감일</h2>
-        <Calendar />
+        <Calendar endDate={endDate} setEndDate={setEndDate} />
       </div>
 
       {/* 경품정하기 */}
