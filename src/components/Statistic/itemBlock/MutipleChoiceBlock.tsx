@@ -1,24 +1,28 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from 'react';
 import UserIcon from '@/assets/icons/user-icon.svg?react';
-// import OptionIcon from '@/assets/icons/option-icon.svg?react';
 import ArrowUpIcon from '@/assets/icons/arrow-up.svg?react';
 import ArrowBottomIcon from '@/assets/icons/arrow-bottom.svg?react';
-import Chart from '@/components/Statistic/itemBlock/Chart';
+import Chart, { ChartData } from '@/components/Statistic/itemBlock/Chart';
+import { OptionType, User } from '../StatResult';
+
+interface MultipleChoiceBlockProps {
+  data: OptionType;
+}
 
 // 객관식
-const MultipleChoiceBlock = ({ data: { labels, users, values } }: any) => {
+const MultipleChoiceBlock = ({
+  data: { labels, users, values },
+}: MultipleChoiceBlockProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleCollapsible = () => {
     setIsOpen(!isOpen);
   };
-  const resultBoxRef = useRef<any>(null);
+  const resultBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (resultBoxRef.current) {
       if (resultBoxRef.current.offsetHeight === 0) return;
-      // console.log(resultBoxRef.current.offsetHeight);
     }
   }, [isOpen]);
 
@@ -27,7 +31,7 @@ const MultipleChoiceBlock = ({ data: { labels, users, values } }: any) => {
       <div
         className={`px-4 ${isOpen ? `` : `overflow-hidden rounded-bl-lg`} bg-slate-100`}
       >
-        <Chart data={{ labels, values }} />
+        <Chart data={{ labels, values } as ChartData} />
       </div>
       <div
         className={`transition-height duration-300 ease-in ${
@@ -50,9 +54,9 @@ const MultipleChoiceBlock = ({ data: { labels, users, values } }: any) => {
           <hr className="h-[1px] bg-slate-400 text-slate-400" />
 
           <div className="flex flex-col gap-2 overflow-y-auto h-80">
-            {users && users.length > 0 ? (
+            {users && (users as User[]).length > 0 ? (
               <>
-                {users.map((user: any) => {
+                {(users as User[]).map((user: User) => {
                   return (
                     <div className="flex items-center self-stretch justify-between px-4 pt-1 pb-2 bg-white border-l-2 border-slate-300">
                       <div className="flex flex-row items-center justify-center gap-4 px-2 py-2">

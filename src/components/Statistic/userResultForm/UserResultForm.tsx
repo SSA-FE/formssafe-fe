@@ -2,43 +2,27 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import User from './User';
 
 import searchIcon from '@assets/icons/search-icon.svg';
-import { useFetchResultQuery } from '@/api/formApi';
+import { useFetchAnswerQuery } from '@/api/formApi';
 import { useParams } from 'react-router-dom';
+import { TotalReponseType } from '@/api/formApi';
 
 interface UserResultFormProps {
   setUserId: (userId: number) => void;
 }
 
-interface ResponseType {
-  responseId: number;
-  user: UserType;
-  responses: Response[];
-  responsedAt: string;
-}
-
-interface UserType {
-  userId: number;
-  nickname: string;
-}
-
-interface Response {
-  questionId: number;
-  content: string | number | number[];
-}
-
 const UserResultForm = (props: UserResultFormProps) => {
-  const [userData, setUserData] = useState<ResponseType[]>();
+  const [userData, setUserData] = useState<TotalReponseType[]>();
   const [answerListResponse, setAnswerListResponse] =
-    useState<ResponseType[]>();
+    useState<TotalReponseType[]>();
   const { formId } = useParams();
-  const resultQuery = useFetchResultQuery({ formId });
+  const answerQuery = useFetchAnswerQuery({ formId });
 
   useEffect(() => {
-    if (resultQuery.data) {
-      setAnswerListResponse(resultQuery.data.totalResponses);
-      setUserData(resultQuery.data.totalResponses);
+    if (answerQuery.data) {
+      setAnswerListResponse(answerQuery.data.totalResponses);
+      setUserData(answerQuery.data.totalResponses);
     }
-  }, [resultQuery.data]);
+  }, [answerQuery.data]);
 
   const handleSearchUser = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -46,8 +30,9 @@ const UserResultForm = (props: UserResultFormProps) => {
       setUserData(answerListResponse);
       return;
     }
-    const searchUserData = answerListResponse!.filter((answer: ResponseType) =>
-      answer.user.nickname.includes(e.target.value.trim())
+    const searchUserData = answerListResponse!.filter(
+      (answer: TotalReponseType) =>
+        answer.user.nickname.includes(e.target.value.trim())
     );
     setUserData(searchUserData);
   };
@@ -78,7 +63,7 @@ const UserResultForm = (props: UserResultFormProps) => {
 
       {/* 개별 질문리스트 */}
       <div className="flex flex-col items-start flex-1 overflow-y-scroll">
-        {userData?.map((res: ResponseType, index: number) => (
+        {userData?.map((res: TotalReponseType, index: number) => (
           <User key={index} user={res.user} setUserId={props.setUserId} />
         ))}
       </div>

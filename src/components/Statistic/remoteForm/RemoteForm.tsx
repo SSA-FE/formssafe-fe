@@ -1,75 +1,20 @@
-import { useFetchAnswerQuery } from '@/api/formApi';
+import { useFetchResultQuery } from '@/api/formApi';
 import Question from '@components/Statistic/remoteForm/Question';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-interface AnswerListType {
-  author: AuthorType;
-  contents: ContentType[];
-  description: string;
-  endDate: string;
-  expectTime: number;
-  id: number;
-  image: string[];
-  privacyDisposalDate?: string;
-  questionCnt: number;
-  recipients: RecipientType[];
-  responseCnt: number;
-  reward?: RewardType;
-  startDate: string;
-  status: string;
-  tags?: TagType[];
-  title: string;
-}
-
-interface AuthorType {
-  email: string;
-  nickname: string;
-  userId: number;
-}
-
-interface ContentType {
-  description?: string;
-  id: number;
-  type: string;
-  title: string | null;
-  options?: OptionType[];
-  isRequired: boolean;
-  isPrivacy: boolean;
-}
-
-interface OptionType {
-  id: number;
-  detail: string;
-}
-
-interface RewardType {
-  category: string;
-  count: number;
-  name: string;
-}
-
-interface TagType {
-  id: number;
-  name: string;
-}
-
-interface RecipientType {
-  id: number;
-  nickname: string;
-}
+import { QuestionListType, ContentType, OptionType } from '@/api/formApi';
 
 const RemoteForm = () => {
   const { formId } = useParams();
 
   const [questionListResponse, setQuestionListResponse] =
-    useState<AnswerListType>();
-  const answerQuery = useFetchAnswerQuery({ formId });
+    useState<QuestionListType>();
+  const resultQuery = useFetchResultQuery({ formId });
   useEffect(() => {
-    if (answerQuery.data) {
-      setQuestionListResponse(answerQuery.data);
+    if (resultQuery.data) {
+      setQuestionListResponse(resultQuery.data);
     }
-  }, [answerQuery.data]);
+  }, [resultQuery.data]);
 
   const getTitle = async () => {
     // 질문 항목

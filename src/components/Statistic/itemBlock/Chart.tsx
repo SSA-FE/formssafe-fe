@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,7 +21,16 @@ ChartJS.register(
   Legend
 );
 
-const Chart = ({ data: { labels, values } }: any) => {
+export interface ChartData {
+  labels: string[];
+  values: number[];
+}
+
+interface ChartProps {
+  data: ChartData;
+}
+
+const Chart = ({ data: { labels, values } }: ChartProps) => {
   const maxValue = Math.max(...values);
   const options = {
     interaction: {
@@ -118,8 +126,11 @@ const Chart = ({ data: { labels, values } }: any) => {
           font: {
             weight: 'bold',
           },
-          formatter: (value: any, context: any) => {
-            const label = labels[context.dataIndex];
+          formatter: (
+            value: number,
+            context: { dataIndex: string | number }
+          ) => {
+            const label = labels[context.dataIndex as number];
             return `${value} - ${label.length >= 100 ? `${label.substring(0, 4)}...` : label}`;
           },
         },
@@ -134,7 +145,8 @@ const Chart = ({ data: { labels, values } }: any) => {
     ],
   };
 
-  const chartRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const chartRef = useRef<any>();
   const testRef = useRef<number | null>(null);
 
   const handleClickChart = (
@@ -153,35 +165,22 @@ const Chart = ({ data: { labels, values } }: any) => {
           data.datasets[clickedDatasetIndex].data[testRef.current] ===
           Math.max(...data.datasets[clickedDatasetIndex].data)
         ) {
-          data.datasets[clickedDatasetIndex].backgroundColor[testRef.current] =
-            '#489bff';
+          (data.datasets[clickedDatasetIndex].backgroundColor as string[])[
+            testRef.current
+          ] = '#489bff';
         } else {
-          data.datasets[clickedDatasetIndex].backgroundColor[testRef.current] =
-            '#CBD5E1';
+          (data.datasets[clickedDatasetIndex].backgroundColor as string[])[
+            testRef.current
+          ] = '#CBD5E1';
         }
       }
-      data.datasets[clickedDatasetIndex].backgroundColor[clickedElementIndex] =
-        '#95b7e0';
+      (data.datasets[clickedDatasetIndex].backgroundColor as string[])[
+        clickedElementIndex
+      ] = '#95b7e0';
 
       testRef.current = clickedElementIndex;
       chart.update();
     }
-
-    // const chart = chartRef.current;
-    // if (!chart) return;
-    // const click_result = getElementAtEvent(chart, e);
-
-    // console.log(click_result[0]);
-    // click_result[0].element.options.backgroundColor = '#000000';
-
-    // const dataIndex = click_result[0].index;
-    // const label = labels_dummy[click_result[0].index];
-
-    // setClickType({
-    //   total: { label, cnt: total_dummy[dataIndex] },
-    //   react: { label, cnt: react_dummy[dataIndex] },
-    //   vue: { label, cnt: vue_dummy[dataIndex] },
-    // });
   };
 
   return (
@@ -191,7 +190,8 @@ const Chart = ({ data: { labels, values } }: any) => {
           <Bar
             ref={chartRef}
             options={options}
-            data={data}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            data={data as any}
             onClick={handleClickChart}
             plugins={[ChartDataLabels]}
           />

@@ -1,22 +1,8 @@
 import { ReactNode } from 'react';
-
-interface Options {
-  labels?: string[];
-  users: string[];
-  values: number[] | string;
-}
-
-interface answerData {
-  description: string;
-  id: string;
-  options: Options;
-  responseCnt: number;
-  title: string;
-  type: string;
-}
+import { QuestionListTmpType } from '../StatResult';
 
 interface ItemProps {
-  data: answerData;
+  data: QuestionListTmpType;
   idx: number;
   children: ReactNode;
 }
