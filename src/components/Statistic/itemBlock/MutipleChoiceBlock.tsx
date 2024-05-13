@@ -58,7 +58,10 @@ const MultipleChoiceBlock = ({
               <>
                 {(users as User[]).map((user: User) => {
                   return (
-                    <div className="flex items-center self-stretch justify-between px-4 pt-1 pb-2 bg-white border-l-2 border-slate-300">
+                    <div
+                      key={user.userId}
+                      className="flex items-center self-stretch justify-between px-4 pt-1 pb-2 bg-white border-l-2 border-slate-300"
+                    >
                       <div className="flex flex-row items-center justify-center gap-4 px-2 py-2">
                         <UserIcon />
                         <p className="text-xs font-normal text-slate-500">

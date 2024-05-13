@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import {
   QuestionListType,
   ContentType,
-  AnswerListType,
   useFetchAnswerQuery,
   useFetchResultQuery,
   TotalReponseType,
@@ -25,7 +24,6 @@ const PersonalResult = ({ userId }: { userId: number }) => {
   const { formId } = useParams();
   const [questionListResponse, setQuestionListResponse] =
     useState<QuestionListType>();
-  const [answerList] = useState<AnswerListType>();
   const [sortedAnswerList, setSortedAnswerList] =
     useState<SortedAnswerListType[]>();
   const [data, setData] = useState<TotalReponseType>();
@@ -96,7 +94,10 @@ const PersonalResult = ({ userId }: { userId: number }) => {
         (content: ContentType, index: number) => {
           if (content?.type === 'short' || content?.type === 'long') {
             return (
-              <div className="flex flex-col gap-4 px-4 pt-4 pb-4">
+              <div
+                key={content.id}
+                className="flex flex-col gap-4 px-4 pt-4 pb-4"
+              >
                 <div className="flex flex-col gap-1">
                   <h3 className="text-xl font-bold text-slate-600">
                     {`${index}. ${content?.title}`}
@@ -118,7 +119,10 @@ const PersonalResult = ({ userId }: { userId: number }) => {
             content.type === 'checkbox'
           ) {
             return (
-              <div className="flex flex-col gap-4 px-4 pt-10 pb-4">
+              <div
+                key={content.id}
+                className="flex flex-col gap-4 px-4 pt-10 pb-4"
+              >
                 <div className="flex flex-col gap-1 pb-2">
                   <h3 className="text-xl font-bold text-slate-600">
                     {`${index}. ${content.title}`}
@@ -128,8 +132,7 @@ const PersonalResult = ({ userId }: { userId: number }) => {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2">
-                  {answerList &&
-                    sortedAnswerList &&
+                  {sortedAnswerList &&
                     content.options?.map(
                       (option: OptionType, optionIdx: number) => {
                         if (
@@ -139,6 +142,7 @@ const PersonalResult = ({ userId }: { userId: number }) => {
                           // 체크박스의 경우
                           return (
                             <div
+                              key={option.id}
                               className={`${(sortedAnswerList[index - 1].content as number[]).includes(optionIdx + 1) ? 'bg-slate-100' : 'white'}  flex items-center gap-4 px-4 py-2`}
                             >
                               <SingleIcon
@@ -153,6 +157,7 @@ const PersonalResult = ({ userId }: { userId: number }) => {
                           // 체크박스 외의 경우
                           return (
                             <div
+                              key={option.id}
                               className={`${Number(sortedAnswerList[index - 1].content) === optionIdx + 1 ? 'bg-slate-100' : 'white'}  flex items-center gap-4 px-4 py-2`}
                             >
                               <SingleIcon

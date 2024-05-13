@@ -46,7 +46,10 @@ const EssayQuestionBlock = ({ data }: MultipleChoiceBlockProps) => {
           >
             {(data?.users as string[]).map((user: string, index: number) => {
               return (
-                <div className="py-2 gap-1 flex flex-col items-start self-stretch justify-between px-4 bg-white border-l-2 border-slate-300 w-[60vw] max-w-[1000px]">
+                <div
+                  key={`${user} + ${index}`}
+                  className="py-2 gap-1 flex flex-col items-start self-stretch justify-between px-4 bg-white border-l-2 border-slate-300 w-[60vw] max-w-[1000px]"
+                >
                   <p className="text-xs font-normal text-neutral-400">{user}</p>
                   <p className="text-xs font-normal text-slate-500">
                     {data?.values[index]}

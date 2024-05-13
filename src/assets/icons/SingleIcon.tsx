@@ -17,7 +17,7 @@ const SvgSingleIcon = ({
       height="10"
       rx="5"
       stroke={strokeColor}
-      stroke-width="4"
+      strokeWidth="4"
     />
   </svg>
 );
