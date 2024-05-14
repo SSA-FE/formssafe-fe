@@ -11,7 +11,7 @@ export interface Notification {
 }
 
 interface Cursor {
-  top?: number | null;
+  top?: number;
 }
 
 interface NotificationResponse {
@@ -33,17 +33,7 @@ export const notificationApi = createApi({
           method: 'GET',
         };
       },
-      // serializeQueryArgs: ({ endpointName }) => {
-      //   return endpointName;
-      // },
-
-      // merge: (currentCache, newItems) => {
-      //   currentCache.notifications.push(...newItems.notifications);
-      // },
-
-      // forceRefetch({ currentArg, previousArg }) {
-      //   return currentArg !== previousArg;
-      // },
+      keepUnusedDataFor: 0,
     }),
     fetchUnreadNotifications: builder.query<NotificationResponse, Cursor>({
       query: (cursor) => {
@@ -55,17 +45,6 @@ export const notificationApi = createApi({
           method: 'GET',
         };
       },
-      // serializeQueryArgs: ({ endpointName }) => {
-      //   return endpointName;
-      // },
-
-      // merge: (currentCache, newItems) => {
-      //   currentCache.notifications.push(...newItems.notifications);
-      // },
-
-      // forceRefetch({ currentArg, previousArg }) {
-      //   return currentArg !== previousArg;
-      // },
     }),
   }),
 });
