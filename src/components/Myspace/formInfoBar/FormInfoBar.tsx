@@ -16,12 +16,13 @@ interface FormInfoInputs {
 const FormInfoBar = () => {
   const [imgFile, setImgFile] = useState<File | null>();
   const [preview, setPreview] = useState<string | null>('');
-  const [presignedUrl, setPresignedUrl] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string>('');
   const [isHidden, setIsHidden] = useState<boolean>(false);
   const [tagList, setTagList] = useState<Tag[]>([]);
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
+  const [endDate, setEndDate] = useState<Date | null>(
+    new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+  );
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm<FormInfoInputs>();
 
@@ -29,13 +30,12 @@ const FormInfoBar = () => {
     skip: !fileName,
   });
 
-  const onChangeImg = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files !== null) {
       const file = event.target.files[0];
       if (file && file.type.startsWith('image')) {
         setImgFile(file);
         setFileName(file.name);
-        setPresignedUrl(presignedData?.path as string);
       } else {
         setImgFile(null);
         setFileName('');
@@ -71,13 +71,8 @@ const FormInfoBar = () => {
         title: data.title,
         description: data.description,
         tags: tagList.map((tag) => tag.value),
-        image: [presignedUrl],
         endDate: endDate?.toISOString(),
-        reward: {
-          name: '',
-          category: 'string',
-          count: 0,
-        },
+        image: [presignedData?.path as string],
       })
     );
   };

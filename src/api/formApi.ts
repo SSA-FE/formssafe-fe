@@ -19,13 +19,13 @@ interface Reward {
 
 interface Form {
   title: string;
-  image: string[];
+  image?: string[];
   description: string;
   endDate: string;
   expectTime: number;
   contents: Content[];
-  tags: string[];
-  reward: Reward;
+  tags?: string[];
+  reward?: Reward;
   isTemp: boolean;
 }
 
