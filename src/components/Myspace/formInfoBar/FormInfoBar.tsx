@@ -11,6 +11,7 @@ import { useFetchPresignedUrlQuery } from '@/api/fileApi';
 interface FormInfoInputs {
   title: string;
   description: string;
+  expectTime: number;
 }
 
 const FormInfoBar = () => {
@@ -24,7 +25,8 @@ const FormInfoBar = () => {
     new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
   );
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm<FormInfoInputs>();
+  const { register, handleSubmit, watch } = useForm<FormInfoInputs>();
+  const expectTimeValue = watch('expectTime', 5);
 
   const { data: presignedData } = useFetchPresignedUrlQuery(fileName, {
     skip: !fileName,
@@ -72,6 +74,7 @@ const FormInfoBar = () => {
         description: data.description,
         tags: tagList.map((tag) => tag.value),
         endDate: endDate?.toISOString(),
+        expectTime: data.expectTime,
         image: [presignedData?.path as string],
       })
     );
@@ -128,7 +131,7 @@ const FormInfoBar = () => {
       </div>
 
       {/* 설문지 정보 */}
-      <div className="w-full px-4 flex flex-col gap-2.5 pt-3 pb-4">
+      <div className="w-full px-4 flex flex-col gap-2.5 pt-3 pb-6">
         <h2 className="flex gap-[0.75rem] font-bold leading-6 text-neutral-600">
           <img src={infoIcon} alt="설문지 정보 아이콘" />
           설문지 정보
@@ -147,9 +150,32 @@ const FormInfoBar = () => {
       </div>
 
       {/* 태그 */}
-      <div className="flex flex-col w-full px-4 pt-3 pb-4 gap-md text-sm">
+      <div className="flex flex-col w-full px-4 pt-3 pb-6 gap-md text-sm">
         <h2 className="font-bold text-neutral-500">태그</h2>
         <Tag tagList={tagList} setTagList={setTagList} />
+      </div>
+
+      {/* 예상소요시간 */}
+      <div className="flex flex-col w-full px-4 pt-3 pb-7 gap-md text-sm">
+        <div className="flex justify-between items-end font-bold text-neutral-500">
+          <h2>예상소요시간</h2>
+          <label htmlFor="survey-time-range">
+            <span className="text-blue-400 text-lg mr-1">
+              {expectTimeValue}
+            </span>
+            <span>분</span>
+          </label>
+        </div>
+        <input
+          {...register('expectTime')}
+          type="range"
+          id="survey-time-range"
+          min="1"
+          max="60"
+          step="1"
+          defaultValue="5"
+          className="appearance-none h-3 bg-slate-100 rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-300"
+        />
       </div>
 
       {/* 마감 */}
