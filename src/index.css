@@ -37,6 +37,11 @@
   -webkit-box-orient: vertical;
 }
 
+.alarm-modal {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
 @layer base {
   html {
     font-family: 'Noto Sans KR', 'Inter', sans-serif;

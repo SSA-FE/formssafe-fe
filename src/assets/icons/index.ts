@@ -11,3 +11,4 @@ export { default as MainLogoIcon } from './MainLogoIcon';
 export { default as SearchIcon } from './SearchIcon';
 export { default as Spinner } from './Spinner';
 export { default as StatusIcon } from './StatusIcon';
+export { default as SingleIcon } from './SingleIcon';
