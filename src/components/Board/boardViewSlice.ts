@@ -1,28 +1,14 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-interface ViewRequest {
+export interface ViewRequest {
   keyword?: string;
   sort?: string;
   category?: string[];
   status?: string;
   tag?: string[];
-  top?: number;
-  startDate?: string;
-  endDate?: string;
-  responseCnt?: number;
 }
 
-const initialState: ViewRequest = {
-  keyword: '',
-  sort: 'createdtime',
-  category: [''],
-  status: '',
-  tag: [],
-  top: 0,
-  startDate: '',
-  endDate: '',
-  responseCnt: 0,
-};
+const initialState: ViewRequest = {};
 
 export const boardViewSlice = createSlice({
   name: 'boardView',
@@ -44,25 +30,15 @@ export const boardViewSlice = createSlice({
       if (!state.tag) {
         state.tag = [];
       }
-      state.tag.push(action.payload);
+      (state.tag as string[]).push(action.payload);
     },
     removeTag: (state, action: PayloadAction<string>) => {
       if (!state.tag) {
         state.tag = [];
       }
-      state.tag = state.tag.filter((tag) => tag !== action.payload);
-    },
-    setTop: (state, action: PayloadAction<number>) => {
-      state.top = action.payload;
-    },
-    setStartDate: (state, action: PayloadAction<string>) => {
-      state.startDate = action.payload;
-    },
-    setEndDate: (state, action: PayloadAction<string>) => {
-      state.endDate = action.payload;
-    },
-    setResponseCnt: (state, action: PayloadAction<number>) => {
-      state.responseCnt = action.payload;
+      state.tag = (state.tag as string[]).filter(
+        (tag) => tag !== action.payload
+      );
     },
   },
 });
@@ -74,9 +50,5 @@ export const {
   setStatus,
   setTag,
   removeTag,
-  setTop,
-  setStartDate,
-  setEndDate,
-  setResponseCnt,
 } = boardViewSlice.actions;
 export default boardViewSlice.reducer;
