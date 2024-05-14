@@ -18,7 +18,7 @@ const Calendar = ({ endDate, setEndDate }: CalendarProps) => {
       timeIntervals={15}
       timeCaption="time"
       dateFormat="YYYY년 MM월 dd일까지"
-      className="w-full py-1 rounded text-xs font-bold text-center border outline-none bg-slate-50 text-slate-400 border-slate-200 cursor-pointer"
+      className="w-full py-1 rounded text-xs font-bold text-center border outline-none bg-slate-50 text-slate-400 border-slate-200 cursor-pointer focus:border-blue-400"
     />
   );
 };

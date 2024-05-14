@@ -8,10 +8,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { setFormMetaData } from '@/components/Myspace/formInfoBar/formInfoSlice';
 import { useFetchPresignedUrlQuery } from '@/api/fileApi';
+import Modal from '@/components/Modal';
+
 interface FormInfoInputs {
   title: string;
   description: string;
   expectTime: number;
+  rewardName: string;
+  rewardCategory: string;
+  rewardCount: number;
 }
 
 const FormInfoBar = () => {
@@ -24,6 +29,7 @@ const FormInfoBar = () => {
   const [endDate, setEndDate] = useState<Date | null>(
     new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
   );
+  const [showRewardModal, setShowRewardModal] = useState(false);
   const dispatch = useDispatch();
   const { register, handleSubmit, watch } = useForm<FormInfoInputs>();
   const expectTimeValue = watch('expectTime', 5);
@@ -31,6 +37,14 @@ const FormInfoBar = () => {
   const { data: presignedData } = useFetchPresignedUrlQuery(fileName, {
     skip: !fileName,
   });
+
+  const categoryList = [
+    '커피/음료',
+    '상품권',
+    '편의점',
+    '치킨/피자/햄버거',
+    '기타',
+  ];
 
   const onChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files !== null) {
@@ -63,10 +77,6 @@ const FormInfoBar = () => {
     }
   };
 
-  const handleSlideButtonClick = () => {
-    setIsHidden(!isHidden);
-  };
-
   const handleSetFormData: SubmitHandler<FormInfoInputs> = (data) => {
     dispatch(
       setFormMetaData({
@@ -80,14 +90,27 @@ const FormInfoBar = () => {
     );
   };
 
+  const handleSetRewardData: SubmitHandler<FormInfoInputs> = (data) => {
+    dispatch(
+      setFormMetaData({
+        reward: {
+          name: data.rewardName,
+          category: data.rewardCategory,
+          count: data.rewardCount,
+        },
+      })
+    );
+    setShowRewardModal(false);
+  };
+
   return (
     <div
       onBlur={handleSubmit(handleSetFormData)}
-      className={`drop-shadow-md w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white flex flex-col content-center self-stretch relative duration-1000 ease-in-out z-50 ${isHidden ? '-translate-x-[19rem]' : ''}`}
+      className={`drop-shadow-md w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white flex flex-col content-center self-stretch relative duration-1000 ease-in-out z-1 ${isHidden ? '-translate-x-[19rem]' : ''}`}
     >
       <button
         type="button"
-        onClick={handleSlideButtonClick}
+        onClick={() => setIsHidden(!isHidden)}
         className="absolute flex justify-center items-center bg-white -right-10 top-7 rounded"
       >
         <div className="text-slate-300 pl-4 pr-3 pb-2 text-3xl">
@@ -119,7 +142,7 @@ const FormInfoBar = () => {
             className="hidden"
           />
           <button
-            className="bg-neutral-100 px-3.5 py-1 rounded-lg flex items-center justify-center text-xs whitespace-nowrap"
+            className="bg-blue-300 text-white px-3.5 py-1 rounded-lg flex items-center justify-center text-xs whitespace-nowrap"
             onClick={handleImgButtonClick}
           >
             파일 선택하기
@@ -137,14 +160,14 @@ const FormInfoBar = () => {
           설문지 정보
         </h2>
         <input
-          {...register('title', { required: true })}
+          {...register('title')}
           type="text"
           placeholder="제목을 작성해주세요."
-          className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded"
+          className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
         />
         <textarea
-          {...register('description', { required: true })}
-          className="flex flex-col h-16 p-2 text-xs border outline-none resize-none gap-md border-slate-200 bg-slate-50 rounded"
+          {...register('description')}
+          className="flex flex-col h-16 p-2 text-xs border outline-none resize-none gap-md border-slate-200 bg-slate-50 rounded focus:border-blue-400"
           placeholder="설명을 작성해주세요."
         />
       </div>
@@ -174,7 +197,7 @@ const FormInfoBar = () => {
           max="60"
           step="1"
           defaultValue="5"
-          className="appearance-none h-3 bg-slate-100 rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-300"
+          className="appearance-none h-3 cursor-pointer bg-slate-100 rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-300"
         />
       </div>
 
@@ -194,11 +217,90 @@ const FormInfoBar = () => {
           <p className="text-xs text-orange-400">
             &#9432; 경품을 정해서 설문자를 모아보세요.
           </p>
-          <button className="w-full text-sm bg-neutral-200 text-neutral-400 h-7">
+          <button
+            onClick={() => setShowRewardModal(true)}
+            className="w-full text-sm bg-blue-300 text-white h-7 rounded"
+          >
             설정
           </button>
         </div>
       </div>
+      <Modal maxWidth="max-w-[30rem]" state={showRewardModal}>
+        <form
+          onSubmit={handleSubmit(handleSetRewardData)}
+          className="relative flex flex-col gap-4"
+        >
+          <button
+            onClick={() => setShowRewardModal(false)}
+            className="absolute right-0 top-0 text-neutral-600"
+          >
+            X
+          </button>
+          <h2 className="text-lg font-bold text-slate-800 mb-4">
+            설문 보상을 선택하세요.
+          </h2>
+          <div className="flex flex-col space-y-2">
+            <label
+              htmlFor="rewardName"
+              className="text-sm font-medium text-slate-600"
+            >
+              보상 이름
+            </label>
+            <input
+              {...register('rewardName', { required: true })}
+              type="text"
+              id="rewardName"
+              placeholder="예) 스타벅스 아메리카노"
+              className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
+            />
+          </div>
+
+          <div className="flex flex-col space-y-2">
+            <label
+              htmlFor="rewardCategory"
+              className="text-sm font-medium text-slate-600"
+            >
+              보상 카테고리
+            </label>
+            <select
+              {...register('rewardCategory', { required: true })}
+              id="rewardCategory"
+              className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
+            >
+              <option value="" selected>
+                선택하세요
+              </option>
+              {categoryList.map((category) => (
+                <option value={category}>{category}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col space-y-2">
+            <label
+              htmlFor="rewardCount"
+              className="text-sm font-medium text-slate-600"
+            >
+              보상 수량
+            </label>
+            <input
+              {...register('rewardCount', { required: true })}
+              type="number"
+              min={1}
+              defaultValue={1}
+              id="rewardCount"
+              className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="mt-4 px-4 py-2 bg-blue-400 text-white rounded-md hover:bg-blue-500 transition duration-200"
+          >
+            저장하기
+          </button>
+        </form>
+      </Modal>
     </div>
   );
 };
