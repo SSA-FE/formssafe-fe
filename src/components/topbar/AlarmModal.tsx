@@ -88,7 +88,8 @@ const AlarmModal: FC<AlarmModalProps> = ({
 
   const handleRead = async (
     event: React.MouseEvent<HTMLButtonElement>,
-    id?: number
+    id?: number,
+    isRead?: boolean
   ) => {
     const { name } = event.currentTarget;
 
@@ -101,6 +102,7 @@ const AlarmModal: FC<AlarmModalProps> = ({
         }));
         setAlarmList(updatedAlarmList);
       } else {
+        if (isRead) return;
         await instance.patch(`${API.NOTIFICATION}/${id}/read`);
         const updatedAlarmList = alarmList.map((alarm) => {
           if (alarm.id === id) {
@@ -200,7 +202,7 @@ const AlarmModal: FC<AlarmModalProps> = ({
               <button
                 name="single"
                 key={alarm.id}
-                onClick={(event) => handleRead(event, alarm.id)}
+                onClick={(event) => handleRead(event, alarm.id, alarm.isRead)}
                 className={`flex flex-col w-full gap-1 px-4 py-2  h-14 ${alarm.isRead ? 'bg-slate-100' : 'bg-white hover:bg-slate-50'}`}
               >
                 <div className="flex items-center justify-between w-full">
