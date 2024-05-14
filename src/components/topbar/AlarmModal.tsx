@@ -5,7 +5,7 @@ import {
   useFetchUnreadNotificationsQuery,
 } from '@/api/notificationApi';
 import { API } from '@/config';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useLayoutEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 interface AlarmModalProps {
@@ -19,19 +19,22 @@ interface Alarm extends Notification {
   title: string;
 }
 
+interface Cursor {
+  top?: number;
+}
+
 const AlarmModal: FC<AlarmModalProps> = ({
   modalRef,
   alarmModalOpen,
   activeAlarmTap,
   setActiveAlarmTap,
 }) => {
-  const [top] = useState<number | null>(null); // [1
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [cursor, setCursor] = useState<Cursor>({});
   const [alarmList, setAlarmList] = useState<Alarm[]>([]);
 
-  const allNotificationsQuery = useFetchAllNotificationsQuery({ top: top });
-  const unreadNotificationsQuery = useFetchUnreadNotificationsQuery({
-    top: top,
-  });
+  const allNotificationsQuery = useFetchAllNotificationsQuery(cursor);
+  const unreadNotificationsQuery = useFetchUnreadNotificationsQuery(cursor);
 
   const [selectedQuery, setSelectedQuery] = useState(allNotificationsQuery);
 
@@ -43,14 +46,18 @@ const AlarmModal: FC<AlarmModalProps> = ({
     );
   }, [activeAlarmTap, allNotificationsQuery, unreadNotificationsQuery]);
 
-  const { data } = selectedQuery;
+  const { data, isSuccess, refetch } = selectedQuery;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setAlarmList([]);
-  }, [selectedQuery]);
+    setCursor({});
+    if (data) {
+      refetch();
+    }
+  }, [activeAlarmTap]);
 
   useEffect(() => {
-    if (data) {
+    if (isSuccess && data) {
       const newAlarmList = data.notifications.reduce((acc: Alarm[], alarm) => {
         const match = alarm.content.match(/'([^']*)'(.*)/);
 
@@ -75,7 +82,6 @@ const AlarmModal: FC<AlarmModalProps> = ({
 
         return acc;
       }, []);
-      console.log(newAlarmList);
       setAlarmList((prevAlarmList) => [...prevAlarmList, ...newAlarmList]);
     }
   }, [data]);
@@ -95,7 +101,6 @@ const AlarmModal: FC<AlarmModalProps> = ({
         }));
         setAlarmList(updatedAlarmList);
       } else {
-        console.log(event.currentTarget);
         await instance.patch(`${API.NOTIFICATION}/${id}/read`);
         const updatedAlarmList = alarmList.map((alarm) => {
           if (alarm.id === id) {
@@ -110,6 +115,29 @@ const AlarmModal: FC<AlarmModalProps> = ({
     }
   };
 
+  useEffect(() => {
+    const scrollCheck = () => {
+      if (!scrollRef.current) return;
+      const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+      if (scrollTop + clientHeight >= scrollHeight && scrollTop > 0) {
+        if (isSuccess && data?.cursor) {
+          setCursor(data.cursor);
+          refetch();
+        }
+      }
+    };
+
+    if (scrollRef.current) {
+      scrollRef.current.addEventListener('scroll', scrollCheck);
+    }
+
+    return () => {
+      if (scrollRef.current) {
+        scrollRef.current.removeEventListener('scroll', scrollCheck);
+      }
+    };
+  }, [scrollRef, data]);
+
   const modalRoot = document.getElementById('modal-root')!;
 
   if (!alarmModalOpen) return null;
@@ -118,7 +146,7 @@ const AlarmModal: FC<AlarmModalProps> = ({
     <div
       ref={modalRef}
       className={`
-        fixed
+        absolute
         top-16
         right-[104px]
         border
@@ -160,33 +188,36 @@ const AlarmModal: FC<AlarmModalProps> = ({
             모두 읽음 표시
           </button>
         </div>
-        {alarmList && alarmList.length === 0 ? (
-          <div className="flex items-center w-full px-4 py-2 text-xs bg-white h-14 text-slate-400">
-            <p>새 알람이 없습니다.</p>
-          </div>
-        ) : (
-          alarmList &&
-          alarmList.map((alarm) => (
-            <button
-              name="single"
-              key={alarm.id}
-              onClick={(event) => handleRead(event, alarm.id)}
-              className="flex flex-col w-full gap-1 px-4 py-2 bg-white h-14"
-            >
-              <div className="flex items-center justify-between w-full">
-                <h1 className="overflow-hidden text-sm text-slate-800 whitespace-nowrap overflow-ellipsis">
-                  {alarm.title}
-                </h1>
-                <p className="text-[10px] text-slate-400 pl-4">
-                  {alarm.createDate}
+
+        <div className="alarm-modal" ref={scrollRef}>
+          {alarmList && alarmList.length === 0 ? (
+            <div className="flex items-center w-full px-4 py-2 text-xs bg-white h-14 text-slate-400">
+              <p>새 알람이 없습니다.</p>
+            </div>
+          ) : (
+            alarmList &&
+            alarmList.map((alarm) => (
+              <button
+                name="single"
+                key={alarm.id}
+                onClick={(event) => handleRead(event, alarm.id)}
+                className={`flex flex-col w-full gap-1 px-4 py-2  h-14 ${alarm.isRead ? 'bg-slate-100' : 'bg-white hover:bg-slate-50'}`}
+              >
+                <div className="flex items-center justify-between w-full">
+                  <h1 className="overflow-hidden text-sm text-slate-800 whitespace-nowrap overflow-ellipsis">
+                    {alarm.title}
+                  </h1>
+                  <p className="text-[10px] text-slate-400 pl-4">
+                    {alarm.createDate}
+                  </p>
+                </div>
+                <p className="w-full text-xs text-slate-500 text-start">
+                  {alarm.content}
                 </p>
-              </div>
-              <p className="w-full text-xs text-slate-500 text-start">
-                {alarm.content}
-              </p>
-            </button>
-          ))
-        )}
+              </button>
+            ))
+          )}
+        </div>
       </div>
     </div>,
     modalRoot
