@@ -1,16 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL, API } from '@/config';
-
-interface Tag {
-  id: number;
-  name: string;
-  count: number;
-}
+import { questionType } from '@/types/questionTypes';
 
 interface Author {
   userId: number;
   nickname: string;
-  email?: string;
+  email: string;
 }
 
 interface Reward {
@@ -19,20 +14,42 @@ interface Reward {
   count: number;
 }
 
+interface Tag {
+  id: number;
+  name: string;
+  count: number;
+}
+
+interface Option {
+  id: number;
+  detail: string;
+}
+
+export interface Content {
+  id: number;
+  type: questionType;
+  title?: string;
+  description?: string;
+  options?: Option[];
+  required?: boolean;
+  privacy?: boolean;
+}
+
 export interface Form {
   id: number;
   title: string;
   description?: string;
+  image?: string[];
   thumbnail?: string;
   author: Author;
-  expectTime: number;
-  questionCnt: number;
-  responseCnt: number;
   startDate: string;
   endDate: string;
+  expectTime: number;
+  contents: Content[];
   reward?: Reward;
   tags?: Tag[];
   status: string;
+  questionCnt: number;
 }
 
 interface Cursor {
@@ -70,7 +87,12 @@ export const viewApi = createApi({
         params: request,
       }),
     }),
+    fetchSurveyDetail: builder.query<Form, number>({
+      query: (id) => ({
+        url: `${API.VIEW}/forms/${id}`,
+      }),
+    }),
   }),
 });
 
-export const { useFetchSurveyListQuery } = viewApi;
+export const { useFetchSurveyListQuery, useFetchSurveyDetailQuery } = viewApi;

@@ -4,7 +4,7 @@ export const GOOGLE_AUTH_URL: string = import.meta.env.VITE_APP_GOOGLE_AUTH_URL;
 export const API = {
   USERS: `/v1/users`,
   FORM: `/v1/forms`,
-  RESULT: `/v1/forms`,
+  RESULT: `/v1/result`,
   ACTIVITY: `/v1/activity`,
   FILES: `/v1/files`,
   VIEW: `/v1/view`,

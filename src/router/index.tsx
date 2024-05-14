@@ -49,7 +49,7 @@ const Router = () => {
           element: <Editor />,
         },
         {
-          path: 'stat',
+          path: 'stat/:formId/',
           element: <StatLayout />,
           children: [
             {
@@ -57,7 +57,7 @@ const Router = () => {
               element: <Stat />,
             },
             {
-              path: 'stat/:id',
+              path: 'detail',
               element: <StatDetail />,
             },
           ],

@@ -1,5 +1,5 @@
+import { Form } from '@/api/viewApi';
 import RewardIcon from '@/assets/icons/reward-icon.svg?react';
-import { Form } from '@/pages/Form';
 import { calculateLeftDays } from '@/utils/calculateLeftDays';
 
 interface FormHeaderProps {
@@ -30,7 +30,7 @@ const FormHeader = ({ formData }: FormHeaderProps) => {
         <div className="flex gap-2 items-start">
           <p className="flex bg-slate-500 text-white text-xs font-bold px-2 py-1 gap-1 items-center leading-4">
             <RewardIcon />
-            {reward.count} 명
+            {reward?.count} 명
           </p>
           <p className="bg-slate-500 text-white text-xs font-bold px-2 py-1">
             마감임박
@@ -50,7 +50,7 @@ const FormHeader = ({ formData }: FormHeaderProps) => {
         <p>{description}</p>
       </div>
       <div className="flex gap-2 mt-12">
-        {tags.map((tag) => (
+        {tags?.map((tag) => (
           <div key={tag.id} className="tag leading-6">
             {tag.name}
           </div>

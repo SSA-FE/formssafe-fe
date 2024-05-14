@@ -1,18 +1,17 @@
-import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
-interface AutoResizeTextareaProps<T extends FieldValues> {
-  register: UseFormRegister<T>;
-  fieldName: Path<T>;
+interface AutoResizeTextareaProps {
+  fieldName: string;
   placeholder: string;
   className: string;
 }
 
-const AutoResizeTextarea = <T extends Record<string, unknown>>({
-  register,
+const AutoResizeTextarea = ({
   fieldName,
   placeholder = '',
   className = '',
-}: AutoResizeTextareaProps<T>) => {
+}: AutoResizeTextareaProps) => {
+  const { register } = useFormContext();
   const { ref, ...rest } = register(fieldName);
   const adjustHeight = (element: HTMLTextAreaElement) => {
     element.style.height = '0';
