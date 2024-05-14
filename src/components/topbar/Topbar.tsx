@@ -3,18 +3,24 @@ import { useSelector } from 'react-redux';
 import { User, useFetchUserQuery } from '@api/userApi';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { setUser } from '@components/topbar/topbarSlice';
-import { InactiveAlarmIcon, MainLogoIcon } from '@assets/icons';
+import {
+  ActiveAlarmIcon,
+  InactiveAlarmIcon,
+  MainLogoIcon,
+} from '@assets/icons';
 import { useEffect, useRef, useState } from 'react';
+import { instance } from '@/api/axios';
 
 import AlarmModal from './AlarmModal';
 import ProfileModal from './ProfileModal';
 import { RootState } from '@/store';
-import { GOOGLE_AUTH_URL } from '@/config';
+import { API, GOOGLE_AUTH_URL } from '@/config';
 
 const Topbar = () => {
   const { data, isError, refetch } = useFetchUserQuery();
   const [alarmModalOpen, setAlarmModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [unreadAlarmCount, setUnreadAlarmCount] = useState<number>();
   const [activeAlarmTap, setActiveAlarmTap] = useState('전체');
   const user: User = useSelector((state: RootState) => state.topbarSlice);
   const navigate = useNavigate();
@@ -28,6 +34,25 @@ const Topbar = () => {
       refetch();
     }
   }, [path]);
+
+  useEffect(() => {
+    const fetchUnreadCount = async () => {
+      try {
+        const response = await instance.get(`${API.NOTIFICATION}/unread/count`);
+        if (response.status === 200) {
+          setUnreadAlarmCount(response.data.count);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUnreadCount();
+  }, [path]);
+
+  useEffect(() => {
+    console.log(unreadAlarmCount);
+  }, [unreadAlarmCount]);
 
   useEffect(() => {
     if (data) {
@@ -111,12 +136,12 @@ const Topbar = () => {
         />
       )}
       <nav className="flex items-center justify-between w-full px-8 py-2 bg-transparent h-topbar min-h-16 whitespace-nowrap">
-        <div className="flex gap-8 items-center">
+        <div className="flex items-center gap-8">
           <NavLink className="text-lg font-bold text-slate-600" to="/">
             <MainLogoIcon width="80" />
           </NavLink>
           {path !== '/' && (
-            <div className="flex space-x-4 font-bold text-sm">
+            <div className="flex space-x-4 text-sm font-bold">
               <NavLink to="/board">
                 <span
                   className={`${path === '/board' ? 'text-blue-500 hover:border-b-[1px] hover:border-blue-500' : 'text-slate-800 hover:border-b-[1px] hover:border-slate-800'}  py-0 leading-none inline-block`}
@@ -142,7 +167,11 @@ const Topbar = () => {
                 className={`flex items-center justify-center w-10 h-10 bg-transparent rounded-full cursor-pointer hover:bg-gray-100 ${alarmModalOpen ? 'focus:bg-gray-200' : ''}`}
                 onClick={(event) => handleModalButtonClick(event, 'alarm')}
               >
-                <InactiveAlarmIcon width="20" height="20" />
+                {unreadAlarmCount ? (
+                  <ActiveAlarmIcon width="20" height="20" />
+                ) : (
+                  <InactiveAlarmIcon width="20" height="20" />
+                )}
               </button>
               <button
                 className={`flex items-center justify-center w-10 h-10 rounded-full cursor-pointer hover:bg-gray-100 ${profileModalOpen ? 'focus:bg-gray-200' : ''}`}
