@@ -16,7 +16,7 @@ const StatusDropdown: React.FC<StatusDropdownProps> = ({
   const dropdownRef = useRef<HTMLButtonElement>(null);
   const statusList = ['전체 설문', '진행중인 설문', '마감된 설문'];
   const formStatusCodes: { [key: string]: string } = {
-    '전체 설문': '',
+    '전체 설문': '_all',
     '진행중인 설문': 'progress',
     '마감된 설문': 'done',
   };

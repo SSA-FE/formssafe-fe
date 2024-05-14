@@ -8,11 +8,12 @@ const BoardToolbar = () => {
   const [activeTap, setActiveTap] = useState('최근에 작성된 설문지');
   const [isStatusDropdownOpen, setStatusDropdownOpen] = useState(false);
   const [isCategoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
+
   const dispatch = useAppDispatch();
 
   const tapList = ['최근에 작성된 설문지', '인기있는 설문지', '마감임박'];
   const formTapCodes: { [key: string]: string } = {
-    '최근에 작성된 설문지': 'createdtime',
+    '최근에 작성된 설문지': 'startDate',
     '인기있는 설문지': 'responseCnt',
     마감임박: 'endTime',
   };
@@ -45,15 +46,17 @@ const BoardToolbar = () => {
           </button>
         ))}
       </div>
-      <div className="w-[340px] h-10 flex justify-between mb-4">
-        <StatusDropdown
-          isOpen={isStatusDropdownOpen}
-          handleDropdown={handleStatusDropdown}
-        />
-        <CategoryDropdown
-          isOpen={isCategoryDropdownOpen}
-          handleDropdown={handleCategoryDropdown}
-        />
+      <div className="flex">
+        <div className="w-[340px] h-10 flex justify-between mb-4">
+          <StatusDropdown
+            isOpen={isStatusDropdownOpen}
+            handleDropdown={handleStatusDropdown}
+          />
+          <CategoryDropdown
+            isOpen={isCategoryDropdownOpen}
+            handleDropdown={handleCategoryDropdown}
+          />
+        </div>
       </div>
     </div>
   );
