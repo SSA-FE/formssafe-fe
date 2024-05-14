@@ -52,12 +52,12 @@ export interface Form {
   questionCnt: number;
 }
 
-interface Cursor {
-  sort: string;
-  top: number;
-  startDate: string;
-  endDate: string;
-  responseCnt: number;
+export interface Cursor {
+  sort?: string;
+  top?: number;
+  startDate?: string;
+  endDate?: string;
+  responseCnt?: number;
 }
 
 export interface FormResponse {
@@ -65,12 +65,12 @@ export interface FormResponse {
   cursor: Cursor;
 }
 
-interface FormRequest {
+export interface FormRequest {
   keyword?: string;
-  sort?: string;
   category?: string[];
   status?: string;
   tag?: string[];
+  sort?: string;
   top?: number;
   startDate?: string;
   endDate?: string;
