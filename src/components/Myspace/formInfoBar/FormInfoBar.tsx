@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import Calendar from '@components/Myspace/Calendar';
 import trophyIcon from '@/assets/icons/trophy-icon.svg';
 import infoIcon from '@/assets/icons/info-icon.svg';
@@ -7,8 +7,8 @@ import Tag from '@components/Tag';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { setFormMetaData } from '@/components/Myspace/formInfoBar/formInfoSlice';
-import { useFetchPresignedUrlQuery } from '@/api/fileApi';
 import Modal from '@/components/Modal';
+import FileUploader from '@/components/Myspace/FileUploader';
 
 interface FormInfoInputs {
   title: string;
@@ -20,10 +20,6 @@ interface FormInfoInputs {
 }
 
 const FormInfoBar = () => {
-  const [imgFile, setImgFile] = useState<File | null>();
-  const [preview, setPreview] = useState<string | null>('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [fileName, setFileName] = useState<string>('');
   const [isHidden, setIsHidden] = useState<boolean>(false);
   const [tagList, setTagList] = useState<Tag[]>([]);
   const [endDate, setEndDate] = useState<Date | null>(
@@ -34,10 +30,6 @@ const FormInfoBar = () => {
   const { register, handleSubmit, watch } = useForm<FormInfoInputs>();
   const expectTimeValue = watch('expectTime', 5);
 
-  const { data: presignedData } = useFetchPresignedUrlQuery(fileName, {
-    skip: !fileName,
-  });
-
   const categoryList = [
     '커피/음료',
     '상품권',
@@ -45,37 +37,6 @@ const FormInfoBar = () => {
     '치킨/피자/햄버거',
     '기타',
   ];
-
-  const onChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files !== null) {
-      const file = event.target.files[0];
-      if (file && file.type.startsWith('image')) {
-        setImgFile(file);
-        setFileName(file.name);
-      } else {
-        setImgFile(null);
-        setFileName('');
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (imgFile) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result as string);
-      };
-      reader.readAsDataURL(imgFile);
-    } else {
-      setPreview(null);
-    }
-  }, [imgFile]);
-
-  const handleImgButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
 
   const handleSetFormData: SubmitHandler<FormInfoInputs> = (data) => {
     dispatch(
@@ -85,7 +46,6 @@ const FormInfoBar = () => {
         tags: tagList.map((tag) => tag.value),
         endDate: endDate?.toISOString(),
         expectTime: data.expectTime,
-        image: [presignedData?.path as string],
       })
     );
   };
@@ -124,33 +84,7 @@ const FormInfoBar = () => {
           <img src={imgIcon} alt="대표 이미지 아이콘" />
           대표 이미지
         </h2>
-        <div className="flex flex-row gap-x-2">
-          <div>
-            {imgFile && (
-              <img
-                src={preview as string}
-                alt="preview-img"
-                className="object-contain w-6 h-6 max-w-6"
-              />
-            )}
-          </div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={onChangeImg}
-            className="hidden"
-          />
-          <button
-            className="bg-blue-300 text-white px-3.5 py-1 rounded-lg flex items-center justify-center text-xs whitespace-nowrap"
-            onClick={handleImgButtonClick}
-          >
-            파일 선택하기
-          </button>
-          {fileName && (
-            <span className="w-full truncate text-neutral-400">{fileName}</span>
-          )}
-        </div>
+        <FileUploader />
       </div>
 
       {/* 설문지 정보 */}
