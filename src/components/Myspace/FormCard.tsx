@@ -1,5 +1,6 @@
 import defaultImg from '@assets/images/dafaultImg.jpg';
 import { palette } from '@/utils/tagPalette';
+import { Reward } from '@/api/activityApi';
 
 interface Tag {
   id: number;
@@ -14,6 +15,7 @@ interface FormCardProps {
   description?: string;
   tags?: Tag[];
   questionCnt: number;
+  reward?: Reward;
   expectTime: number;
   startDate: string;
   endDate?: string;
@@ -27,6 +29,7 @@ const FormCard = ({
   description,
   tags,
   questionCnt,
+  reward,
   expectTime,
   startDate,
   endDate,
@@ -36,7 +39,7 @@ const FormCard = ({
   const endDateObject = endDate ? new Date(endDate) : undefined;
   const formattedStartDate = `${startDateObject.getFullYear()}/${String(startDateObject.getMonth() + 1).padStart(2, '0')}/${String(startDateObject.getDate()).padStart(2, '0')}`;
   const formattedEndDate = endDateObject
-    ? `${endDateObject.getFullYear()}/${String(endDateObject.getMonth() + 1).padStart(2, '0')}/${String(endDateObject.getDate()).padStart(2, '0')} ${String(endDateObject.getHours()).padStart(2, '0')}시 ${String(endDateObject.getMinutes()).padStart(2, '0')}분`
+    ? `${endDateObject.getFullYear()}/${String(endDateObject.getMonth() + 1).padStart(2, '0')}/${String(endDateObject.getDate()).padStart(2, '0')} - ${String(endDateObject.getHours()).padStart(2, '0')}시 ${String(endDateObject.getMinutes()).padStart(2, '0')}분`
     : '';
   const tagElements = [];
 
@@ -86,7 +89,11 @@ const FormCard = ({
             <strong>문항수:</strong> {questionCnt}문항
           </p>
           <p>
-            <strong>예상 소요시간:</strong> {expectTime}분
+            <strong>보상:</strong> {reward?.category}({reward?.count}개)
+          </p>
+          <p>
+            <strong>예상 소요시간:</strong>{' '}
+            {expectTime === 0 ? '미정' : `${expectTime}분`}
           </p>
           {endDate && (
             <p>
