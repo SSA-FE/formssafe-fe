@@ -32,7 +32,7 @@ export const store = configureStore({
       userApi.middleware,
       activityApi.middleware,
       viewApi.middleware,
-      notificationApi.middleware
+      notificationApi.middleware,
       submissionApi.middleware,
       formApi.middleware
     );

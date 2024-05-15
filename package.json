@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
-    "@reduxjs/toolkit": "^2.2.0",
+    "@reduxjs/toolkit": "^2.2.4",
     "@types/chart.js": "^2.9.41",
     "@types/react-datepicker": "^6.2.0",
     "@types/react-router-dom": "^5.3.3",
