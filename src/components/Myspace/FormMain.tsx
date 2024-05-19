@@ -1,39 +1,41 @@
-import plusIcon from '@/assets/icons/plus-icon.svg';
+import PlusIcon from '@/assets/icons/plus-icon.svg?react';
+import QuestionBlockList from './questionBlockList/QuestionBlockList';
+import {
+  addQuestion,
+  setActiveBlockId,
+} from '@/components/Myspace/questionBlockList/questionBlockListSlice';
+import { useDispatch } from 'react-redux';
+import { questionType } from '@/types/questionTypes';
 
-const FormMain = () => {
-  const numQuestions = [1, 2, 3]; // 반복할 질문 블록의 수
+type FormMainProps = {
+  selectedQuestionType: questionType;
+};
+
+const FormMain: React.FC<FormMainProps> = ({ selectedQuestionType }) => {
+  const dispatch = useDispatch();
+  const handleAddBlock = () => {
+    const newQuestionId = crypto.randomUUID();
+    const newQuestion = {
+      id: newQuestionId,
+      type: selectedQuestionType,
+      isRequired: true,
+      isPrivacy: false,
+    };
+    dispatch(addQuestion(newQuestion));
+    dispatch(setActiveBlockId({ id: newQuestionId }));
+  };
 
   return (
-    <div className="flex-1 w-full h-full px-4">
-      <div className="flex flex-col gap-sm">
-        {numQuestions.map((_, index) => (
-          <div
-            key={index}
-            className="flex flex-col bg-white border divide-y rounded-lg border-neutral-200"
-          >
-            <div className="flex flex-col px-4 py-2 gap-sm">
-              <p className="text-lg text-neutral-400">무슨 질문인가요?</p>
-              <input
-                className="text-sm font-bold outline-none text-neutral-400"
-                type="text"
-                placeholder="설명을 입력하세요."
-              />
-            </div>
-            <button className="w-full py-2 text-sm text-neutral-400">
-              질문을 추가하세요
-            </button>
-          </div>
-        ))}
+    <div className="bg-white flex-1 w-full h-[calc(100vh-8rem)] overflow-y-scroll pb-10 p-10 px-16">
+      <div className="flex flex-col">
+        <QuestionBlockList />
       </div>
-      <div className="flex justify-center w-full mt-6">
-        <button className="w-8 h-8 rounded-full bg-[#d9d9d9] flex justify-center items-center">
-          <img
-            src={plusIcon}
-            alt="설문추가 아이콘"
-            className="w-[19px] h-[19px]"
-          />
-        </button>
-      </div>
+      <button
+        onClick={handleAddBlock}
+        className="w-8 h-8 rounded-full bg-blue-300 flex justify-center items-center mx-auto mt-8"
+      >
+        <PlusIcon />
+      </button>
     </div>
   );
 };

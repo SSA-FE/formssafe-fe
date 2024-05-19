@@ -1,46 +1,58 @@
+import { useFetchUserQuery } from '@/api/userApi';
+import { FormExampleIcon1, FormExampleIcon2 } from '@/assets/icons';
 import googleIcon from '@/assets/icons/google-icon.svg';
 import { GOOGLE_AUTH_URL } from '@/config';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const { isError } = useFetchUserQuery();
+  const navigate = useNavigate();
+
   const handleLogin = () => {
-    window.location.href = GOOGLE_AUTH_URL;
+    if (isError) {
+      window.location.href = GOOGLE_AUTH_URL;
+    } else {
+      navigate('/board');
+    }
   };
 
   return (
-    <div className="flex justify-center w-full h-auto py-36">
-      <div className="flex flex-col items-center justify-between w-full h-homeFront max-w-homeFront">
-        <div className="flex flex-col items-center gap-y-4">
-          <h2 className="text-base font-bold text-neutral-600">
-            데이터 수집을 위한 올인원 툴
-          </h2>
-          <h1 className="text-5xl font-bold text-center text-black">
-            폼을 만들고 분석하는
-            <br /> 가장 합리적인 방법
+    <div className="w-full flex flex-wrap justify-center py-[6rem] px-[10rem]">
+      <div className="w-1/2 flex flex-col gap-8 min-w-[450px]">
+        <div className="flex flex-col gap-4">
+          <h1 className="flex flex-col gap-4 text-base font-bold text-slate-500">
+            <p>
+              데이터 수집을 위한 올인원 툴<br />
+            </p>
+            <span className="text-5xl font-bold text-transparent w-fit bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-500">
+              폼나는 SSAFFE
+            </span>
           </h1>
-          <p className="text-lg font-normal text-center text-slate-800">
+          <p className="text-base text-slate-500 ">
             폼의 제작, 응답자 모집, 보상, 분석에 불필요한 시간을 쏟지 마세요.
-            모든 핵심 과정을 왈라에서 한번에 해결하실 수 있습니다.
+            <br />
+            설문과 관련된 모든 작업은 폼나는 싸패에서 한번에 해결하실 수
+            있습니다.
           </p>
         </div>
-        <div className="flex flex-col items-center w-full gap-8">
-          <button className="w-full py-4 text-xl font-bold text-white max-w-80 bg-primary rounded-4xl">
-            설문지 찾기
-          </button>
-          <hr className="w-full h-line max-w-96 bg-neutral-300" />
-          <button
-            className="flex items-center justify-center w-full h-16 gap-4 py-4 text-xl bg-white border-2 border-solid max-w-80 rounded-4xl border-neutral-300"
-            onClick={handleLogin}
-          >
-            <img src={googleIcon} alt="구글 로그인 아이콘" />
-            <p className="text-base font-bold text-neutral-400 whitespace-nowrap">
-              Google 계정으로 로그인
-            </p>
-          </button>
+        <button
+          className="flex items-center justify-center h-12 gap-4 px-4 py-4 mb-16 bg-white border-2 border-solid max-w-60 rounded-4xl border-neutral-300 w-max-content"
+          onClick={handleLogin}
+        >
+          <img src={googleIcon} alt="구글 로그인 아이콘" width="20" />
+          <p className="text-sm font-bold text-slate-400 whitespace-nowrap">
+            Google 계정으로 로그인
+          </p>
+        </button>
+      </div>
+      <div className="flex flex-col w-1/2 gap-8 min-w-max">
+        <div className="w-full px-4 border-l slide-in">
+          <FormExampleIcon1 width="330" />
+        </div>
+        <div className="w-full px-4 border-l slide-in-1">
+          <FormExampleIcon2 width="450" />
         </div>
       </div>
-      <button className="fixed flex items-center justify-center w-12 pb-1 text-2xl font-bold text-white bg-black rounded-full aspect-square right-8 bottom-8">
-        @
-      </button>
     </div>
   );
 };

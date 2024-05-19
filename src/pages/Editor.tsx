@@ -1,16 +1,25 @@
-import FormInfoBar from '@/components/Myspace/FormInfoBar';
+import { useState } from 'react';
 import FormMain from '@/components/Myspace/FormMain';
 import FormOptionBar from '@/components/Myspace/FormOptionBar';
 import FormToolBar from '@/components/Myspace/FormToolBar';
+import { questionType } from '@/types/questionTypes';
+import FormInfoBar from '@/components/Myspace/formInfoBar/FormInfoBar';
 
 const Editor = () => {
+  const [selectedQuestionType, setSelectedQuestionType] =
+    useState<questionType>('single');
+
+  const handleQuestionTypeSelected = (type: string) => {
+    setSelectedQuestionType(type as questionType);
+  };
+
   return (
-    <div>
+    <div className="flex flex-col gap-2 bg-slate-50">
       <FormToolBar />
-      <div className="flex pt-2 bg-neutral-50">
+      <div className="flex gap-2">
         <FormInfoBar />
-        <FormMain />
-        <FormOptionBar />
+        <FormMain selectedQuestionType={selectedQuestionType} />
+        <FormOptionBar setSelectedQuestionType={handleQuestionTypeSelected} />
       </div>
     </div>
   );

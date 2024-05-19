@@ -1,23 +1,41 @@
-import searchIcon from '@/assets/icons/search-icon.svg';
+import { SearchIcon } from '@/assets/icons';
+import { updateKeyword } from '@components/Myspace/toolbar/toolbarInputSlice';
+import { useState } from 'react';
+import { useAppDispatch } from '@hooks/useAppDispatch';
 
 interface SearchBarProps {
   placeholder: string;
   bgColor: string;
   width: string;
+  height: string;
 }
 
-const SearchBar = ({ placeholder, bgColor, width }: SearchBarProps) => {
+const SearchBar = ({ placeholder, bgColor, width, height }: SearchBarProps) => {
+  const dispatch = useAppDispatch();
+  const [keyword, setKeyword] = useState('');
+
+  const handleOnclick = () => {
+    dispatch(updateKeyword({ keyword }));
+  };
+
   return (
     <div
-      className={`box-content flex items-center justify-between py-2 pr-4 pl-6 border border-neutral-200 rounded-[1.125rem] gap-lg ${bgColor} h-min`}
+      className={`box-content  flex items-center justify-between pr-3 pl-6 border border-neutral-200 rounded-[1.125rem] gap-md ${bgColor} ${height} ${width}`}
     >
       <input
         type="text"
-        className={`font-bold bg-transparent outline-none h-[17px] text-neutral-400 placeholder-neutral-400 caret-neutral-400 text-sm ${width}`}
+        className={` bg-transparent outline-none text-slate-400 placeholder-neutral-400 caret-neutral-400 text-xs font-bold w-full`}
         placeholder={placeholder}
+        value={keyword}
+        onChange={(e) => setKeyword(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleOnclick();
+          }
+        }}
       />
-      <button>
-        <img src={searchIcon} alt="검색 아이콘" />
+      <button onClick={handleOnclick}>
+        <SearchIcon width="20" height="20" />
       </button>
     </div>
   );

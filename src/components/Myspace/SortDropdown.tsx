@@ -1,12 +1,33 @@
 import { useState, useRef, useEffect } from 'react';
-import dropdownIcon from '@/assets/icons/dropdown-icon.svg';
+import { DropdownIcon } from '@/assets/icons';
+import { updateSort } from './toolbar/toolbarInputSlice';
+import { useAppDispatch } from '@hooks/useAppDispatch';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+interface SortDropdownProps {
+  bgColor: string;
+  width: string;
+  height: string;
+}
 
-const SortDropdown = () => {
-  const options = ['최근에 수정된 순서', '많은 응답자순', '가까운 마감일자순'];
-
+const SortDropdown = ({ bgColor, width, height }: SortDropdownProps) => {
+  const { sort } = useSelector((state: RootState) => state.toolbarInput);
+  const options = ['생성일순', '가까운 마감순'];
+  const formOptionCodes: { [key: string]: string } = {
+    생성일순: 'startDate',
+    '가까운 마감순': 'endTime',
+  };
+  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    setSelectedOption(
+      Object.keys(formOptionCodes).find(
+        (key) => formOptionCodes[key] === sort
+      ) as string
+    );
+  }, [sort]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -14,20 +35,20 @@ const SortDropdown = () => {
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
-    console.log(option, 'is clicked!');
+    dispatch(updateSort({ sort: formOptionCodes[option] }));
     setIsOpen(false);
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  };
-
   useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -35,34 +56,39 @@ const SortDropdown = () => {
   }, []);
 
   return (
-    <div className="relative inline-block" ref={dropdownRef}>
-      <button
-        onClick={toggleDropdown}
-        className="bg-neutral-300 text-sm h-8 text-neutral-400 focus:outline-none rounded-lg pl-6 pr-4 text-center flex items-center font-bold w-[182px] justify-between"
-        type="button"
-      >
-        {selectedOption}
-        <img src={dropdownIcon} alt="드롭다운 아이콘" />
-      </button>
+    <div
+      className={`box-content  flex items-center justify-between border border-neutral-200 rounded-[1.125rem] gap-md ${bgColor} ${height} ${width}`}
+      ref={dropdownRef}
+    >
+      <div className="relative w-full">
+        <button
+          onClick={toggleDropdown}
+          className="flex items-center w-full h-8 text-xs font-bold rounded-lg justify-evenly text-slate-400 focus:outline-none"
+          type="button"
+        >
+          <p className="text-center">{selectedOption}</p>
+          <DropdownIcon width="10" />
+        </button>
 
-      {isOpen && (
-        <div className="absolute z-10 w-full mt-1 bg-white rounded-lg shadow">
-          <ul className="py-2 text-sm text-neutral-400">
-            {options.map((option) => (
-              <li key={option}>
-                <button
-                  onClick={() => handleOptionClick(option)}
-                  className={`flex items-center pl-6 pr-4 w-full py-2 hover:bg-neutral-100 ${
-                    selectedOption === option ? 'bg-neutral-100' : ''
-                  }`}
-                >
-                  {option}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        {isOpen && (
+          <div className="absolute z-10 w-full mt-1 bg-white border rounded-lg shadow border-slate-200">
+            <ul className="py-2 text-sm text-neutral-400">
+              {options.map((option) => (
+                <li key={option}>
+                  <button
+                    onClick={() => handleOptionClick(option)}
+                    className={`flex items-center w-full py-2 hover:bg-slate-400 hover:text-slate-50  
+                      
+                    `}
+                  >
+                    <p className="w-full text-center">{option}</p>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

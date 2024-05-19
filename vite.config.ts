@@ -1,10 +1,17 @@
+import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [
+    react(),
+    svgr({
+      svgrOptions: {
+        icon: true,
+      },
+    }),
+  ],
   resolve: {
     alias: [
       { find: '@', replacement: path.resolve(__dirname, 'src') },
@@ -20,6 +27,8 @@ export default defineConfig({
       { find: '@store', replacement: path.resolve(__dirname, 'src/store') },
       { find: '@style', replacement: path.resolve(__dirname, 'src/style') },
       { find: '@utils', replacement: path.resolve(__dirname, 'src/util') },
+      { find: '@data', replacement: path.resolve(__dirname, 'src/data') },
+      { find: '@types', replacement: path.resolve(__dirname, 'src/types') },
     ],
   },
 });

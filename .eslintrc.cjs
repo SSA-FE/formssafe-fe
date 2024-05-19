@@ -17,5 +17,6 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
+    'jsx-a11y/no-autofocus': 'off',
   },
 };

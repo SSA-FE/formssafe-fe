@@ -9,14 +9,22 @@
     "lint": "eslint src --ext ts,tsx --cache --max-warnings 0",
     "format": "prettier --cache --write .",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "svgr": "npx @svgr/cli -d src/assets/icons --ignore-existing --typescript --no-dimensions public/svg"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
-    "@reduxjs/toolkit": "^2.2.0",
+    "@reduxjs/toolkit": "^2.2.4",
+    "@types/chart.js": "^2.9.41",
+    "@types/react-datepicker": "^6.2.0",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.7",
+    "chart.js": "^4.4.2",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-datepicker": "^6.6.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.1",
     "react-redux": "^9.1.0",
@@ -26,6 +34,7 @@
   "devDependencies": {
     "@types/node": "^20.11.17",
     "@types/react": "^18.2.55",
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",

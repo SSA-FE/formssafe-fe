@@ -8,8 +8,21 @@ export default {
         primary: '#6ED1F9',
         primaryTag: '#CFFAFE',
       },
+      backgroundImage: (theme) => ({
+        '_bg-home':
+          'linear-gradient(to right, ' +
+          theme('colors._slate-25') +
+          ', ' +
+          theme('colors.white') +
+          ', ' +
+          theme('colors.slate.50') +
+          ')',
+      }),
       colors: {
         primaryTag: '#06B6D4',
+        mainColor: '#64748b',
+        bgColor: '#FAFAFA',
+        '_slate-25': '#FDFDFE',
       },
       width: {
         sidebar: '19rem',
@@ -17,12 +30,13 @@ export default {
       },
       height: {
         topbar: '4rem',
+        footer: '17.5rem',
         toolbar: '2rem',
         homeFront: '28rem',
         line: '0.0625rem',
       },
       maxWidth: {
-        nicknamemodal: '30rem',
+        nicknamemodal: '25rem',
         homeFront: '34rem',
         surveyCard: '22.625rem',
       },

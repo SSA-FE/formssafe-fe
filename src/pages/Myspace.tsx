@@ -1,15 +1,25 @@
-import Toolbar from '@/components/Myspace/Toolbar';
-import { useSelector } from 'react-redux';
-import { selectAllUsers } from '@components/users/userSlice';
+import MyspacePanel from '@/components/Myspace/MyspacePanel';
+import MyspaceMain from '@/components/Myspace/MyspaceMain';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { reset } from '@/components/Myspace/toolbar/toolbarInputSlice';
 
 const Myspace = () => {
-  const users = useSelector(selectAllUsers);
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+  const path = location.pathname;
 
-  console.log(users);
+  useEffect(() => {
+    if (path === '/myspace') {
+      dispatch(reset());
+    }
+  }, [path, dispatch]);
   return (
-    <>
-      <Toolbar />
-    </>
+    <div className="w-full h-screen bg-neutral-100 ">
+      <MyspacePanel />
+      <MyspaceMain />
+    </div>
   );
 };
 
