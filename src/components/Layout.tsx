@@ -11,7 +11,7 @@ export default function Layout({ hasBackground }: { hasBackground: boolean }) {
   return (
     <Suspense>
       <div
-        className={`w-full h-100dvh
+        className={`w-full h-full min-h-screen
           ${hasBackground ? 'bg-gradient-to-r from-slate-50 to-_slate-25' : ''}
           `}
       >
