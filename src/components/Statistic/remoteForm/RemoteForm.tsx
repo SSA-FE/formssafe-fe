@@ -52,7 +52,7 @@ const RemoteForm = () => {
   }, [questionListResponse]);
 
   return (
-    <div className="w-[15rem] h-[21.28125rem] mt-4 mx-auto flex flex-col flex-1 sticky top-10 rounded-lg drop-shadow-md bg-slate-50 ">
+    <div className="w-[15rem] h-[21.28125rem] mt-4 mx-auto flex flex-col flex-1 sticky top-10 rounded-lg drop-shadow-md bg-slate-50 gap-4">
       {/* 개별 질문리스트 헤더  */}
       <div className="h-16 gap-2 py-3">
         {/* StatusBar */}
@@ -61,12 +61,12 @@ const RemoteForm = () => {
             <div className="w-[12px] h-[12px] flex justify-center items-center text-[10px] text-white bg-blue-400 rounded-full">
               ?
             </div>
-            <h1>질문 리스트</h1>
+            <h1 className="text-lg">질문 리스트</h1>
           </div>
 
           {/* 총 질문 개수 */}
           <div className="h-6 flex items-center gap-2.5">
-            <span className="font-bold text-[10px] text-neutral-400">
+            <span className="text-xs font-bold text-neutral-400">
               총 {questionListResponse?.contents.length}개의 질문
             </span>
           </div>
