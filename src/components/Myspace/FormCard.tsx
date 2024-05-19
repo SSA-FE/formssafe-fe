@@ -105,44 +105,44 @@ const FormCard = ({
           alert('마감된 설문입니다.');
         }
       }}
-      className={`group min-w-[20.875rem] h-[300px] bg-white hover:bg-slate-200 rounded flex flex-col justify-between p-2 gap-4 border  hover:border-slate-300 shadow-sm ${selectedSurvey === id ? 'border-blue-400' : 'border-slate-200'}`}
+      className={`group w-[20.875rem] min-w-[20.875rem] h-[320px] bg-white hover:bg-slate-200 rounded flex flex-col justify-between p-2 gap-4 border  hover:border-slate-300 shadow-sm ${selectedSurvey === id ? 'border-blue-400' : 'border-slate-200'}`}
     >
       <div className="relative group">
         {thumbnail ? (
           <img
             src={thumbnail}
             alt="thumbnail"
-            className="w-full z-0 h-[10rem] rounded object-contain"
+            className="w-full z-0 h-[11rem] rounded object-contain"
           />
         ) : (
           <img
             src={defaultImg}
             alt="기본이미지"
-            className="w-full z-0 h-[10rem] rounded object-contain"
+            className="w-full z-0 h-[11rem] rounded object-contain"
           />
         )}
 
         <div className="absolute bottom-0 left-0 flex flex-wrap w-full gap-1 px-2 py-2">
           {tagElements}
         </div>
-        <div className="absolute top-0 left-0 w-full h-[10rem] bg-black bg-opacity-50  text-slate-50 text-sm p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-100">
-          <p>
+        <div className="absolute top-0 left-0 w-full h-[11rem] bg-black bg-opacity-50  text-slate-50 text-sm p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-100">
+          <p className="mb-1">
             <strong>문항수:</strong> {questionCnt}문항
           </p>
-          <p>
+          <p className="mb-1">
             <strong>보상:</strong> {reward?.category}({reward?.count}개)
           </p>
-          <p>
+          <p className="mb-1">
             <strong>예상 소요시간:</strong>{' '}
             {expectTime === 0 ? '미정' : `${expectTime}분`}
           </p>
           {endDate && (
-            <p>
+            <p className="mb-1">
               <strong>마감 시각:</strong> {formattedEndDate}
             </p>
           )}
           {isTemp && (
-            <p className="text-red-500">
+            <p className="mb-1 text-red-500">
               <strong>임시 설문</strong>
             </p>
           )}
@@ -159,7 +159,7 @@ const FormCard = ({
                 {description}
               </p>
             </div>
-            <div className="flex justify-center  w-[120px] rounded-2xl bg-slate-100 group-hover:bg-slate-400">
+            <div className="flex justify-center w-[120px] mb-2 rounded-2xl bg-slate-100 group-hover:bg-slate-400">
               <p className="text-xs text-neutral-400 group-hover:text-slate-50">
                 {formattedStartDate} 편집됨
               </p>
@@ -176,7 +176,7 @@ const FormCard = ({
                 {description}
               </p>
             </div>
-            <div className="flex justify-center  w-[120px] rounded-2xl bg-slate-100 group-hover:bg-slate-400">
+            <div className="flex justify-center  w-[120px] mb-2 rounded-2xl bg-slate-100 group-hover:bg-slate-400">
               <p className="text-xs text-neutral-400 group-hover:text-slate-50">
                 {formattedStartDate} 편집됨
               </p>
