@@ -2,15 +2,15 @@ import { FooterLogoIcon } from '@/assets/icons';
 
 const Footer = () => {
   return (
-    <div className="w-full h-footer bg-gradient-to-r from-slate-50 to-slate-100 pt-2 px-16 flex flex-col gap-8">
-      <div className="w-full h-12 flex items-center space-x-2 border-b border-slate-200">
+    <div className="flex flex-col w-full gap-8 px-16 pt-2 h-footer bg-gradient-to-r from-slate-50 to-slate-100">
+      <div className="flex items-center w-full h-12 space-x-2 border-b border-slate-200">
         <p className="text-sm font-bold text-slate-600">공지사항</p>
         <div className="flex space-x-2">
           <span className="bg-blue-500 rounded-xl text-white px-2 py-[1px] font-bold text-[10px] flex justify-center items-center">
             MAIN
           </span>
           <p className="font-bold text-[10px] text-slate-600">
-            폼나는 싸패는 2024년 05월 13일에 정식 배포되었습니다.
+            폼나는 싸패는 2024년 05월 24일에 정식 배포되었습니다.
           </p>
         </div>
       </div>
@@ -19,7 +19,7 @@ const Footer = () => {
           <div className="min-w-[150px]">
             <FooterLogoIcon width="150" />
           </div>
-          <p className="flex justify-center items-center">
+          <p className="flex items-center justify-center">
             이메일 ssafe.dev@gmail.com | 연락처 010-3107-1487
             <br />
             <br />
@@ -33,15 +33,27 @@ const Footer = () => {
           <span className="text-sm font-bold text-slate-800">SNS</span>
           <ul className="flex flex-col gap-2 text-xs text-slate-600">
             <li>
-              <a href="https://kwakseongjae.notion.site/33246b4a66a64cde943d513ca774faf9?pvs=4">
+              <a
+                href="https://kwakseongjae.notion.site/33246b4a66a64cde943d513ca774faf9?pvs=4"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Notion
               </a>
             </li>
             <li>
-              <a href="https://github.com/SSA-FE">Github</a>
+              <a
+                href="https://github.com/SSA-FE"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Github
+              </a>
             </li>
             <li>
-              <a href="/">Figma</a>
+              <a href="/" target="_blank" rel="noopener noreferrer">
+                Figma
+              </a>
             </li>
           </ul>
         </div>
