@@ -20,7 +20,7 @@ const StatusDropdown: React.FC<StatusDropdownProps> = ({
     '진행중인 설문': 'progress',
     '마감된 설문': 'done',
   };
-  const [, setSelectedOption] = useState(statusList[0]);
+  const [, setSelectedOption] = useState<string>();
 
   const handleClickOutside = (event: MouseEvent) => {
     if (

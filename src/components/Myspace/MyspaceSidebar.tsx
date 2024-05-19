@@ -4,6 +4,7 @@ import {
   useFetchRegisteredSurveysQuery,
 } from '@api/activityApi';
 import { useEffect, useState } from 'react';
+import { ListIcon } from '@/assets/icons';
 
 interface MyspaceSidebarProps {
   activeTap: string;
@@ -59,7 +60,8 @@ const MyspaceSidebar = ({
     <div className="w-[300px] p-1 bg-slate-100 border-t-[2px] border-r-[2px] border-slate-200 flex flex-col gap-2">
       <div className="border border-slate-200">
         <div className="flex items-center w-full h-10 px-4 text-sm font-bold bg-white border-b-[1px] border-slate-200 text-slate-800">
-          등록한 설문목록
+          <ListIcon width="20" />
+          <p className="ml-2">등록한 설문목록</p>
         </div>
         {registeredSurveyList && registeredSurveyList.length === 0 ? (
           <div className="flex items-center w-full h-10 px-4 text-sm bg-white text-slate-400">
@@ -82,7 +84,8 @@ const MyspaceSidebar = ({
       </div>
       <div className="border border-slate-200">
         <div className="flex items-center w-full h-10 px-4 text-sm font-bold bg-white border-b-[1px] border-slate-200 text-slate-800">
-          참여한 설문목록
+          <ListIcon width="20" />
+          <p className="ml-2">참여한 설문목록</p>
         </div>
         {participatedSurveyList && participatedSurveyList.length === 0 ? (
           <div className="flex items-center w-full h-10 px-4 text-sm bg-white text-slate-400">

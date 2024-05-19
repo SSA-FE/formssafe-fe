@@ -20,11 +20,11 @@ const Home = () => {
     <div className="w-full flex flex-wrap justify-center py-[6rem] px-[10rem]">
       <div className="w-1/2 flex flex-col gap-8 min-w-[450px]">
         <div className="flex flex-col gap-4">
-          <h1 className="font-bold text-base text-slate-500 flex flex-col gap-4">
+          <h1 className="flex flex-col gap-4 text-base font-bold text-slate-500">
             <p>
               데이터 수집을 위한 올인원 툴<br />
             </p>
-            <span className="w-fit bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-cyan-500 font-bold text-5xl">
+            <span className="text-5xl font-bold text-transparent w-fit bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-500">
               폼나는 SSAFFE
             </span>
           </h1>
@@ -36,7 +36,7 @@ const Home = () => {
           </p>
         </div>
         <button
-          className="flex items-center justify-center h-12 gap-4 py-4 px-4 mb-16 bg-white border-2 border-solid max-w-60 rounded-4xl border-neutral-300 w-max-content"
+          className="flex items-center justify-center h-12 gap-4 px-4 py-4 mb-16 bg-white border-2 border-solid max-w-60 rounded-4xl border-neutral-300 w-max-content"
           onClick={handleLogin}
         >
           <img src={googleIcon} alt="구글 로그인 아이콘" width="20" />
@@ -46,10 +46,10 @@ const Home = () => {
         </button>
       </div>
       <div className="flex flex-col w-1/2 gap-8 min-w-max">
-        <div className="w-full slide-in border-l px-4">
+        <div className="w-full px-4 border-l slide-in">
           <FormExampleIcon1 width="330" />
         </div>
-        <div className="w-full slide-in-1 border-l px-4">
+        <div className="w-full px-4 border-l slide-in-1">
           <FormExampleIcon2 width="450" />
         </div>
       </div>
