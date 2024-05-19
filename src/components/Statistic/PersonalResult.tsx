@@ -1,4 +1,3 @@
-import SingleIcon from '@/assets/icons/SingleIcon';
 import PersonIcon from '@assets/icons/person-icon.svg?react';
 import { useEffect, useState } from 'react';
 import {
@@ -11,6 +10,11 @@ import {
   ResponseType,
 } from '@/api/formApi';
 import { useParams } from 'react-router-dom';
+import {
+  SingleIcon,
+  DropdownIcon,
+  CheckboxIcon,
+} from '@/assets/icons/AnswertOptionsIcons';
 
 interface SortedAnswerListType {
   content: string | number[];
@@ -145,8 +149,8 @@ const PersonalResult = ({ userId }: { userId: number }) => {
                               key={option.id}
                               className={`${(sortedAnswerList[index - 1].content as number[]).includes(optionIdx + 1) ? 'bg-slate-100' : 'white'}  flex items-center gap-4 px-4 py-2`}
                             >
-                              <SingleIcon
-                                strokeColor={`${(sortedAnswerList[index - 1].content as number[]).includes(optionIdx + 1) ? '#94A3B8' : '#CBD5E1'}`}
+                              <CheckboxIcon
+                                fillColor={`${(sortedAnswerList[index - 1].content as number[]).includes(optionIdx + 1) ? '#94A3B8' : '#CBD5E1'}`}
                               />
                               <p className="w-4/5 text-sm font-normal text-slate-600">
                                 {option.detail}
@@ -160,9 +164,20 @@ const PersonalResult = ({ userId }: { userId: number }) => {
                               key={option.id}
                               className={`${Number(sortedAnswerList[index - 1].content) === optionIdx + 1 ? 'bg-slate-100' : 'white'}  flex items-center gap-4 px-4 py-2`}
                             >
-                              <SingleIcon
-                                strokeColor={`${Number(sortedAnswerList[index - 1].content) === optionIdx + 1 ? '#94A3B8' : '#CBD5E1'}`}
-                              />
+                              {(
+                                sortedAnswerList[
+                                  index - 1
+                                ] as SortedAnswerListType
+                              ).type === 'dropdown' ? (
+                                <DropdownIcon
+                                  fillColor={`${Number(sortedAnswerList[index - 1].content) === optionIdx + 1 ? '#94A3B8' : '#CBD5E1'}`}
+                                />
+                              ) : (
+                                <SingleIcon
+                                  fillColor={`${Number(sortedAnswerList[index - 1].content) === optionIdx + 1 ? '#94A3B8' : '#CBD5E1'}`}
+                                />
+                              )}
+
                               <p className="w-4/5 text-sm font-normal text-slate-600">
                                 {option.detail}
                               </p>
