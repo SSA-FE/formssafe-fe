@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import Loading from '@components/Loading';
-import { resetInput } from './toolbar/toolbarInputSlice';
+import { reset } from './toolbar/toolbarInputSlice';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import MyspaceSidebar from './MyspaceSidebar';
 import { useLocation } from 'react-router-dom';
@@ -59,7 +59,7 @@ const MyspaceMain = () => {
             className={`px-6 py-2 whitespace-nowrap ${activeTap === '등록한 설문' ? 'text-blue-400 border-b-2 border-blue-400 ' : 'text-neutral-400 border-b-2 border-neutral-400'}`}
             onClick={() => {
               setActiveTap('등록한 설문');
-              dispatch(resetInput());
+              dispatch(reset());
             }}
           >
             등록한 설문
@@ -68,7 +68,7 @@ const MyspaceMain = () => {
             className={`px-6 py-2 whitespace-nowrap ${activeTap === '참여한 설문' ? 'text-blue-400 border-b-2 border-blue-400 ' : 'text-neutral-400 border-b-2 border-neutral-400'}`}
             onClick={() => {
               setActiveTap('참여한 설문');
-              dispatch(resetInput());
+              dispatch(reset());
             }}
           >
             참여한 설문

@@ -47,6 +47,7 @@ export const boardViewSlice = createSlice({
         (tag) => tag !== action.payload
       );
     },
+    reset: () => initialState,
   },
 });
 
@@ -57,5 +58,6 @@ export const {
   setStatus,
   setTag,
   removeTag,
+  reset,
 } = boardViewSlice.actions;
 export default boardViewSlice.reducer;
