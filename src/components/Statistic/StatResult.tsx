@@ -146,17 +146,25 @@ const StatResult = () => {
 
   return (
     <>
-      {data?.map((item: QuestionListTmpType, index: number) => (
-        <div key={'_content' + index} id={'_content' + index}>
-          <Item key={index} data={item} idx={index + 1}>
-            {item.type === 'long' || item.type === 'short' ? (
-              <EssayQuestionBlock data={item.options as OptionType} />
-            ) : (
-              <MultipleChoiceBlock data={item.options as OptionType} />
-            )}
-          </Item>
+      {answerListResponse && answerListResponse.responseCnt === 0 ? (
+        <div className="flex justify-center w-full h-full pt-40 text-xl">
+          <p className="text-slate-600">
+            응답자가 없어서 통계를 표시할 수 없습니다
+          </p>
         </div>
-      ))}
+      ) : (
+        data?.map((item: QuestionListTmpType, index: number) => (
+          <div key={'_content' + index} id={'_content' + index}>
+            <Item key={index} data={item} idx={index + 1}>
+              {item.type === 'long' || item.type === 'short' ? (
+                <EssayQuestionBlock data={item.options as OptionType} />
+              ) : (
+                <MultipleChoiceBlock data={item.options as OptionType} />
+              )}
+            </Item>
+          </div>
+        ))
+      )}
     </>
   );
 };

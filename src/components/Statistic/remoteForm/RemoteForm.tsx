@@ -67,7 +67,9 @@ const RemoteForm = () => {
           {/* 총 질문 개수 */}
           <div className="h-6 flex items-center gap-2.5">
             <span className="text-xs font-bold text-neutral-400">
-              총 {questionListResponse?.contents.length}개의 질문
+              총{' '}
+              {questionListResponse ? questionListResponse.contents.length : 0}
+              개의 질문
             </span>
           </div>
         </div>
