@@ -11,11 +11,14 @@ import Loading from '@components/Loading';
 import { resetInput } from './toolbar/toolbarInputSlice';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import MyspaceSidebar from './MyspaceSidebar';
+import { useLocation } from 'react-router-dom';
 
 const MyspaceMain = () => {
   const [activeTap, setActiveTap] = useState('등록한 설문');
   const [selectedSurvey, setSelectedSurvey] = useState<number>(-1);
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const path = location.pathname;
   const [formList, setFormList] = useState<Form[] | null>(null);
   const toolbarInput = useSelector((state: RootState) => state.toolbarInput);
   const registeredSurveysQuery = useFetchRegisteredSurveysQuery(toolbarInput);
@@ -78,6 +81,9 @@ const MyspaceMain = () => {
               formList.map((form: Form) => (
                 <FormCard
                   key={form.id}
+                  to={`${form.id}`}
+                  activeTap={activeTap}
+                  path={path}
                   {...form}
                   selectedSurvey={selectedSurvey}
                 />
