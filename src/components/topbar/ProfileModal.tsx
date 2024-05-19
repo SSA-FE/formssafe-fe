@@ -83,7 +83,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
     <div
       ref={modalRef}
       className={`
-        fixed
+        absolute
         top-16
         right-10
         border

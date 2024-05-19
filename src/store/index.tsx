@@ -9,6 +9,7 @@ import formMetaDataSliceReducer from '@/components/Myspace/formInfoBar/formInfoS
 import { userApi } from '@api/userApi';
 import { activityApi } from '@/api/activityApi';
 import { viewApi } from '@/api/viewApi';
+import { notificationApi } from '@/api/notificationApi';
 import { submissionApi } from '@/api/submissionApi';
 import { formApi } from '@/api/formApi';
 import { fileApi } from '@/api/fileApi';
@@ -24,6 +25,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [activityApi.reducerPath]: activityApi.reducer,
     [viewApi.reducerPath]: viewApi.reducer,
+    [notificationApi.reducerPath]: notificationApi.reducer,
     [submissionApi.reducerPath]: submissionApi.reducer,
     [formApi.reducerPath]: formApi.reducer,
     [fileApi.reducerPath]: fileApi.reducer,
@@ -37,6 +39,9 @@ export const store = configureStore({
       submissionApi.middleware,
       formApi.middleware,
       fileApi.middleware
+      notificationApi.middleware,
+      submissionApi.middleware,
+      formApi.middleware
     );
   },
 });
