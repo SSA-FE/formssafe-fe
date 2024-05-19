@@ -38,7 +38,7 @@ export const store = configureStore({
       viewApi.middleware,
       submissionApi.middleware,
       formApi.middleware,
-      fileApi.middleware
+      fileApi.middleware,
       notificationApi.middleware,
       submissionApi.middleware,
       formApi.middleware
