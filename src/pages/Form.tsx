@@ -3,7 +3,7 @@ import FormBody from '@/components/Form/FormBody';
 import FormHeader from '@/components/Form/FormHeader';
 import Loading from '@/components/Loading';
 import { useParams } from 'react-router-dom';
-import defaultImg from '@assets/images/dafaultImg.png';
+import defaultImg from '@assets/images/defaultImg.png';
 
 const Form = () => {
   const { id } = useParams<{ id: string }>();
