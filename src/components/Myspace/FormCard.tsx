@@ -7,7 +7,7 @@ import { useState } from 'react';
 interface Tag {
   id: number;
   name: string;
-  count: number;
+  count?: number;
 }
 
 interface FormCardProps {
