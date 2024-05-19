@@ -11,10 +11,9 @@ const BoardToolbar = () => {
 
   const dispatch = useAppDispatch();
 
-  const tapList = ['최근에 작성된 설문지', '인기있는 설문지', '마감임박'];
+  const tapList = ['최근에 작성된 설문지', '마감임박'];
   const formTapCodes: { [key: string]: string } = {
     '최근에 작성된 설문지': 'startDate',
-    '인기있는 설문지': 'responseCnt',
     마감임박: 'endTime',
   };
 
