@@ -74,7 +74,7 @@ const RemoteForm = () => {
       </div>
 
       {/* 개별 질문리스트 */}
-      <div className="h-[17.28125rem] flex flex-col items-start overflow-y-scroll">
+      <div className="h-[17.28125rem] flex flex-col items-start overflow-y-auto">
         {questionListResponse?.contents.map(
           (content: ContentType, index: number) => {
             if (content.type !== 'text') {

@@ -62,7 +62,7 @@ const UserResultForm = (props: UserResultFormProps) => {
       </div>
 
       {/* 개별 질문리스트 */}
-      <div className="flex flex-col items-start flex-1 overflow-y-scroll">
+      <div className="flex flex-col items-start flex-1 overflow-y-auto">
         {userData?.map((res: TotalReponseType, index: number) => (
           <User key={index} user={res.user} setUserId={props.setUserId} />
         ))}
