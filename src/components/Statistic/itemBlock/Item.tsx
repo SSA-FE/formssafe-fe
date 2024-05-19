@@ -36,8 +36,8 @@ const Item = ({
 
   return (
     <div className="flex flex-col pb-4 overflow-hidden rounded-tl-lg rounded-tr-lg">
-      <div className="px-4 pt-3 pb-2 bg-slate-100 ">
-        <span className="inline-flex flex-row items-center justify-center px-1 text-xs font-bold text-white bg-slate-300">
+      <div className="px-4 pt-3 pb-2 bg-blue-50">
+        <span className="inline-flex flex-row items-center justify-center px-1 text-xs font-bold text-white bg-blue-400">
           {nType}
         </span>
 
@@ -49,7 +49,7 @@ const Item = ({
             <p className="text-base text-slate-500">{description}</p>
           </div>
 
-          <h3 className="self-end text-base font-normal text-slate-400">
+          <h3 className="self-end text-base font-normal text-blue-400">
             응답 {responseCnt}개
           </h3>
         </div>

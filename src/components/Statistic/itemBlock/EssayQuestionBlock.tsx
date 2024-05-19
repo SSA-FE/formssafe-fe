@@ -32,7 +32,7 @@ const EssayQuestionBlock = ({ data }: MultipleChoiceBlockProps) => {
       <div
         className={`transition-height duration-300 ease-in ${
           isOpen ? `h-[500px]` : 'h-[300px]'
-        } overflow-hidden bg-[#F2F6F9] rounded-bl-lg ${state ? '' : 'rounded-br-lg'}`}
+        } overflow-hidden bg-blue-50 rounded-bl-lg ${state ? '' : 'rounded-br-lg'}`}
       >
         <div
           ref={contentRef}
@@ -63,7 +63,7 @@ const EssayQuestionBlock = ({ data }: MultipleChoiceBlockProps) => {
       {state ? (
         <div className="flex flex-row justify-end w-full">
           <button
-            className="px-20 py-2 rounded-bl-lg rounded-br-lg bg-slate-100"
+            className="px-20 py-2 rounded-bl-lg rounded-br-lg bg-blue-50"
             onClick={toggleCollapsible}
           >
             {isOpen ? <ArrowUpIcon /> : <ArrowBottomIcon />}

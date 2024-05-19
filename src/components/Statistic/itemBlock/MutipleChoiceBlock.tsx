@@ -29,18 +29,18 @@ const MultipleChoiceBlock = ({
   return (
     <>
       <div
-        className={`px-4 ${isOpen ? `` : `overflow-hidden rounded-bl-lg`} bg-slate-100`}
+        className={`px-4 ${isOpen ? `` : `overflow-hidden rounded-bl-lg`} bg-blue-50`}
       >
         <Chart data={{ labels, values } as ChartData} />
       </div>
       <div
         className={`transition-height duration-300 ease-in ${
           isOpen ? `h-[360px] pb-4` : 'h-0'
-        } overflow-hidden bg-[#F2F6F9] rounded-bl-lg`}
+        } overflow-hidden bg-blue-50 rounded-bl-lg`}
         ref={resultBoxRef}
       >
         <div className="flex flex-col gap-4 px-4 ">
-          <hr className="h-[1px] bg-slate-400 text-slate-400" />
+          <hr className="h-[1px] bg-slate-300 border-none" />
           <div className="flex flex-col gap-2 overflow-y-auto h-80">
             {users && (users as User[]).length > 0 ? (
               <>
@@ -75,7 +75,7 @@ const MultipleChoiceBlock = ({
       </div>
       <div className="flex flex-row justify-end w-full">
         <button
-          className="flex items-center justify-center px-20 py-2 rounded-bl-lg rounded-br-lg bg-slate-100"
+          className="flex items-center justify-center px-20 py-2 rounded-bl-lg rounded-br-lg bg-blue-50"
           onClick={toggleCollapsible}
         >
           {isOpen ? <ArrowUpIcon /> : <ArrowBottomIcon />}
