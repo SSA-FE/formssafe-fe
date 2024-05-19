@@ -186,7 +186,7 @@ const Chart = ({ data: { labels, values } }: ChartProps) => {
   return (
     <div className="flex">
       <div className="w-[60vw] h-[auto] max-w-[1000px]">
-        <div className="h-[300px] bg-[#F2F6F9] pb-4">
+        <div className="h-[300px] bg-blue-50 pb-7">
           <Bar
             ref={chartRef}
             options={options}

@@ -75,7 +75,7 @@ const StatTopBar = () => {
       </div>
 
       {/* buttons */}
-      <div className="w-[15.25rem] flex justify-between items-center gap-4 text-xs text-slate-50 font-bold">
+      <div className="w-[15.25rem] flex justify-end items-center gap-4 text-xs text-slate-50 font-bold">
         <button
           onClick={printForm}
           className="flex items-center px-4 py-2 rounded-full gap-x-2 bg-neutral-400 drop-shadow"

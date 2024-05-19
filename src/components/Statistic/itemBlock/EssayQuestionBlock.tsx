@@ -32,17 +32,17 @@ const EssayQuestionBlock = ({ data }: MultipleChoiceBlockProps) => {
       <div
         className={`transition-height duration-300 ease-in ${
           isOpen ? `h-[500px]` : 'h-[300px]'
-        } overflow-hidden bg-[#F2F6F9] rounded-bl-lg ${state ? '' : 'rounded-br-lg'}`}
+        } overflow-hidden bg-blue-50 rounded-bl-lg ${state ? '' : 'rounded-br-lg'}`}
       >
         <div
           ref={contentRef}
           className={`${
             isOpen ? `h-[500px]` : 'h-[300px]'
-          } transition-height ease-in duration-300 flex flex-col gap-4 px-4 `}
+          } transition-height ease-in duration-300 flex flex-col gap-4 px-9 `}
         >
           <div
             ref={scrollBoxRef}
-            className={`transition-height flex flex-col gap-2  mb-3 overflow-y-auto h-full`}
+            className={`transition-height flex flex-col gap-2  mb-7 overflow-y-auto h-full`}
           >
             {(data?.users as string[]).map((user: string, index: number) => {
               return (
@@ -63,7 +63,7 @@ const EssayQuestionBlock = ({ data }: MultipleChoiceBlockProps) => {
       {state ? (
         <div className="flex flex-row justify-end w-full">
           <button
-            className="px-20 py-2 rounded-bl-lg rounded-br-lg bg-slate-100"
+            className="px-20 py-2 rounded-bl-lg rounded-br-lg bg-blue-50"
             onClick={toggleCollapsible}
           >
             {isOpen ? <ArrowUpIcon /> : <ArrowBottomIcon />}
