@@ -17,7 +17,6 @@ interface Reward {
 interface Tag {
   id: number;
   name: string;
-  count: number;
 }
 
 interface Option {

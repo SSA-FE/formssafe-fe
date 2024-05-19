@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import FormInfoBar from '@/components/Myspace/FormInfoBar';
 import FormMain from '@/components/Myspace/FormMain';
 import FormOptionBar from '@/components/Myspace/FormOptionBar';
 import FormToolBar from '@/components/Myspace/FormToolBar';
 import { questionType } from '@/types/questionTypes';
+import FormInfoBar from '@/components/Myspace/formInfoBar/FormInfoBar';
 
 const Editor = () => {
   const [selectedQuestionType, setSelectedQuestionType] =
@@ -14,9 +14,9 @@ const Editor = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-2 bg-slate-50">
       <FormToolBar />
-      <div className="flex bg-white">
+      <div className="flex gap-2">
         <FormInfoBar />
         <FormMain selectedQuestionType={selectedQuestionType} />
         <FormOptionBar setSelectedQuestionType={handleQuestionTypeSelected} />

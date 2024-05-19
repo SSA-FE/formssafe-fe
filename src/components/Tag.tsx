@@ -6,8 +6,12 @@ interface Tag {
   value: string;
 }
 
-const Tag = () => {
-  const [tagList, setTagList] = useState<Tag[]>([]);
+interface TagProps {
+  tagList: Tag[];
+  setTagList: React.Dispatch<React.SetStateAction<Tag[]>>;
+}
+
+const Tag = ({ tagList, setTagList }: TagProps) => {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const { register, setFocus, getValues, setValue } = useForm();
   const { ref, ...rest } = register('tag');
@@ -79,7 +83,7 @@ const Tag = () => {
           setIsInputVisible(false);
           setValue('tag', '');
         }}
-        onKeyDown={(e) => handleTagAdd(e)}
+        onKeyPress={(e) => handleTagAdd(e)}
         className="tag px-2 text-white bg-blue-300 focus:outline-none"
       />
     </div>
