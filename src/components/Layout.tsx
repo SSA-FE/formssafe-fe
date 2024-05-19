@@ -1,20 +1,32 @@
 import { Outlet } from 'react-router-dom';
 import Topbar from '@/components/topbar/Topbar';
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Footer from './Footer';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFetchUserQuery } from '@/api/userApi';
 
 export default function Layout({ hasBackground }: { hasBackground: boolean }) {
-  const { isError } = useFetchUserQuery();
+  const { isError, refetch } = useFetchUserQuery();
+  const [isFetched, setIsFetched] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const path = location.pathname;
 
   useEffect(() => {
-    if (path !== '/' && path !== '/join/' && isError) {
+    const fetchUser = async () => {
+      await refetch();
+      setIsFetched(true);
+    };
+
+    fetchUser();
+  }, [refetch, path]);
+
+  useEffect(() => {
+    if (path !== '/' && path !== '/join/' && isFetched && isError) {
+      setIsFetched(false);
       navigate('/', { replace: true });
     }
+    setIsFetched(false);
   }, [isError, path, navigate]);
 
   return (
