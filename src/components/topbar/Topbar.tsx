@@ -52,10 +52,6 @@ const Topbar = () => {
   }, [path]);
 
   useEffect(() => {
-    console.log(unreadAlarmCount);
-  }, [unreadAlarmCount]);
-
-  useEffect(() => {
     if (data) {
       dispatch(setUser(data));
     }

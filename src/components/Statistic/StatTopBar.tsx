@@ -29,7 +29,7 @@ const StatTopBar = () => {
         link.click();
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -42,7 +42,7 @@ const StatTopBar = () => {
         })
         .catch((err) => {
           alert('설문 마감에 실패했습니다.');
-          console.log(err);
+          console.error(err);
         });
     }
   };

@@ -34,9 +34,7 @@ const BoardMain = () => {
     ) {
       delete updatedQueryParams.status;
     }
-
     setQueryParams(updatedQueryParams);
-    console.log(updatedQueryParams);
   }, [boardViewInput]);
 
   const { data, isLoading } = useFetchSurveyListQuery({
@@ -57,10 +55,6 @@ const BoardMain = () => {
     setCursor({});
     setIsSuccess(false);
   }, [boardViewInput]);
-
-  useEffect(() => {
-    console.log(formList);
-  }, [formList]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -114,7 +108,7 @@ const BoardMain = () => {
                 />
               ))
             ) : isSuccess ? (
-              <span className="my-8 text-bold text-slate-400">
+              <span className="w-full my-8 text-center text-bold text-slate-400">
                 연관된 설문이 없습니다.
               </span>
             ) : (
