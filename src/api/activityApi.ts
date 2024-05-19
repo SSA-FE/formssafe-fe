@@ -13,7 +13,7 @@ interface Author {
   email?: string;
 }
 
-interface Reward {
+export interface Reward {
   name: string;
   category: string;
   count: number;

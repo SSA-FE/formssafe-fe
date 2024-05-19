@@ -5,6 +5,7 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { setUser } from '@components/topbar/topbarSlice';
 import {
   ActiveAlarmIcon,
+  EditIcon,
   InactiveAlarmIcon,
   MainLogoIcon,
 } from '@assets/icons';
@@ -135,7 +136,7 @@ const Topbar = () => {
           refetch={refetch}
         />
       )}
-      <nav className="flex items-center justify-between w-full px-8 py-2 bg-transparent h-topbar min-h-16 whitespace-nowrap">
+      <nav className="flex items-center justify-between w-full px-8 py-2 h-topbar min-h-16 whitespace-nowrap">
         <div className="flex items-center gap-8">
           <NavLink className="text-lg font-bold text-slate-600" to="/">
             <MainLogoIcon width="80" />
@@ -162,7 +163,16 @@ const Topbar = () => {
 
         {path !== '/' && user.imageUrl && (
           <div className="relative">
-            <div className="flex px-3 py-2 my-1 h-14 w-[124px] items-center justify-between">
+            <div className="flex items-center justify-end gap-6 my-1 h-14">
+              {(path === '/board' || path === '/myspace') && (
+                <NavLink
+                  to="/editor"
+                  className="shadow-md flex items-center w-auto px-5 py-2 space-x-2 text-xs font-bold text-white bg-blue-500 rounded-[38px] h-9 whitespace-nowrap"
+                >
+                  <EditIcon width="10" strokeColor="#F1F5F9" />
+                  <p className="flex items-center p-0 m-0">설문 작성하기</p>
+                </NavLink>
+              )}
               <button
                 className={`flex items-center justify-center w-10 h-10 bg-transparent rounded-full cursor-pointer hover:bg-gray-100 ${alarmModalOpen ? 'focus:bg-gray-200' : ''}`}
                 onClick={(event) => handleModalButtonClick(event, 'alarm')}

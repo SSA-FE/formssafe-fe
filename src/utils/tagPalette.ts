@@ -1,3 +1,3 @@
 export const palette = {
-  colors: ['#60A5FA', '#94A3B8', '#DBEAFE'],
+  colors: ['#7AA2E3', '#6AD4DD', '#97E7E1'],
 };

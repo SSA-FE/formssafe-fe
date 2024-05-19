@@ -5,7 +5,9 @@ type toolbarInput = {
   sort?: string;
 };
 
-const initialState: toolbarInput = {};
+const initialState: toolbarInput = {
+  sort: 'startDate',
+};
 
 export const toolbarInputSlice = createSlice({
   name: 'toolbarInput',
@@ -17,13 +19,9 @@ export const toolbarInputSlice = createSlice({
     updateSort: (state, action: PayloadAction<toolbarInput>) => {
       state.sort = action.payload.sort;
     },
-    resetInput: (state) => {
-      state.keyword = '';
-      state.sort = '';
-    },
+    reset: () => initialState,
   },
 });
 
-export const { updateKeyword, updateSort, resetInput } =
-  toolbarInputSlice.actions;
+export const { updateKeyword, updateSort, reset } = toolbarInputSlice.actions;
 export default toolbarInputSlice.reducer;

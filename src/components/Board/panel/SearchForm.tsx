@@ -1,5 +1,5 @@
 import { SearchIcon } from '@/assets/icons';
-import { useState, KeyboardEvent, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import {
   setKeyword,
   setTag,
@@ -35,22 +35,34 @@ const SearchForm = () => {
     dispatch(removeTag(sanitizedInput));
   };
 
-  const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+  const handleInput = (
+    e:
+      | React.KeyboardEvent<HTMLInputElement>
+      | React.MouseEvent<HTMLButtonElement>
+  ) => {
+    if (
+      e.type === 'click' ||
+      (e.type === 'keydown' &&
+        (e as React.KeyboardEvent<HTMLInputElement>).key === 'Enter')
+    ) {
       e.preventDefault();
-      if (input.startsWith('#') && tags.some((tag) => tag.text === input)) {
-        setInput('');
-        return;
-      }
+      const trimmedInput = input.trim();
 
-      if (input.startsWith('#')) {
-        addTag(input);
-        const sanitizedInput = input.slice(1).replace(/\s/g, '');
+      if (trimmedInput.startsWith('#')) {
+        if (tags.some((tag) => tag.text === input)) {
+          setInput('#');
+          return;
+        }
+
+        if (trimmedInput.trim() === '#') return;
+
+        addTag(trimmedInput);
+        const sanitizedInput = trimmedInput.slice(1).replace(/\s/g, '');
         dispatch(setTag(sanitizedInput));
+        setInput('');
       } else {
-        dispatch(setKeyword(input));
+        dispatch(setKeyword(trimmedInput));
       }
-      setInput('');
     }
   };
 
@@ -71,13 +83,13 @@ const SearchForm = () => {
 
   return (
     <form className="flex items-center w-[480px] h-[50px] px-3 space-x-2 bg-blue-50 rounded-[48px] border border-blue-200 shadow-sm">
-      <div className="flex-shrink-0">
+      <button onClick={handleInput} className="flex-shrink-0">
         <SearchIcon width="32" />
-      </div>
+      </button>
       {tags.map((tag) => (
         <button
           key={tag.id}
-          className="flex items-center justify-center h-6 px-2 py-0 text-xs font-bold cursor-pointer rounded-xl text-slate-200 bg-slate-400 whitespace-nowrap"
+          className="flex items-center justify-center h-6 px-2 py-0 text-xs font-bold text-white cursor-pointer rounded-xl bg-slate-400 hover:bg-slate-600 whitespace-nowrap"
           onClick={(e) => handleTagInteraction(tag.id, e)}
           onKeyDown={(e) => handleTagInteraction(tag.id, e)}
         >
@@ -86,10 +98,10 @@ const SearchForm = () => {
       ))}
       <input
         className="w-full h-6 text-[14px] font-bold bg-transparent border-none outline-none text-slate-400 placeholder-neutral-400 m-0 p-0 leading-6"
-        placeholder={tags.length === 0 ? '설문을 검색해보세요.' : ''}
+        placeholder={tags.length === 0 ? '키워드 또는 #해시태그 검색' : ''}
         value={input}
         onChange={handleInputChange}
-        onKeyDown={handleInputKeyDown}
+        onKeyUp={handleInput}
       />
     </form>
   );

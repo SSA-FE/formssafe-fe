@@ -8,7 +8,13 @@ export interface ViewRequest {
   tag?: string[];
 }
 
-const initialState: ViewRequest = {};
+interface ViewSliceTypes extends ViewRequest {
+  prevStatus?: string;
+}
+
+const initialState: ViewSliceTypes = {
+  status: '',
+};
 
 export const boardViewSlice = createSlice({
   name: 'boardView',
@@ -24,6 +30,7 @@ export const boardViewSlice = createSlice({
       state.category = [action.payload];
     },
     setStatus: (state, action: PayloadAction<string>) => {
+      state.prevStatus = state.status;
       state.status = action.payload;
     },
     setTag: (state, action: PayloadAction<string>) => {
@@ -40,6 +47,7 @@ export const boardViewSlice = createSlice({
         (tag) => tag !== action.payload
       );
     },
+    reset: () => initialState,
   },
 });
 
@@ -50,5 +58,6 @@ export const {
   setStatus,
   setTag,
   removeTag,
+  reset,
 } = boardViewSlice.actions;
 export default boardViewSlice.reducer;
