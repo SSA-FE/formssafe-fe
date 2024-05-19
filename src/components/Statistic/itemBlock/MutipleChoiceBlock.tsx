@@ -29,17 +29,17 @@ const MultipleChoiceBlock = ({
   return (
     <>
       <div
-        className={`px-4 ${isOpen ? `` : `overflow-hidden rounded-bl-lg`} bg-blue-50`}
+        className={`px-9 ${isOpen ? `` : `overflow-hidden rounded-bl-lg`} bg-blue-50`}
       >
         <Chart data={{ labels, values } as ChartData} />
       </div>
       <div
         className={`transition-height duration-300 ease-in ${
-          isOpen ? `h-[360px] pb-4` : 'h-0'
+          isOpen ? `h-[360px] pb-7` : 'h-0'
         } overflow-hidden bg-blue-50 rounded-bl-lg`}
         ref={resultBoxRef}
       >
-        <div className="flex flex-col gap-4 px-4 ">
+        <div className="flex flex-col gap-4 px-9 ">
           <hr className="h-[1px] bg-slate-300 border-none" />
           <div className="flex flex-col gap-2 overflow-y-auto h-80">
             {users && (users as User[]).length > 0 ? (

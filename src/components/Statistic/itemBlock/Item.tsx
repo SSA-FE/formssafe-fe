@@ -35,8 +35,8 @@ const Item = ({
   }
 
   return (
-    <div className="flex flex-col pb-4 overflow-hidden rounded-tl-lg rounded-tr-lg">
-      <div className="px-4 pt-3 pb-2 bg-blue-50">
+    <div className="flex flex-col overflow-hidden rounded-tl-lg rounded-tr-lg">
+      <div className="pb-2 pt-7 px-9 bg-blue-50">
         <span className="inline-flex flex-row items-center justify-center px-1 text-xs font-bold text-white bg-blue-400">
           {nType}
         </span>
