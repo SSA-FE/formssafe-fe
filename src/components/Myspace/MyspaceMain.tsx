@@ -43,8 +43,6 @@ const MyspaceMain = () => {
     }
   }, [data]);
 
-  if (isLoading) return <Loading />;
-
   return (
     <div className="flex">
       <MyspaceSidebar
@@ -76,6 +74,7 @@ const MyspaceMain = () => {
         </div>
         <div className="w-full min-h-screen p-4 bg-slate-50">
           <div className="flex flex-wrap gap-4">
+            {isLoading && <Loading />}
             {formList &&
               Array.isArray(formList) &&
               formList.map((form: Form) => (
