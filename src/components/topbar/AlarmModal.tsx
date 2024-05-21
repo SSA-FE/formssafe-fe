@@ -149,6 +149,7 @@ const AlarmModal: FC<AlarmModalProps> = ({
       ref={modalRef}
       className={`
         absolute
+        z-[9999]
         top-16
         right-[104px]
         border
