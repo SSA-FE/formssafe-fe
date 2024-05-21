@@ -62,7 +62,7 @@ const BoardMain = () => {
         window.innerHeight + window.scrollY >= document.body.offsetHeight;
       if (scrolledToBottom && data) {
         if (data.forms.length === 0) return;
-        setCursor(data.cursor);
+        setCursor(data.cursor as Cursor);
       }
     };
 

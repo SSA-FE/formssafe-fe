@@ -61,7 +61,7 @@ export interface Cursor {
 
 export interface FormResponse {
   forms: Form[];
-  cursor: Cursor;
+  cursor?: Cursor;
 }
 
 export interface FormRequest {
@@ -91,7 +91,16 @@ export const viewApi = createApi({
         url: `${API.VIEW}/forms/${id}`,
       }),
     }),
+    fetchPopularForms: builder.query<Form[], void>({
+      query: () => ({
+        url: `${API.VIEW}/forms/hot`,
+      }),
+    }),
   }),
 });
 
-export const { useFetchSurveyListQuery, useFetchSurveyDetailQuery } = viewApi;
+export const {
+  useFetchSurveyListQuery,
+  useFetchSurveyDetailQuery,
+  useFetchPopularFormsQuery,
+} = viewApi;

@@ -42,6 +42,15 @@
   overflow-y: auto;
 }
 
+.coverflow .swiper-wrapper {
+  padding-bottom: 3rem;
+}
+
+.swiper .swiper-button-next,
+.swiper .swiper-button-prev {
+  color: #60a5fa;
+}
+
 @layer base {
   html {
     font-family: 'Noto Sans KR', 'Inter', sans-serif;
