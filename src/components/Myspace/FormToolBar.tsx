@@ -51,7 +51,7 @@ const FormToolBar = () => {
   return (
     <div className="flex items-start justify-end w-full h-12 px-8 bg-white whitespace-nowrap">
       <div className="flex gap-md">
-        <button className="px-8 py-2 text-xs font-bold border rounded-full text-slate-400 h-9 hover:bg-slate-50">
+        {/* <button className="px-8 py-2 text-xs font-bold border rounded-full text-slate-400 h-9 hover:bg-slate-50">
           미리보기
         </button>
         <button
@@ -59,7 +59,7 @@ const FormToolBar = () => {
           className="px-8 py-2 text-xs font-bold border rounded-full text-slate-400 h-9 hover:bg-slate-50"
         >
           임시저장
-        </button>
+        </button> */}
         <button
           onClick={() => handleFormCreation(false)}
           className="px-8 py-2 text-xs font-bold text-white bg-blue-500 rounded-full shadow-md h-9 hover:bg-blue-400"
