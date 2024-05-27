@@ -18,8 +18,8 @@ const FormMain: React.FC<FormMainProps> = ({ selectedQuestionType }) => {
     const newQuestion = {
       id: newQuestionId,
       type: selectedQuestionType,
-      isRequired: true,
-      isPrivacy: false,
+      required: true,
+      privacy: false,
     };
     dispatch(addQuestion(newQuestion));
     dispatch(setActiveBlockId({ id: newQuestionId }));

@@ -25,7 +25,7 @@ interface Option {
 }
 
 export interface Content {
-  id: number;
+  id: string;
   type: questionType;
   title?: string;
   description?: string;

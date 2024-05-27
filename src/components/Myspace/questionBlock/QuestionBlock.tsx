@@ -38,8 +38,8 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
         title: data.title,
         description: data.description,
         options: optionList,
-        isRequired: questionData.isRequired,
-        isPrivacy: questionData.isPrivacy,
+        required: questionData.required,
+        privacy: questionData.privacy,
       })
     );
   };

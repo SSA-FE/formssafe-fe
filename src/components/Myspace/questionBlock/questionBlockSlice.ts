@@ -4,8 +4,8 @@ import { questionBlock, questionType } from '@/types/questionTypes';
 const initialState: questionBlock = {
   id: crypto.randomUUID(),
   type: 'single',
-  isRequired: true,
-  isPrivacy: false,
+  required: true,
+  privacy: false,
 };
 
 export const questionBlockSlice = createSlice({
@@ -15,15 +15,15 @@ export const questionBlockSlice = createSlice({
     setQuestionType: (state, action: PayloadAction<{ type: questionType }>) => {
       state.type = action.payload.type;
     },
-    setIsRequired: (state, action: PayloadAction<{ isRequired: boolean }>) => {
-      state.isPrivacy = action.payload.isRequired;
+    setRequired: (state, action: PayloadAction<{ required: boolean }>) => {
+      state.privacy = action.payload.required;
     },
-    setIsPrivacy: (state, action: PayloadAction<{ isPrivacy: boolean }>) => {
-      state.isPrivacy = action.payload.isPrivacy;
+    setPrivacy: (state, action: PayloadAction<{ privacy: boolean }>) => {
+      state.privacy = action.payload.privacy;
     },
   },
 });
 
-export const { setQuestionType, setIsRequired, setIsPrivacy } =
+export const { setQuestionType, setRequired, setPrivacy } =
   questionBlockSlice.actions;
 export default questionBlockSlice.reducer;

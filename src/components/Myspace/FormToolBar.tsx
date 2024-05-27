@@ -14,12 +14,13 @@ const FormToolBar = () => {
 
   const contentList: Content[] = questionList.map(
     (question: questionBlock) => ({
+      id: question.id,
       type: question.type,
       title: question.title,
       description: question.description,
       options: question.options?.map((option) => option.value),
-      isRequired: question.isRequired,
-      isPrivacy: question.isPrivacy,
+      required: question.required,
+      privacy: question.privacy,
     })
   );
 

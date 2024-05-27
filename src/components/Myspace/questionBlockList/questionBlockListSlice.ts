@@ -11,8 +11,8 @@ const initialState: QuestionBlockList = {
     {
       id: crypto.randomUUID(),
       type: 'text',
-      isRequired: true,
-      isPrivacy: false,
+      required: true,
+      privacy: false,
     },
   ],
   activeBlockId: '',
@@ -75,7 +75,7 @@ export const questionBlockListSlice = createSlice({
         (question) => question.id === action.payload.id
       );
       if (index !== -1) {
-        state.questionList[index].isRequired = action.payload.required;
+        state.questionList[index].required = action.payload.required;
       }
     },
     updateQuestionPrivacy: (
@@ -86,8 +86,11 @@ export const questionBlockListSlice = createSlice({
         (question) => question.id === action.payload.id
       );
       if (index !== -1) {
-        state.questionList[index].isPrivacy = action.payload.privacy;
+        state.questionList[index].privacy = action.payload.privacy;
       }
+    },
+    setTempQuestions: (state, action: PayloadAction<questionBlock[]>) => {
+      state.questionList = action.payload;
     },
   },
 });
@@ -101,5 +104,6 @@ export const {
   updateQuestionType,
   updateQuestionRequired,
   updateQuestionPrivacy,
+  setTempQuestions,
 } = questionBlockListSlice.actions;
 export default questionBlockListSlice.reducer;

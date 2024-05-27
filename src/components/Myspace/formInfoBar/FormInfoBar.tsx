@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Calendar from '@components/Myspace/Calendar';
 import trophyIcon from '@/assets/icons/trophy-icon.svg';
 import infoIcon from '@/assets/icons/info-icon.svg';
@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setFormMetaData } from '@/components/Myspace/formInfoBar/formInfoSlice';
 import Modal from '@/components/Modal';
 import FileUploader from '@/components/Myspace/FileUploader';
+import { Form } from '@/api/viewApi';
 
 interface FormInfoInputs {
   title: string;
@@ -19,7 +20,7 @@ interface FormInfoInputs {
   rewardCount: number;
 }
 
-const FormInfoBar = () => {
+const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
   const [isHidden, setIsHidden] = useState<boolean>(false);
   const [tagList, setTagList] = useState<Tag[]>([]);
   const [endDate, setEndDate] = useState<Date | null>(
@@ -28,7 +29,10 @@ const FormInfoBar = () => {
   const [showRewardModal, setShowRewardModal] = useState(false);
   const dispatch = useDispatch();
   const { register, handleSubmit, watch } = useForm<FormInfoInputs>();
-  const expectTimeValue = watch('expectTime', 5);
+  const expectTimeValue = watch(
+    'expectTime',
+    tempForm ? tempForm.expectTime : 5
+  );
 
   const categoryList = [
     '커피/음료',
@@ -37,6 +41,13 @@ const FormInfoBar = () => {
     '치킨/피자/햄버거',
     '기타',
   ];
+
+  useEffect(() => {
+    if (tempForm) {
+      setTagList(tempForm.tags);
+      setEndDate(new Date(tempForm.endDate));
+    }
+  }, []);
 
   const handleSetFormData: SubmitHandler<FormInfoInputs> = (data) => {
     dispatch(
@@ -97,11 +108,13 @@ const FormInfoBar = () => {
           {...register('title')}
           type="text"
           placeholder="제목을 작성해주세요."
+          defaultValue={tempForm && tempForm.title}
           className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
         />
         <textarea
           {...register('description')}
           className="flex flex-col h-16 p-2 text-xs border outline-none resize-none gap-md border-slate-200 bg-slate-50 rounded focus:border-blue-400"
+          defaultValue={tempForm && tempForm.description}
           placeholder="설명을 작성해주세요."
         />
       </div>
@@ -130,7 +143,7 @@ const FormInfoBar = () => {
           min="1"
           max="60"
           step="1"
-          defaultValue="5"
+          defaultValue={tempForm ? tempForm.expectTime : '5'}
           className="appearance-none h-3 cursor-pointer bg-slate-100 rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-300"
         />
       </div>
@@ -185,6 +198,7 @@ const FormInfoBar = () => {
               type="text"
               id="rewardName"
               placeholder="예) 스타벅스 아메리카노"
+              defaultValue={tempForm && tempForm.reward?.name}
               className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
             />
           </div>
@@ -221,7 +235,7 @@ const FormInfoBar = () => {
               {...register('rewardCount', { required: true })}
               type="number"
               min={1}
-              defaultValue={1}
+              defaultValue={tempForm ? tempForm.reward?.count : 1}
               id="rewardCount"
               className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
             />
