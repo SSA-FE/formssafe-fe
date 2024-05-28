@@ -7,12 +7,12 @@ import FormInfoBar from '@/components/Myspace/formInfoBar/FormInfoBar';
 import { useParams } from 'react-router-dom';
 import { useFetchTempFormQuery } from '@/api/formApi';
 import Loading from '@/components/Loading';
-import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { setTempQuestions } from '@/components/Myspace/questionBlockList/questionBlockListSlice';
+import { useDispatch } from 'react-redux';
 
 const Editor = () => {
   const { formId } = useParams<{ formId: string }>();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const [selectedQuestionType, setSelectedQuestionType] =
     useState<questionType>('single');
 

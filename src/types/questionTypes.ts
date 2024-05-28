@@ -52,6 +52,6 @@ export interface questionBlock {
 }
 
 export type Option = {
-  id: number;
+  id: string;
   detail: string;
 };

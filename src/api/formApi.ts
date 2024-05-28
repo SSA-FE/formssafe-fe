@@ -94,8 +94,8 @@ export interface Content {
   title?: string;
   description?: string;
   options?: string[];
-  required: boolean;
-  privacy: boolean;
+  required?: boolean;
+  privacy?: boolean;
 }
 
 interface Reward {

@@ -20,7 +20,7 @@ interface Tag {
 }
 
 interface Option {
-  id: number;
+  id: string;
   detail: string;
 }
 
