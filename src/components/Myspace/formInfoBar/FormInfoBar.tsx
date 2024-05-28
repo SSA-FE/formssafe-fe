@@ -44,7 +44,11 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
 
   useEffect(() => {
     if (tempForm) {
-      setTagList(tempForm.tags);
+      const updatedTags = tempForm.tags?.map((tag) => ({
+        id: crypto.randomUUID(),
+        name: tag.name,
+      }));
+      setTagList(updatedTags || []);
       setEndDate(new Date(tempForm.endDate));
     }
   }, []);
@@ -54,7 +58,7 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
       setFormMetaData({
         title: data.title,
         description: data.description,
-        tags: tagList.map((tag) => tag.value),
+        tags: tagList.map((tag) => tag.name),
         endDate: endDate?.toISOString(),
         expectTime: data.expectTime,
       })

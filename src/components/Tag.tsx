@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 interface Tag {
   id: string;
-  value: string;
+  name: string;
 }
 
 interface TagProps {
@@ -27,7 +27,7 @@ const Tag = ({ tagList, setTagList }: TagProps) => {
         ...tagList,
         {
           id: crypto.randomUUID(),
-          value: getValues('tag'),
+          name: getValues('tag'),
         },
       ]);
       setValue('tag', '');
@@ -55,7 +55,7 @@ const Tag = ({ tagList, setTagList }: TagProps) => {
               className="tag cursor-pointer"
               onClick={() => handleTagRemove(tag.id)}
             >
-              {tag.value}
+              {tag.name}
             </button>
           </li>
         ))}
