@@ -1,11 +1,12 @@
 import { UseFormRegister } from 'react-hook-form';
 import { QuestionBlockInputs } from './QuestionBlock';
-
+import { questionBlock } from '@/types/questionTypes';
 interface TextBlockProps {
   register: UseFormRegister<QuestionBlockInputs>;
+  questionData: questionBlock;
 }
 
-const TextBlock = ({ register }: TextBlockProps) => {
+const TextBlock = ({ register, questionData }: TextBlockProps) => {
   const { ref, ...rest } = register('description');
 
   const adjustHeight = (element: HTMLTextAreaElement) => {
@@ -23,6 +24,7 @@ const TextBlock = ({ register }: TextBlockProps) => {
           }
         }}
         {...rest}
+        defaultValue={questionData.description}
         placeholder="기타 설문과 관련한 추가정보, 안내사항 등을 입력할 수 있습니다."
         className="text-slate-500 outline-none bg-transparent w-full focus:bg-slate-50 px-2 py-1 placeholder:text-slate-400 resize-none overflow-hidden"
         onInput={(e) => adjustHeight(e.currentTarget)}

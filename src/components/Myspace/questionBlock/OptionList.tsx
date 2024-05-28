@@ -24,12 +24,12 @@ const OptionList = ({
 }: OptionListProps) => {
   const handleAddOption = () => {
     const optionId = crypto.randomUUID();
-    setOptionList([...optionList, { id: optionId, value: '' }]);
+    setOptionList([...optionList, { id: optionId, detail: '' }]);
   };
 
   const handleUpdateOption = (optionId: string, value: string) => {
     const newOptionList = optionList.map((option) =>
-      option.id === optionId ? { id: optionId, value: value } : option
+      option.id === optionId ? { id: optionId, detail: value } : option
     );
     setOptionList(newOptionList);
   };
@@ -52,6 +52,7 @@ const OptionList = ({
             </div>
             <input
               type="text"
+              defaultValue={option.detail}
               placeholder={`옵션 ${idx + 1}`}
               onChange={(e) => handleUpdateOption(option.id, e.target.value)}
               autoFocus

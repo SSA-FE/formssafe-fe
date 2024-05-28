@@ -20,8 +20,8 @@ const OptionsToggle = ({ selectedQuestionId }: OptionsToggleProps) => {
   );
 
   const [localToggleState, setLocalToggleState] = useState({
-    privacy: question?.privacy || false,
-    required: question?.required || false,
+    privacy: question?.privacy,
+    required: question?.required,
   });
 
   useEffect(() => {
@@ -44,14 +44,14 @@ const OptionsToggle = ({ selectedQuestionId }: OptionsToggleProps) => {
       dispatch(
         updateQuestionPrivacy({
           id: selectedQuestionId,
-          privacy: updatedState.privacy,
+          privacy: updatedState.privacy as boolean,
         })
       );
     } else if (type === 'required') {
       dispatch(
         updateQuestionRequired({
           id: selectedQuestionId,
-          required: updatedState.required,
+          required: updatedState.required as boolean,
         })
       );
     }

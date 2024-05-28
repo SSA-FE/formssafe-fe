@@ -18,7 +18,7 @@ const FormToolBar = () => {
       type: question.type,
       title: question.title,
       description: question.description,
-      options: question.options?.map((option) => option.value),
+      options: question.options?.map((option) => option.detail),
       required: question.required,
       privacy: question.privacy,
     })
