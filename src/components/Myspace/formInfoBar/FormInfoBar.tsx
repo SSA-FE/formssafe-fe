@@ -99,7 +99,7 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
           <img src={imgIcon} alt="대표 이미지 아이콘" />
           대표 이미지
         </h2>
-        <FileUploader />
+        <FileUploader tempImg={tempForm?.image} />
       </div>
 
       {/* 설문지 정보 */}
@@ -112,13 +112,13 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
           {...register('title')}
           type="text"
           placeholder="제목을 작성해주세요."
-          defaultValue={tempForm && tempForm.title}
+          defaultValue={tempForm?.title}
           className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
         />
         <textarea
           {...register('description')}
           className="flex flex-col h-16 p-2 text-xs border outline-none resize-none gap-md border-slate-200 bg-slate-50 rounded focus:border-blue-400"
-          defaultValue={tempForm && tempForm.description}
+          defaultValue={tempForm?.description}
           placeholder="설명을 작성해주세요."
         />
       </div>
@@ -202,7 +202,7 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
               type="text"
               id="rewardName"
               placeholder="예) 스타벅스 아메리카노"
-              defaultValue={tempForm && tempForm.reward?.name}
+              defaultValue={tempForm?.reward?.name}
               className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
             />
           </div>

@@ -3,7 +3,7 @@ import { useFetchPresignedUrlQuery } from '@/api/fileApi';
 import { useDispatch } from 'react-redux';
 import { setFormMetaData } from '@/components/Myspace/formInfoBar/formInfoSlice';
 
-const FileUploader = () => {
+const FileUploader = ({ tempImg }: { tempImg?: string[] }) => {
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>('');
   const [preview, setPreview] = useState<string | null>(null);
@@ -19,15 +19,15 @@ const FileUploader = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (event.target.files !== null) {
-      const file = event.target.files[0];
-      if (file && file.type.startsWith('image')) {
-        setFile(file);
-        setFileName(file.name);
+      const selectedFile = event.target.files[0];
+      if (selectedFile && selectedFile.type.startsWith('image')) {
+        setFile(selectedFile);
+        setFileName(selectedFile.name);
         const reader = new FileReader();
         reader.onloadend = () => {
           setPreview(reader.result as string);
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(selectedFile);
       } else {
         setFile(null);
         setFileName('');
@@ -35,6 +35,13 @@ const FileUploader = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (tempImg && tempImg.length > 0) {
+      setPreview(tempImg[0]);
+      setFileName(tempImg[0].split('/').pop() || '');
+    }
+  }, [tempImg]);
 
   useEffect(() => {
     const uploadFile = async () => {
@@ -60,7 +67,7 @@ const FileUploader = () => {
       }
     };
 
-    if (fileName && presignedData) {
+    if (file && fileName && presignedData) {
       uploadFile();
     }
   }, [file, fileName, presignedData, dispatch]);
@@ -74,7 +81,7 @@ const FileUploader = () => {
   return (
     <div className="flex flex-row gap-x-2">
       <div>
-        {file && (
+        {preview && (
           <img
             src={preview as string}
             alt="preview-img"
