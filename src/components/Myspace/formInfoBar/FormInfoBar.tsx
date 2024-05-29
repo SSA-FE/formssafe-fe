@@ -28,7 +28,7 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
   );
   const [showRewardModal, setShowRewardModal] = useState(false);
   const dispatch = useDispatch();
-  const { register, handleSubmit, watch } = useForm<FormInfoInputs>();
+  const { register, handleSubmit, watch, setValue } = useForm<FormInfoInputs>();
   const expectTimeValue = watch(
     'expectTime',
     tempForm ? tempForm.expectTime : 5
@@ -50,6 +50,13 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
       }));
       setTagList(updatedTags || []);
       setEndDate(new Date(tempForm.endDate));
+
+      setValue('title', tempForm.title);
+      setValue('description', tempForm.description || '');
+      setValue('expectTime', tempForm.expectTime);
+      setValue('rewardName', tempForm.reward?.name || '');
+      setValue('rewardCategory', tempForm.reward?.category || '');
+      setValue('rewardCount', tempForm.reward?.count || 0);
     }
   }, []);
 
@@ -80,6 +87,8 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
 
   return (
     <div
+      tabIndex={0}
+      role="button"
       onBlur={handleSubmit(handleSetFormData)}
       className={`drop-shadow-md w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white flex flex-col content-center self-stretch relative duration-1000 ease-in-out z-1 ${isHidden ? '-translate-x-[19rem]' : ''}`}
     >
@@ -112,13 +121,11 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
           {...register('title')}
           type="text"
           placeholder="제목을 작성해주세요."
-          defaultValue={tempForm?.title}
           className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
         />
         <textarea
           {...register('description')}
           className="flex flex-col h-16 p-2 text-xs border outline-none resize-none gap-md border-slate-200 bg-slate-50 rounded focus:border-blue-400"
-          defaultValue={tempForm?.description}
           placeholder="설명을 작성해주세요."
         />
       </div>
@@ -147,7 +154,7 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
           min="1"
           max="60"
           step="1"
-          defaultValue={tempForm ? tempForm.expectTime : '5'}
+          defaultValue={5}
           className="appearance-none h-3 cursor-pointer bg-slate-100 rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-300"
         />
       </div>
@@ -202,7 +209,6 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
               type="text"
               id="rewardName"
               placeholder="예) 스타벅스 아메리카노"
-              defaultValue={tempForm?.reward?.name}
               className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
             />
           </div>
@@ -239,7 +245,6 @@ const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
               {...register('rewardCount', { required: true })}
               type="number"
               min={1}
-              defaultValue={tempForm ? tempForm.reward?.count : 1}
               id="rewardCount"
               className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
             />
