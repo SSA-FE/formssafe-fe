@@ -20,12 +20,12 @@ interface Tag {
 }
 
 interface Option {
-  id: number;
+  id: string;
   detail: string;
 }
 
 export interface Content {
-  id: number;
+  id: string;
   type: questionType;
   title?: string;
   description?: string;

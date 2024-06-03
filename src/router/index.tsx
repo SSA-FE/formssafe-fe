@@ -49,6 +49,10 @@ const Router = () => {
           element: <Editor />,
         },
         {
+          path: 'editor/:formId',
+          element: <Editor />,
+        },
+        {
           path: 'stat/:formId/',
           element: <StatLayout />,
           children: [

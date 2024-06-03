@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Calendar from '@components/Myspace/Calendar';
 import trophyIcon from '@/assets/icons/trophy-icon.svg';
 import infoIcon from '@/assets/icons/info-icon.svg';
@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setFormMetaData } from '@/components/Myspace/formInfoBar/formInfoSlice';
 import Modal from '@/components/Modal';
 import FileUploader from '@/components/Myspace/FileUploader';
+import { Form } from '@/api/viewApi';
 
 interface FormInfoInputs {
   title: string;
@@ -19,7 +20,7 @@ interface FormInfoInputs {
   rewardCount: number;
 }
 
-const FormInfoBar = () => {
+const FormInfoBar = ({ tempForm }: { tempForm?: Form }) => {
   const [isHidden, setIsHidden] = useState<boolean>(false);
   const [tagList, setTagList] = useState<Tag[]>([]);
   const [endDate, setEndDate] = useState<Date | null>(
@@ -27,8 +28,11 @@ const FormInfoBar = () => {
   );
   const [showRewardModal, setShowRewardModal] = useState(false);
   const dispatch = useDispatch();
-  const { register, handleSubmit, watch } = useForm<FormInfoInputs>();
-  const expectTimeValue = watch('expectTime', 5);
+  const { register, handleSubmit, watch, setValue } = useForm<FormInfoInputs>();
+  const expectTimeValue = watch(
+    'expectTime',
+    tempForm ? tempForm.expectTime : 5
+  );
 
   const categoryList = [
     '커피/음료',
@@ -38,12 +42,30 @@ const FormInfoBar = () => {
     '기타',
   ];
 
+  useEffect(() => {
+    if (tempForm) {
+      const updatedTags = tempForm.tags?.map((tag) => ({
+        id: crypto.randomUUID(),
+        name: tag.name,
+      }));
+      setTagList(updatedTags || []);
+      setEndDate(new Date(tempForm.endDate));
+
+      setValue('title', tempForm.title);
+      setValue('description', tempForm.description || '');
+      setValue('expectTime', tempForm.expectTime);
+      setValue('rewardName', tempForm.reward?.name || '');
+      setValue('rewardCategory', tempForm.reward?.category || '');
+      setValue('rewardCount', tempForm.reward?.count || 0);
+    }
+  }, []);
+
   const handleSetFormData: SubmitHandler<FormInfoInputs> = (data) => {
     dispatch(
       setFormMetaData({
         title: data.title,
         description: data.description,
-        tags: tagList.map((tag) => tag.value),
+        tags: tagList.map((tag) => tag.name),
         endDate: endDate?.toISOString(),
         expectTime: data.expectTime,
       })
@@ -65,6 +87,8 @@ const FormInfoBar = () => {
 
   return (
     <div
+      tabIndex={0}
+      role="button"
       onBlur={handleSubmit(handleSetFormData)}
       className={`drop-shadow-md w-[19rem] ml-auto h-[calc(100vh-8rem)] bg-white flex flex-col content-center self-stretch relative duration-1000 ease-in-out z-1 ${isHidden ? '-translate-x-[19rem]' : ''}`}
     >
@@ -84,7 +108,7 @@ const FormInfoBar = () => {
           <img src={imgIcon} alt="대표 이미지 아이콘" />
           대표 이미지
         </h2>
-        <FileUploader />
+        <FileUploader tempImg={tempForm?.image} />
       </div>
 
       {/* 설문지 정보 */}
@@ -130,7 +154,7 @@ const FormInfoBar = () => {
           min="1"
           max="60"
           step="1"
-          defaultValue="5"
+          defaultValue={5}
           className="appearance-none h-3 cursor-pointer bg-slate-100 rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-300"
         />
       </div>
@@ -221,7 +245,6 @@ const FormInfoBar = () => {
               {...register('rewardCount', { required: true })}
               type="number"
               min={1}
-              defaultValue={1}
               id="rewardCount"
               className="p-2 text-xs border outline-none resize-none border-slate-200 bg-slate-50 rounded focus:border-blue-400"
             />

@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API, BASE_URL } from '@/config';
 import { questionType } from '@/types/questionTypes';
+import { Form } from './viewApi';
 
 interface User {
   userId: number;
@@ -58,8 +59,8 @@ export interface ContentType {
   type: string;
   title: string | null;
   options?: OptionType[];
-  isRequired: boolean;
-  isPrivacy: boolean;
+  required: boolean;
+  privacy: boolean;
 }
 
 export interface OptionType {
@@ -88,12 +89,13 @@ interface Request {
 }
 
 export interface Content {
+  id: string;
   type: questionType;
   title?: string;
   description?: string;
   options?: string[];
-  isRequired?: boolean;
-  isPrivacy?: boolean;
+  required?: boolean;
+  privacy?: boolean;
 }
 
 interface Reward {
@@ -102,7 +104,7 @@ interface Reward {
   count: number;
 }
 
-interface Form {
+export interface RequestForm {
   title: string;
   image?: string[];
   description: string;
@@ -118,11 +120,16 @@ export const formApi = createApi({
   reducerPath: 'formApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' }),
   endpoints: (builder) => ({
-    fetchFormCreation: builder.mutation<{ formId: number }, Form>({
+    fetchFormCreation: builder.mutation<{ formId: number }, RequestForm>({
       query: (form) => ({
         url: API.FORM,
         method: 'POST',
         body: form,
+      }),
+    }),
+    fetchTempForm: builder.query<Form, string>({
+      query: (formId) => ({
+        url: `${API.FORM}/${formId}`,
       }),
     }),
     endSurvey: builder.mutation<void, string>({
@@ -151,4 +158,5 @@ export const {
   useFetchResultQuery,
   useFetchAnswerQuery,
   useFetchFormCreationMutation,
+  useFetchTempFormQuery,
 } = formApi;

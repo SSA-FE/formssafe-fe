@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import {
@@ -30,6 +30,12 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
   const [optionList, setOptionList] = useState<Option[]>([]);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (questionData.options) {
+      setOptionList(questionData.options);
+    }
+  }, []);
+
   const handleUpdateBlockData: SubmitHandler<QuestionBlockInputs> = (data) => {
     dispatch(
       updateQuestion({
@@ -38,8 +44,8 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
         title: data.title,
         description: data.description,
         options: optionList,
-        isRequired: questionData.isRequired,
-        isPrivacy: questionData.isPrivacy,
+        required: questionData.required,
+        privacy: questionData.privacy,
       })
     );
   };
@@ -71,17 +77,19 @@ const QuestionBlock = ({ questionData, dragHandler }: QuestionBlockProps) => {
       </p>
       <>
         {questionData.type === 'text' ? (
-          <TextBlock register={register} />
+          <TextBlock register={register} questionData={questionData} />
         ) : (
           <>
             <header className="flex flex-col gap-1 pb-2 text-slate-500">
               <input
                 {...register('title')}
+                defaultValue={questionData.title}
                 placeholder="질문을 입력해주세요."
                 className="w-full text-lg bg-transparent border-b outline-none hover:bg-slate-100 border-b-transparent focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
               />
               <input
                 {...register('description')}
+                defaultValue={questionData.description}
                 placeholder="질문에 대해 추가로 필요한 설명이나 제한사항을 입력하세요."
                 className="w-full bg-transparent border-b outline-none border-b-transparent hover:bg-slate-100 focus:border-slate-300 focus:bg-slate-100 border-slate-300 placeholder:text-slate-400"
               />

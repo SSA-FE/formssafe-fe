@@ -47,11 +47,11 @@ export interface questionBlock {
   title?: string;
   description?: string;
   options?: Option[];
-  isRequired: boolean;
-  isPrivacy: boolean;
+  required?: boolean;
+  privacy?: boolean;
 }
 
 export type Option = {
   id: string;
-  value: string;
+  detail: string;
 };
